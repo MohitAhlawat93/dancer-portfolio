@@ -62,7 +62,7 @@ test("desktop profile renders and gallery works", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Contact", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /Friendly, private/i })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /At a glance/i })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /clean, premium photo gallery/i })).toBeVisible();
@@ -90,7 +90,7 @@ test("mobile profile keeps contact visible with no overflow", async ({ page }) =
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Contact", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Contact Anora on WhatsApp/i })).toBeVisible();
   await expect(page.locator("video")).toHaveCount(0);
 
