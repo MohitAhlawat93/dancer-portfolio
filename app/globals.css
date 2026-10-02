@@ -96,9 +96,38 @@ button { font: inherit; }
   animation: fade-up 1100ms 140ms cubic-bezier(.2,.7,.2,1) both;
 }
 
+.availability-pulse {
+  position: relative;
+}
+
+.availability-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 9999px;
+  border: 1px solid rgba(74, 222, 128, 0.28);
+  animation: availability-pulse 2.2s ease-out infinite;
+}
+
+.luxury-light-button {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.luxury-light-button:hover {
+  background-color: #e5e5e5 !important;
+  color: #000000 !important;
+}
+
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes availability-pulse {
+  0% { opacity: 0.8; transform: scale(0.72); }
+  70% { opacity: 0; transform: scale(1.65); }
+  100% { opacity: 0; transform: scale(1.65); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -111,15 +140,4 @@ button { font: inherit; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-
-.luxury-light-button {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-.luxury-light-button:hover {
-  background-color: #e5e5e5 !important;
-  color: #000000 !important;
 }

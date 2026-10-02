@@ -9,15 +9,22 @@ export function About() {
         <SectionHeading eyebrow="About" title="A closer portrait." />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-[0.88fr_0.72fr] lg:items-center lg:gap-24">
-          <div className="relative mx-auto aspect-[9/14] w-full max-w-[620px] overflow-hidden rounded-2xl border border-white/10 bg-[#141414]">
+          <div className="group relative mx-auto aspect-[9/14] w-full max-w-[620px] overflow-hidden rounded-3xl border border-white/15 bg-[#141414] shadow-2xl shadow-black/70">
             <Image
               src={siteContent.images.about.src}
               alt={siteContent.images.about.alt}
               fill
               quality={94}
               sizes="(max-width: 1024px) 100vw, 48vw"
-              className="object-cover object-center transition duration-700 hover:scale-[1.015]"
+              className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
             />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-transparent to-black/20"
+            />
+            <div className="absolute bottom-6 left-6 z-20 rounded-full border border-white/20 bg-black/40 px-4 py-1.5 text-[11px] uppercase tracking-widest text-white/90 backdrop-blur-md">
+              Bangalore · Profile
+            </div>
           </div>
 
           <div>

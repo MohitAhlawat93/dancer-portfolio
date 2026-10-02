@@ -30,21 +30,37 @@ export function DanceBookings() {
           {siteContent.danceBookings.map((item, index) => (
             <article
               key={item.title}
-              className="flex min-h-[360px] flex-col justify-between rounded-2xl border border-white/10 bg-neutral-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/25"
+              className="group relative flex min-h-[390px] flex-col justify-between overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-b from-white/[0.07] to-white/[0.01] p-8 shadow-2xl shadow-black/80 backdrop-blur-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_20px_50px_rgba(255,255,255,0.05)]"
             >
-              <div>
-                <p className="font-display text-3xl font-light text-white/20">
-                  0{index + 1}
-                </p>
-                <h3 className="mt-7 text-xl font-medium leading-snug text-white">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]"
+              />
+
+              <div className="relative z-10">
+                <div className="flex items-start justify-between gap-6">
+                  <p className="font-display text-4xl font-light text-white/20">
+                    0{index + 1}
+                  </p>
+                  <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+                    Dance
+                  </span>
+                </div>
+
+                <h3 className="mt-8 font-display text-3xl font-light leading-tight text-white">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-sm leading-6 text-zinc-400">
+
+                <p className="mt-4 text-sm leading-7 text-zinc-400">
                   {item.note}
                 </p>
               </div>
 
-              <div className="mt-10 border-t border-white/10 pt-6">
+              <div className="relative z-10 mt-10 border-t border-white/10 pt-6">
                 <p className="font-display text-4xl font-light tracking-[-0.03em] text-white">
                   {item.price}
                 </p>
@@ -56,9 +72,13 @@ export function DanceBookings() {
                   href={getWhatsAppHref(item.inquiry)}
                   target={siteContent.contact.whatsapp.configured ? "_blank" : undefined}
                   rel={siteContent.contact.whatsapp.configured ? "noreferrer" : undefined}
-                  className="luxury-light-button mt-7 inline-flex w-full items-center justify-center rounded-full border border-white/10 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-all duration-300"
+                  className="luxury-light-button relative mt-7 inline-flex w-full items-center justify-center overflow-hidden rounded-full border border-white/10 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-all duration-300"
                 >
-                  Inquire on WhatsApp
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/50 to-transparent opacity-20 transition-opacity duration-300 group-hover:opacity-35"
+                  />
+                  <span className="relative z-10">Inquire on WhatsApp</span>
                 </a>
               </div>
             </article>

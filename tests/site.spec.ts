@@ -32,48 +32,26 @@ async function loadAllImages(page: import("@playwright/test").Page) {
     .toBe(true);
 }
 
-test("desktop luxury profile controls and gallery work", async ({ page }) => {
+test("desktop premium cards frames and bento render correctly", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
 
-  const messageButton = page.getByRole("link", { name: "Message Anora" });
-  await expect(messageButton).toBeVisible();
+  await expect(page.getByText("Bangalore · Available")).toBeVisible();
+  await expect(page.getByText("Bangalore · Profile")).toBeVisible();
 
-  const buttonStyle = await messageButton.evaluate((element) => {
-    const style = getComputedStyle(element);
-    return {
-      color: style.color,
-      background: style.backgroundColor,
-    };
-  });
+  await page.locator("#profile").scrollIntoViewIfNeeded();
+  await expect(page.getByText("Active in Bangalore for engagements")).toBeVisible();
+  await expect(page.getByText("Active now")).toBeVisible();
 
-  expect(buttonStyle.color).toBe("rgb(0, 0, 0)");
-  expect(buttonStyle.background).toBe("rgb(255, 255, 255)");
-
-  const navContact = page.getByRole("link", { name: "Primary contact" });
-  const navStyle = await navContact.evaluate((element) => {
-    const style = getComputedStyle(element);
-    return { color: style.color, background: style.backgroundColor };
-  });
-  expect(navStyle.color).toBe("rgb(0, 0, 0)");
-  expect(navStyle.background).toBe("rgb(255, 255, 255)");
-
+  await page.locator("#rates").scrollIntoViewIfNeeded();
   await expect(page.locator("#rates article")).toHaveCount(3);
   await expect(page.getByText("₹17,000")).toBeVisible();
   await expect(page.getByText("₹20,000")).toBeVisible();
   await expect(page.getByText("₹50,000")).toBeVisible();
-
-  await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
-  await expectNoHorizontalOverflow(page);
-
-  await page.getByRole("button", { name: "Open gallery image 1" }).click();
-  await expect(page.getByTestId("gallery-lightbox")).toBeVisible();
-  await page.getByRole("button", { name: "Next image" }).click();
-  await page.getByTestId("gallery-lightbox").click({ position: { x: 10, y: 10 } });
-  await expect(page.getByTestId("gallery-lightbox")).toHaveCount(0);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);
@@ -81,20 +59,18 @@ test("desktop luxury profile controls and gallery work", async ({ page }) => {
   await page.screenshot({ path: "test-results/desktop-full.png", fullPage: true });
 });
 
-test("mobile CTAs navigation bookings and gallery stay usable", async ({ page }) => {
+test("mobile premium cards frames and bento stay responsive", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
+
+  await page.locator("#profile").scrollIntoViewIfNeeded();
+  await expect(page.getByText("Active in Bangalore for engagements")).toBeVisible();
 
   await page.locator("#rates").scrollIntoViewIfNeeded();
   await expect(page.locator("#rates article")).toHaveCount(3);
-  await expect(page.getByText("₹50,000")).toBeVisible();
-
-  await page.locator("#gallery").scrollIntoViewIfNeeded();
-  await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);

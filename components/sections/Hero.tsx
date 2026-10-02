@@ -58,7 +58,7 @@ export function Hero() {
         </div>
 
         <div className="fade-up-delay order-1 lg:order-2">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[760px] overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03),0_40px_100px_rgba(0,0,0,0.5)]">
+          <div className="group relative mx-auto aspect-[4/5] w-full max-w-[760px] overflow-hidden rounded-3xl border border-white/15 bg-[#141414] shadow-2xl shadow-black/70">
             <Image
               src={siteContent.images.hero.src}
               alt={siteContent.images.hero.alt}
@@ -66,9 +66,15 @@ export function Hero() {
               priority
               quality={94}
               sizes="(max-width: 1024px) 100vw, 56vw"
-              className="object-cover object-center"
+              className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/5" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-transparent to-black/20"
+            />
+            <div className="absolute bottom-6 left-6 z-20 rounded-full border border-white/20 bg-black/40 px-4 py-1.5 text-[11px] uppercase tracking-widest text-white/90 backdrop-blur-md">
+              Bangalore · Available
+            </div>
           </div>
         </div>
       </div>
