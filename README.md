@@ -37,3 +37,8 @@ Image references are centralized in:
     npm run build
     npx playwright install chromium
     npm run test:e2e
+
+
+## Deployment sync
+
+Latest production sync: 2026-10-02 22:07 IST.
