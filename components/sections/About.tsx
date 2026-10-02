@@ -7,9 +7,9 @@ export function About() {
     <section id="about" className="bg-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-36">
       <div className="mx-auto max-w-[1600px]">
         <SectionHeading
-          eyebrow="About"
-          title="A performer-led portfolio, built around presence rather than noise."
-          description="The biography below is demo copy for structure only. Replace it with Anney's approved story before launch."
+          eyebrow="About Anora"
+          title="Friendly, private, and straightforward."
+          description="The copy below is based on the profile details you provided, while keeping the public page tasteful and non-explicit."
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[0.92fr_0.78fr] lg:items-end lg:gap-20">
@@ -31,20 +31,20 @@ export function About() {
 
           <div className="lg:pb-12">
             <p className="font-display text-3xl leading-[1.08] tracking-[-0.03em] sm:text-4xl lg:text-5xl">
-              {siteContent.dancer.bio}
+              {siteContent.profile.bio}
             </p>
             <div className="mt-10 grid gap-6 border-t border-line pt-6 sm:grid-cols-2">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">Based in</p>
-                <p className="mt-2 text-sm">{siteContent.dancer.location}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">Currently in</p>
+                <p className="mt-2 text-sm">{siteContent.profile.location}</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">Availability</p>
-                <p className="mt-2 text-sm">Selected performance & creative enquiries</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">Verification</p>
+                <p className="mt-2 text-sm">Ask directly via WhatsApp or Telegram</p>
               </div>
             </div>
             <p className="mt-8 max-w-lg text-xs leading-6 text-muted">
-              {siteContent.dancer.note}
+              {siteContent.profile.note}
             </p>
           </div>
         </div>

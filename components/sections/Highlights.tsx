@@ -6,9 +6,9 @@ export function Highlights() {
     <section className="bg-foreground px-5 py-20 text-background sm:px-8 sm:py-28 lg:px-12 lg:py-36">
       <div className="mx-auto max-w-[1600px]">
         <SectionHeading
-          eyebrow="Highlights"
-          title="Three reasons the presentation should feel professional from the first glance."
-          description="These are demo placeholders, not claims about Anney. Replace each with verified experience or achievements."
+          eyebrow="Good to know"
+          title="Simple details before you get in touch."
+          description="Direct communication, privacy, and clear expectations are the focus of this public profile."
           light
         />
 

@@ -2,8 +2,8 @@ import { siteContent } from "@/content/site-content";
 
 const links = [
   { href: "#about", label: "About" },
+  { href: "#profile", label: "Profile" },
   { href: "#gallery", label: "Gallery" },
-  { href: "#services", label: "Services" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -16,10 +16,10 @@ export function Navigation() {
       >
         <a
           href="#top"
-          className="font-display text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl"
-          aria-label={siteContent.dancer.name + " home"}
+          className="font-display text-2xl font-semibold tracking-[-0.03em] text-white drop-shadow-sm sm:text-3xl"
+          aria-label={siteContent.profile.name + " home"}
         >
-          {siteContent.dancer.name}
+          {siteContent.profile.name}
         </a>
 
         <div className="hidden items-center gap-7 lg:flex">
@@ -27,7 +27,7 @@ export function Navigation() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:text-white"
+              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/85 drop-shadow-sm transition hover:text-white"
             >
               {link.label}
             </a>
@@ -36,9 +36,9 @@ export function Navigation() {
 
         <a
           href="#contact"
-          className="rounded-full border border-white/35 bg-black/10 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md transition hover:border-white hover:bg-white hover:text-black sm:px-5"
+          className="rounded-full bg-white px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-white transition duration-300 hover:-translate-y-0.5 hover:bg-background sm:px-6"
         >
-          Enquire
+          Contact
         </a>
       </nav>
     </header>

@@ -1,106 +1,101 @@
 export const siteContent = {
-  dancer: {
-    name: "Anney Zangma",
-    role: "Professional Dancer & Performer",
+  profile: {
+    name: "Anora",
+    role: "Private Profile · Bangalore",
     location: "Bangalore, India",
-    tagline: "Movement with presence, precision, and personality.",
+    status: "Currently in Bangalore",
+    tagline: "Warm, discreet, and easy to talk to.",
     intro:
-      "A premium portfolio for performances, private events, brand moments, and creative collaborations.",
+      "Welcome to my profile. I’m Anora, 27, and currently in Bangalore. I value respectful communication, privacy, cleanliness, and a calm, comfortable atmosphere.",
     bio:
-      "Demo biography — Anney Zangma is presented here as a professional performer based in Bangalore. Replace this paragraph with her approved story, background, experience, and artistic point of view before the public launch.",
+      "Hello, I’m Anora. I’m a friendly, independent woman currently in Bangalore. I prefer clear and respectful communication and I take privacy, hygiene, and personal boundaries seriously. The photographs on this preview are temporary placeholders; the final gallery should contain only Anora’s approved genuine photographs. If you would like to verify the profile or ask a question, contact me directly on WhatsApp or Telegram.",
     note:
-      "Demo content is used throughout this preview and is intentionally easy to replace.",
+      "For privacy and safety, this public page keeps the profile tasteful and does not publish intimate or sexual details.",
   },
   images: {
     hero: {
-      src: "https://images.unsplash.com/photo-1530234332485-f2c7355bd1ef?auto=format&fit=crop&fm=jpg&q=88&w=2200",
-      alt: "Temporary placeholder photograph of a dancer in dramatic stage lighting",
-      credit: "Leon JL / Unsplash",
+      src: "https://images.unsplash.com/photo-1562349377-0ff74adf1365?auto=format&fit=crop&fm=jpg&q=88&w=2200",
+      alt: "Temporary editorial portrait of a woman in an elegant black dress",
+      credit: "Victoria Magneticwear / Unsplash",
+      uploadPath: "/images/profile/hero.jpg",
       isPlaceholder: true,
     },
     about: {
-      src: "https://images.unsplash.com/photo-1783864424950-ccca6d6d52aa?auto=format&fit=crop&fm=jpg&q=86&w=1400",
-      alt: "Temporary placeholder photograph of a classical dancer in a red costume",
-      credit: "Jayanth Muppaneni / Unsplash",
+      src: "https://images.unsplash.com/photo-1677537946961-7b1ffd75d959?auto=format&fit=crop&fm=jpg&q=86&w=1400",
+      alt: "Temporary editorial portrait of a brunette woman in a brown dress",
+      credit: "Lance Reis / Unsplash",
+      uploadPath: "/images/profile/about.jpg",
       isPlaceholder: true,
     },
     gallery: [
       {
-        src: "https://images.unsplash.com/photo-1769651409831-3f3d8677782a?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph of ballet dancers performing on stage",
-        credit: "Kazuo ota / Unsplash",
+        src: "https://images.unsplash.com/photo-1765229278564-6775d6aec567?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary fashion portrait of a woman in an elegant evening dress",
+        credit: "FOTOGRAFÍA EDITORIAL / Unsplash",
+        uploadPath: "/images/profile/gallery-01.jpg",
       },
       {
-        src: "https://images.unsplash.com/photo-1783864424950-ccca6d6d52aa?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph of a classical dancer",
-        credit: "Jayanth Muppaneni / Unsplash",
+        src: "https://images.unsplash.com/photo-1766193232543-30daf3802aa0?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary night portrait of a woman in a brown dress",
+        credit: "FOTOGRAFÍA EDITORIAL / Unsplash",
+        uploadPath: "/images/profile/gallery-02.jpg",
       },
       {
-        src: "https://images.unsplash.com/photo-1758529224718-a5c4cfa795ab?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph of a ballerina on stage",
-        credit: "Kazuo ota / Unsplash",
+        src: "https://images.unsplash.com/photo-1562750271-680f26a95358?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary studio portrait of a brunette woman in a black dress",
+        credit: "Anastasia Leonova / Unsplash",
+        uploadPath: "/images/profile/gallery-03.jpg",
       },
       {
-        src: "https://images.unsplash.com/photo-1624250561671-9e6916e49f49?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph of an Indian dancer",
-        credit: "Natural light Bhupathi / Unsplash",
+        src: "https://images.unsplash.com/photo-1554787497-98caae0f95df?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary elegant evening portrait near a glass doorway",
+        credit: "raj jariwala / Unsplash",
+        uploadPath: "/images/profile/gallery-04.jpg",
       },
       {
-        src: "https://images.unsplash.com/photo-1635013289238-3d3da984b521?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph from a traditional dance performance",
-        credit: "Culture Trip / Unsplash",
+        src: "https://images.unsplash.com/photo-1763551229890-64e97d845251?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary clean studio fashion portrait in a long dress",
+        credit: "sammy swae / Unsplash",
+        uploadPath: "/images/profile/gallery-05.jpg",
       },
     ],
   },
   highlights: [
     {
       number: "01",
-      title: "Stage presence",
-      text: "Demo highlight — replace with a verified note about performance experience, training, or stage work.",
+      title: "Direct communication",
+      text: "Questions and profile verification can be handled directly through WhatsApp or Telegram.",
     },
     {
       number: "02",
-      title: "Professional approach",
-      text: "Demo highlight — replace with approved information about preparation, reliability, or client experience.",
+      title: "Privacy first",
+      text: "The profile is intentionally simple and discreet, with only the information needed for a comfortable first conversation.",
     },
     {
       number: "03",
-      title: "Creative collaboration",
-      text: "Demo highlight — replace with a verified note about shoots, campaigns, choreography, or collaborations.",
+      title: "Clear expectations",
+      text: "Respectful communication, personal boundaries, and hygiene are important parts of any meeting or conversation.",
     },
   ],
-  services: [
-    {
-      name: "Private Performance",
-      description:
-        "Demo service — a polished performance concept for private celebrations and curated events.",
-      price: "Starting from ₹15,000",
-      isPlaceholder: true,
-    },
-    {
-      name: "Corporate & Brand Event",
-      description:
-        "Demo service — stage appearances and performance concepts for professional events and brand-led experiences.",
-      price: "Starting from ₹25,000",
-      isPlaceholder: true,
-    },
-    {
-      name: "Creative Collaboration",
-      description:
-        "Demo service — photography, campaigns, choreography, and artist collaboration enquiries.",
-      price: "Contact for pricing",
-      isPlaceholder: true,
-    },
+  facts: [
+    { label: "Age", value: "27" },
+    { label: "Languages", value: "English · Fluent" },
+    { label: "Height", value: "158 cm / 5′2″" },
+    { label: "Hair", value: "Black" },
+    { label: "Nationality", value: "Indian" },
+    { label: "Gender", value: "Female" },
+    { label: "Smoking", value: "Yes" },
+    { label: "City", value: "Bangalore" },
   ],
   contact: {
     whatsapp: {
       label: "WhatsApp",
-      href: "https://wa.me/?text=Hi%20Anney%2C%20I%27d%20like%20to%20enquire%20about%20a%20performance.",
+      href: "https://wa.me/?text=Hello%20Anora%2C%20I%20found%20your%20profile%20and%20would%20like%20to%20say%20hello.",
       isPlaceholder: true,
     },
     telegram: {
       label: "Telegram",
-      href: "https://t.me/share/url?url=https%3A%2F%2Fexample.com&text=Hi%20Anney%2C%20I%27d%20like%20to%20enquire%20about%20working%20together.",
+      href: "https://t.me/share/url?url=https%3A%2F%2Fdancerportfolio.vercel.app&text=Hello%20Anora%2C%20I%20found%20your%20profile.",
       isPlaceholder: true,
     },
     instagram: {
@@ -110,9 +105,9 @@ export const siteContent = {
     },
   },
   seo: {
-    title: "Anney Zangma | Professional Dancer & Performer",
+    title: "Anora | Private Profile in Bangalore",
     description:
-      "Portfolio of Anney Zangma, a professional dancer and performer based in Bangalore. Explore photography, services, pricing, and direct contact options.",
+      "Private profile for Anora, currently in Bangalore. View her profile, gallery, personal details, and direct contact options.",
   },
 } as const;
 
@@ -123,7 +118,7 @@ export function getSiteUrl() {
   const candidate = configuredUrl || vercelProductionUrl || vercelDeploymentUrl;
 
   if (!candidate) {
-    return "https://example.com";
+    return "https://dancerportfolio.vercel.app";
   }
 
   const withProtocol = /^https?:\/\//.test(candidate)

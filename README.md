@@ -1,48 +1,59 @@
-# Anney Zangma — Premium Dancer Portfolio
+# Anora — Private Profile
 
-A premium, mobile-first performer portfolio built with Next.js, TypeScript, and Tailwind CSS.
+A premium, mobile-first personal profile built with Next.js, TypeScript, and Tailwind CSS.
 
-## V1 includes
+## Current V1
 
-- editorial hero and navigation
-- introduction and About
-- experience/highlight placeholders
-- asymmetric photography gallery with lightbox
-- services and demo starting prices
+- high-contrast hero and navigation
+- Anora branding and Bangalore availability
+- About section
+- non-intimate profile details
+- premium asymmetric photo gallery with lightbox
 - direct WhatsApp, Telegram, and Instagram actions
 - floating WhatsApp CTA
-- responsive footer
+- responsive mobile/desktop layout
 - metadata, Open Graph, sitemap, robots.txt, semantic structure, and optimized images
-- automated desktop and mobile browser tests
+- automated desktop/mobile browser tests
 
-## Intentionally excluded from V1
+The public site intentionally does not publish sexual-service advertising, explicit rate cards, or intimate profile details.
 
-- all video
-- dance-style taxonomy
-- login/signup
-- booking or calendar
-- payments
-- AI/chatbot/RAG
-- database
-- admin dashboard
+## Add real photos
 
-## Development
+Use this GitHub folder:
 
-Run:
+    public/images/profile/
+
+Recommended filenames:
+
+    hero.jpg
+    about.jpg
+    gallery-01.jpg
+    gallery-02.jpg
+    gallery-03.jpg
+    gallery-04.jpg
+    gallery-05.jpg
+
+After upload, replace the temporary Unsplash URLs in:
+
+    content/site-content.ts
+
+with:
+
+    /images/profile/hero.jpg
+    /images/profile/about.jpg
+    /images/profile/gallery-01.jpg
+    /images/profile/gallery-02.jpg
+    /images/profile/gallery-03.jpg
+    /images/profile/gallery-04.jpg
+    /images/profile/gallery-05.jpg
+
+Anything inside Next.js public/ is available from the website root, so public/images/profile/hero.jpg becomes /images/profile/hero.jpg on the live site.
+
+## Quality checks
 
     npm install
-    npm run dev
-
-Quality checks:
-
     npm run lint
     npm run typecheck
     npm run build
     npx playwright install chromium
     npm run test:e2e
-
-## Placeholder content
-
-Biography, highlights, services, prices, photography, and contact/social URLs are demo placeholders. Replace them in `content/site-content.ts` before public launch.
-
-Set `NEXT_PUBLIC_SITE_URL` to the final production domain when one is available. Vercel deployment environment URLs are used automatically when possible.

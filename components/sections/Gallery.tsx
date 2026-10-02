@@ -25,16 +25,12 @@ export function Gallery() {
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setActiveIndex(null);
-      }
-
+      if (event.key === "Escape") setActiveIndex(null);
       if (event.key === "ArrowRight") {
         setActiveIndex((current) =>
           current === null ? null : (current + 1) % siteContent.images.gallery.length,
         );
       }
-
       if (event.key === "ArrowLeft") {
         setActiveIndex((current) =>
           current === null
@@ -60,9 +56,9 @@ export function Gallery() {
       <section id="gallery" className="bg-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-36">
         <div className="mx-auto max-w-[1600px]">
           <SectionHeading
-            eyebrow="Selected images"
-            title="A gallery designed like an editorial spread, not a thumbnail wall."
-            description="All photographs in this preview are temporary placeholders and will be replaced with Anney's approved images."
+            eyebrow="Gallery"
+            title="A clean, premium photo gallery."
+            description="These are non-Indian editorial placeholders only. Upload Anora’s approved genuine photos into the GitHub image folder and replace these sources before public launch."
           />
 
           <div className="mt-14 grid auto-rows-[minmax(220px,1fr)] grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
@@ -85,7 +81,7 @@ export function Gallery() {
                   }
                   className="object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
                 />
-                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/55 to-transparent px-4 pb-4 pt-16 text-white opacity-100 transition md:opacity-0 md:group-hover:opacity-100">
+                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/60 to-transparent px-4 pb-4 pt-16 text-white opacity-100 transition md:opacity-0 md:group-hover:opacity-100">
                   <span className="text-[10px] uppercase tracking-[0.16em]">
                     Placeholder · {image.credit}
                   </span>

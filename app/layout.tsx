@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description: siteContent.seo.description,
     type: "website",
     locale: "en_IN",
-    siteName: siteContent.dancer.name,
+    siteName: siteContent.profile.name,
     images: [
       {
         url: siteContent.images.hero.src,

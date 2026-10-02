@@ -9,15 +9,15 @@ export function Footer() {
         <div className="grid gap-10 border-t border-white/15 pt-6 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <p className="font-display text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
-              {siteContent.dancer.name}
+              {siteContent.profile.name}
             </p>
             <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/50">
-              {siteContent.dancer.role} · {siteContent.dancer.location}
+              {siteContent.profile.role} · {siteContent.profile.location}
             </p>
           </div>
           <div className="text-xs leading-6 text-white/50 md:text-right">
-            <p>© {year} {siteContent.dancer.name}</p>
-            <p>V1 portfolio · Photography currently uses placeholders · No video</p>
+            <p>© {year} {siteContent.profile.name}</p>
+            <p>Private profile · Placeholder photography · No video</p>
           </div>
         </div>
       </div>
