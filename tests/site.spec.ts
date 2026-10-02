@@ -9,27 +9,28 @@ async function expectNoHorizontalOverflow(page: import("@playwright/test").Page)
 }
 
 async function loadAllImages(page: import("@playwright/test").Page) {
-  await page.evaluate(async () => {
-    const step = Math.max(500, Math.floor(window.innerHeight * 0.75));
-    for (let y = 0; y < document.body.scrollHeight; y += step) {
-      window.scrollTo(0, y);
-      await new Promise((resolve) => window.setTimeout(resolve, 80));
-    }
-    window.scrollTo(0, 0);
-  });
+  const images = page.locator("img");
+  const count = await images.count();
+
+  for (let index = 0; index < count; index += 1) {
+    await images.nth(index).scrollIntoViewIfNeeded();
+    await page.waitForTimeout(120);
+  }
 
   await expect
     .poll(
       async () =>
-        page.locator("img").evaluateAll((images) =>
-          images.every((image) => {
+        images.evaluateAll((items) =>
+          items.every((image) => {
             const img = image as HTMLImageElement;
             return img.complete && img.naturalWidth > 0;
           }),
         ),
-      { timeout: 15000 },
+      { timeout: 20000 },
     )
     .toBe(true);
+
+  await page.evaluate(() => window.scrollTo(0, 0));
 }
 
 test("desktop premium cards frames and bento render correctly", async ({ page }) => {
