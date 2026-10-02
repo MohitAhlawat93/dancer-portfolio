@@ -53,6 +53,14 @@ test("desktop luxury profile controls and gallery work", async ({ page }) => {
   expect(buttonStyle.color).toBe("rgb(0, 0, 0)");
   expect(buttonStyle.background).toBe("rgb(255, 255, 255)");
 
+  const navContact = page.getByRole("link", { name: "Primary contact" });
+  const navStyle = await navContact.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { color: style.color, background: style.backgroundColor };
+  });
+  expect(navStyle.color).toBe("rgb(0, 0, 0)");
+  expect(navStyle.background).toBe("rgb(255, 255, 255)");
+
   await expect(page.locator("#rates article")).toHaveCount(3);
   await expect(page.getByText("₹17,000")).toBeVisible();
   await expect(page.getByText("₹20,000")).toBeVisible();
