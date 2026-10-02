@@ -6,6 +6,14 @@ export const siteContent = {
     tagline: "Movement with presence, precision, and personality.",
     bio: "Demo biography — Anney Zangma is presented here as a professional performer available for selected events, creative collaborations, and appearances. Replace this text with her approved biography before launch.",
   },
+  images: {
+    hero: {
+      src: "https://images.unsplash.com/photo-1530234332485-f2c7355bd1ef?auto=format&fit=crop&fm=jpg&q=85&w=1800",
+      alt: "Temporary placeholder photograph of a dancer in dramatic stage lighting",
+      isPlaceholder: true,
+      credit: "Leon JL / Unsplash",
+    },
+  },
   contact: {
     whatsapp: {
       label: "WhatsApp",
