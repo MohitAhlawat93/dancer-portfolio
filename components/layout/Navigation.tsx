@@ -35,7 +35,7 @@ export function Navigation() {
         <a
           href="#contact"
           aria-label="Primary contact"
-          className="rounded-full bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-black transition-colors duration-200 hover:bg-neutral-200"
+          className="luxury-light-button rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors duration-200"
         >
           Contact
         </a>
