@@ -38,7 +38,7 @@ export function Hero() {
             <a
               href="#contact"
               aria-label="Message Anora"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-black shadow-lg shadow-white/5 transition-all duration-200 hover:bg-neutral-200 active:scale-95"
+              className="luxury-light-button inline-flex items-center justify-center rounded-full px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] shadow-lg shadow-white/5 transition-all duration-200 active:scale-95"
             >
               Message Anora
             </a>
