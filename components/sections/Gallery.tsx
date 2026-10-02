@@ -71,7 +71,7 @@ export function Gallery() {
                 key={image.src}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={"group relative min-h-[280px] overflow-hidden bg-neutral-200 text-left " + layouts[index]}
+                className={"group relative overflow-hidden bg-neutral-200 text-left " + layouts[index]}
                 aria-label={"Open gallery image " + (index + 1)}
               >
                 <Image
