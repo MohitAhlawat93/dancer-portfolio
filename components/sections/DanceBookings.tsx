@@ -51,7 +51,7 @@ export function DanceBookings() {
                   href={getWhatsAppHref(item.inquiry)}
                   target={siteContent.contact.whatsapp.configured ? "_blank" : undefined}
                   rel={siteContent.contact.whatsapp.configured ? "noreferrer" : undefined}
-                  className="mt-7 inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-white px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:bg-neutral-200"
+                  className="luxury-light-button mt-7 inline-flex w-full items-center justify-center rounded-full border border-white/10 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-all duration-300"
                 >
                   Inquire on WhatsApp
                 </a>
