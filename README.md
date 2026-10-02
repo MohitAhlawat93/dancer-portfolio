@@ -1,28 +1,48 @@
-# Premium Dancer Portfolio — Anney Zangma
+# Anney Zangma — Premium Dancer Portfolio
 
-Phase 1 is a premium, mobile-first dancer/performer portfolio built with Next.js, TypeScript, and Tailwind CSS.
+A premium, mobile-first performer portfolio built with Next.js, TypeScript, and Tailwind CSS.
 
-## V1 scope
+## V1 includes
 
-V1 is intentionally frontend-only. It will include photography, profile/about content, services and demo pricing, and direct WhatsApp, Telegram, and social links.
+- editorial hero and navigation
+- introduction and About
+- experience/highlight placeholders
+- asymmetric photography gallery with lightbox
+- services and demo starting prices
+- direct WhatsApp, Telegram, and Instagram actions
+- floating WhatsApp CTA
+- responsive footer
+- metadata, Open Graph, sitemap, robots.txt, semantic structure, and optimized images
+- automated desktop and mobile browser tests
 
-It intentionally does **not** include video, dance-style taxonomy, authentication, booking, calendars, payments, AI/RAG, a database, or an admin dashboard.
+## Intentionally excluded from V1
 
-## Local development
+- all video
+- dance-style taxonomy
+- login/signup
+- booking or calendar
+- payments
+- AI/chatbot/RAG
+- database
+- admin dashboard
 
-```bash
-npm install
-npm run dev
-```
+## Development
+
+Run:
+
+    npm install
+    npm run dev
 
 Quality checks:
 
-```bash
-npm run lint
-npm run typecheck
-npm run build
-```
+    npm run lint
+    npm run typecheck
+    npm run build
+    npx playwright install chromium
+    npm run test:e2e
 
 ## Placeholder content
 
-Temporary biography, services, pricing, and social/contact URLs live in `content/site-content.ts` and are marked as demo/placeholder content. Replace them with approved information before launch.
+Biography, highlights, services, prices, photography, and contact/social URLs are demo placeholders. Replace them in `content/site-content.ts` before public launch.
+
+Set `NEXT_PUBLIC_SITE_URL` to the final production domain when one is available. Vercel deployment environment URLs are used automatically when possible.
