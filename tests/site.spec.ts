@@ -25,7 +25,7 @@ async function loadLazyImages(page: import("@playwright/test").Page) {
     .poll(
       async () =>
         page.locator("img").evaluateAll((images) =>
-          images.every((image) => image.complete && image.naturalWidth > 0),
+          images.every((image) => {\n            const img = image as HTMLImageElement;\n            return img.complete && img.naturalWidth > 0;\n          }),
         ),
       { timeout: 15000 },
     )
