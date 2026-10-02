@@ -1,12 +1,34 @@
 import { expect, test } from "@playwright/test";
 
 async function expectNoHorizontalOverflow(page: import("@playwright/test").Page) {
-  const overflow = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    innerWidth: window.innerWidth,
-  }));
+  const overflow = await page.evaluate(() => {
+    const innerWidth = window.innerWidth;
+    const offenders = Array.from(document.querySelectorAll("body *"))
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          tag: element.tagName,
+          className: element.getAttribute("class") ?? "",
+          text: (element.textContent ?? "").trim().slice(0, 80),
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+        };
+      })
+      .filter((item) => item.right > innerWidth + 1 || item.left < -1)
+      .slice(0, 12);
 
-  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.innerWidth + 1);
+    return {
+      scrollWidth: document.documentElement.scrollWidth,
+      innerWidth,
+      offenders,
+    };
+  });
+
+  expect(
+    overflow.scrollWidth,
+    "Horizontal overflow offenders: " + JSON.stringify(overflow.offenders),
+  ).toBeLessThanOrEqual(overflow.innerWidth + 1);
 }
 
 async function loadLazyImages(page: import("@playwright/test").Page) {
