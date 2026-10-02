@@ -1,59 +1,64 @@
 export const siteContent = {
   profile: {
     name: "Anora",
-    location: "Bangalore",
-    status: "Currently in Bangalore",
-    eyebrow: "Anora · Bangalore",
-    tagline: "Elegant, warm, and effortlessly herself.",
+    location: "Bangalore, IN",
+    status: "Available in Bangalore",
+    eyebrow: "ANORA · BANGALORE, IN",
+    tagline: "Elegant presence. Quiet confidence.",
     intro:
-      "Welcome. I’m Anora, 27, currently in Bangalore. I’m easy to talk to, attentive, and I value privacy, cleanliness, and respectful communication.",
+      "Warm, discreet, and easy to talk to. I value privacy, cleanliness, respectful communication, and a relaxed atmosphere.",
     bio:
-      "I’m a sweet, pleasant person who enjoys keeping things relaxed and comfortable. Good manners, discretion, and clear communication matter to me. I use my own current photographs on this profile, and if you would ever like verification or simply want to know more, you can ask me directly on WhatsApp or Telegram.",
+      "I’m Anora, 27, currently in Bangalore. I like things to feel natural, comfortable, and uncomplicated. Good manners, discretion, and clear communication matter to me. If you would like to know more or verify my profile, WhatsApp or Telegram is the easiest way to reach me.",
+    quote:
+      "I prefer simple things done beautifully — good conversation, good energy, and mutual respect.",
   },
   images: {
     hero: {
-      src: "/images/profile/hero.jpeg",
+      src: "/images/profile/gallery-02.jpg",
       alt: "Anora portrait",
     },
     about: {
-      src: "/images/profile/about.jpeg",
+      src: "/images/profile/gallery-03.jpg",
       alt: "Anora portrait",
     },
     gallery: [
-      { src: "/images/profile/gallery-01.jpeg", alt: "Anora gallery portrait 1" },
-      { src: "/images/profile/gallery-02.jpg", alt: "Anora gallery portrait 2" },
-      { src: "/images/profile/gallery-03.jpg", alt: "Anora gallery portrait 3" },
-      { src: "/images/profile/gallery-04.jpg", alt: "Anora gallery portrait 4" },
+      { src: "/images/profile/gallery-04.jpg", alt: "Anora gallery portrait 1" },
+      { src: "/images/profile/hero.jpeg", alt: "Anora gallery portrait 2" },
+      { src: "/images/profile/about.jpeg", alt: "Anora gallery portrait 3" },
+      { src: "/images/profile/gallery-01.jpeg", alt: "Anora gallery portrait 4" },
       { src: "/images/profile/gallery-05.jpeg", alt: "Anora gallery portrait 5" },
       { src: "/images/profile/gallery-06.jpeg", alt: "Anora gallery portrait 6" },
     ],
   },
-  highlights: [
-    {
-      number: "01",
-      title: "Discreet",
-      text: "Privacy and respectful communication matter to me.",
-    },
-    {
-      number: "02",
-      title: "Genuine",
-      text: "I keep my profile current and use my own photographs.",
-    },
-    {
-      number: "03",
-      title: "Easy to reach",
-      text: "WhatsApp and Telegram are the best ways to contact me.",
-    },
-  ],
   facts: [
     { label: "Age", value: "27" },
-    { label: "Languages", value: "English · Fluent" },
     { label: "Height", value: "158 cm / 5′2″" },
+    { label: "Languages", value: "English · Fluent" },
     { label: "Hair", value: "Black" },
     { label: "Ethnicity", value: "Asian" },
     { label: "Nationality", value: "Indian" },
     { label: "Gender", value: "Female" },
     { label: "City", value: "Bangalore" },
+  ],
+  danceBookings: [
+    {
+      title: "Private studio dance session",
+      price: "₹17,000",
+      suffix: "per hour",
+      note: "One-to-one private studio booking.",
+    },
+    {
+      title: "On-location dance session",
+      price: "₹20,000",
+      suffix: "per hour",
+      note: "Travel-based dance session within Bangalore.",
+    },
+    {
+      title: "Full-day dance booking",
+      price: "₹50,000",
+      suffix: "full day",
+      note: "Extended dance / appearance booking.",
+    },
   ],
   contact: {
     whatsapp: {
@@ -68,7 +73,7 @@ export const siteContent = {
   seo: {
     title: "Anora | Bangalore",
     description:
-      "Anora in Bangalore. View her personal profile, photographs, profile details, and direct contact options.",
+      "Anora in Bangalore. View her profile, gallery, dance booking options, and direct contact details.",
   },
 } as const;
 
@@ -78,13 +83,8 @@ export function getSiteUrl() {
   const vercelDeploymentUrl = process.env.VERCEL_URL?.trim();
   const candidate = configuredUrl || vercelProductionUrl || vercelDeploymentUrl;
 
-  if (!candidate) {
-    return "https://dancerportfolio.vercel.app";
-  }
+  if (!candidate) return "https://dancerportfolio.vercel.app";
 
-  const withProtocol = /^https?:\/\//.test(candidate)
-    ? candidate
-    : "https://" + candidate;
-
+  const withProtocol = /^https?:\/\//.test(candidate) ? candidate : "https://" + candidate;
   return withProtocol.replace(/\/$/, "");
 }
