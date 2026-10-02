@@ -5,8 +5,13 @@ import {
 
 export function DanceBookings() {
   return (
-    <section id="rates" className="bg-[#101010] px-6 py-28 text-white lg:px-16">
-      <div className="mx-auto max-w-[1600px]">
+    <section id="rates" className="relative overflow-hidden bg-[#101010] px-6 py-28 text-white lg:px-16">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[8%] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-gradient-to-br from-neutral-700/15 to-transparent blur-[120px]"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1600px]">
         <div className="grid gap-6 border-t border-white/10 pt-6 md:grid-cols-[0.25fr_1fr] md:gap-12">
           <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-zinc-500">
             Dance bookings

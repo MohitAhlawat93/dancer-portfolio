@@ -47,9 +47,21 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 999;
+  z-index: 998;
   background: radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.32) 100%);
   opacity: 0.42;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.03;
+  background-image: url("/noise.svg");
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
 }
 
 a { color: inherit; text-decoration: none; }

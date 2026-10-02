@@ -8,7 +8,12 @@ export function Hero() {
       className="editorial-noise relative min-h-screen overflow-hidden bg-[#0b0b0b] px-6 pb-16 pt-28 text-white lg:px-16 lg:pb-24 lg:pt-32"
       aria-labelledby="hero-title"
     >
-      <div className="mx-auto grid min-h-[calc(100vh-8rem)] max-w-[1600px] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-20 -top-20 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-amber-500/10 to-orange-400/5 blur-[140px]"
+      />
+
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-8rem)] max-w-[1600px] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
         <div className="fade-up order-2 lg:order-1">
           <div className="flex flex-wrap gap-2">
             <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-[10px] font-medium uppercase tracking-[0.22em] text-zinc-400">
