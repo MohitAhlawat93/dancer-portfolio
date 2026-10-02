@@ -16,16 +16,14 @@ const layouts = [
 
 export function Gallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (activeIndex === null) {
-      setVisible(false);
+
       document.body.style.overflow = "";
       return;
     }
 
-    setVisible(true);
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
