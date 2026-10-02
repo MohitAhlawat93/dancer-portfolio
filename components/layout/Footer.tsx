@@ -1,8 +1,24 @@
-import { siteContent } from "@/content/site-content";
-import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
+import {
+  getTelegramHref,
+  getWhatsAppHref,
+  siteContent,
+} from "@/content/site-content";
 
 export function Footer() {
   const year = new Date().getFullYear();
+
+  const links = [
+    {
+      label: "WhatsApp",
+      href: getWhatsAppHref(),
+      configured: siteContent.contact.whatsapp.configured,
+    },
+    {
+      label: "Telegram",
+      href: getTelegramHref(),
+      configured: siteContent.contact.telegram.configured,
+    },
+  ];
 
   return (
     <footer className="bg-[#0b0b0b] px-6 pb-24 pt-12 text-white lg:px-16">
@@ -20,16 +36,15 @@ export function Footer() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {[siteContent.contact.whatsapp, siteContent.contact.telegram].map((channel) => (
+            {links.map((channel) => (
               <a
                 key={channel.label}
                 href={channel.href}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] font-medium uppercase tracking-[0.16em] text-zinc-300 transition hover:border-white/20 hover:text-white"
+                target={channel.configured ? "_blank" : undefined}
+                rel={channel.configured ? "noreferrer" : undefined}
+                className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] font-medium uppercase tracking-[0.16em] text-zinc-300 transition hover:border-white/20 hover:text-white"
               >
                 {channel.label}
-                <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             ))}
           </div>

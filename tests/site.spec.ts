@@ -32,26 +32,40 @@ async function loadAllImages(page: import("@playwright/test").Page) {
     .toBe(true);
 }
 
-test("desktop luxury editorial profile works", async ({ page }) => {
+test("desktop luxury profile controls and gallery work", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
 
-  await expect(page.getByRole("heading", { level: 2, name: /Talent comp card/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /Simple booking options/i })).toBeVisible();
+  const messageButton = page.getByRole("link", { name: "Message Anora" });
+  await expect(messageButton).toBeVisible();
+
+  const buttonStyle = await messageButton.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      color: style.color,
+      background: style.backgroundColor,
+    };
+  });
+
+  expect(buttonStyle.color).toBe("rgb(0, 0, 0)");
+  expect(buttonStyle.background).toBe("rgb(255, 255, 255)");
+
+  await expect(page.locator("#rates article")).toHaveCount(3);
   await expect(page.getByText("₹17,000")).toBeVisible();
   await expect(page.getByText("₹20,000")).toBeVisible();
   await expect(page.getByText("₹50,000")).toBeVisible();
 
+  await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
   await expectNoHorizontalOverflow(page);
 
   await page.getByRole("button", { name: "Open gallery image 1" }).click();
   await expect(page.getByTestId("gallery-lightbox")).toBeVisible();
   await page.getByRole("button", { name: "Next image" }).click();
-  await page.getByRole("button", { name: "Close gallery" }).click();
+  await page.getByTestId("gallery-lightbox").click({ position: { x: 10, y: 10 } });
+  await expect(page.getByTestId("gallery-lightbox")).toHaveCount(0);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);
@@ -59,21 +73,20 @@ test("desktop luxury editorial profile works", async ({ page }) => {
   await page.screenshot({ path: "test-results/desktop-full.png", fullPage: true });
 });
 
-test("mobile luxury editorial profile works", async ({ page }) => {
+test("mobile CTAs navigation bookings and gallery stay usable", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Contact Anora on WhatsApp/i })).toBeVisible();
 
   await page.locator("#rates").scrollIntoViewIfNeeded();
+  await expect(page.locator("#rates article")).toHaveCount(3);
   await expect(page.getByText("₹50,000")).toBeVisible();
-  await expectNoHorizontalOverflow(page);
 
   await page.locator("#gallery").scrollIntoViewIfNeeded();
-  await expect(page.getByRole("button", { name: "Open gallery image 1" })).toBeVisible();
+  await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);

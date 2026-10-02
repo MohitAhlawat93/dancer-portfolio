@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { siteContent } from "@/content/site-content";
-import { ArrowUpRight } from "@/components/ui/ArrowUpRight";
 
 export function Hero() {
   return (
@@ -35,20 +34,20 @@ export function Hero() {
             {siteContent.profile.intro}
           </p>
 
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-4 pt-6">
             <a
               href="#contact"
               aria-label="Message Anora"
-              className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-black transition duration-300 hover:-translate-y-0.5 hover:bg-zinc-200"
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-black shadow-lg shadow-white/5 transition-all duration-200 hover:bg-neutral-200 active:scale-95"
             >
               Message Anora
-              <ArrowUpRight />
             </a>
+
             <a
               href="#gallery"
-              className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/15"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-xs font-medium uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-all duration-200 hover:border-white/40 hover:bg-white/10 active:scale-95"
             >
-              View gallery
+              View Gallery
             </a>
           </div>
         </div>

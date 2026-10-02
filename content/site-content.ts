@@ -1,3 +1,21 @@
+const rawWhatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() ?? "";
+const rawTelegramHandle = process.env.NEXT_PUBLIC_TELEGRAM_HANDLE?.trim() ?? "";
+
+const whatsappNumber = rawWhatsappNumber.replace(/\D/g, "");
+const telegramHandle = rawTelegramHandle.replace(/^@/, "");
+
+export function getWhatsAppHref(
+  message = "Hi Anora, I would like to inquire about a booking.",
+) {
+  if (!whatsappNumber) return "#contact";
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export function getTelegramHref() {
+  if (!telegramHandle) return "#contact";
+  return `https://t.me/${telegramHandle}`;
+}
+
 export const siteContent = {
   profile: {
     name: "Anora",
@@ -42,32 +60,35 @@ export const siteContent = {
   ],
   danceBookings: [
     {
-      title: "Private studio dance session",
+      title: "Private Studio Dance Session",
       price: "₹17,000",
       suffix: "per hour",
-      note: "One-to-one private studio booking.",
+      note: "A private one-to-one studio dance booking.",
+      inquiry: "Hi Anora, I would like to inquire about the Private Studio Dance Session.",
     },
     {
-      title: "On-location dance session",
+      title: "On-Location Dance Session",
       price: "₹20,000",
       suffix: "per hour",
-      note: "Travel-based dance session within Bangalore.",
+      note: "A dance booking at a suitable Bangalore location.",
+      inquiry: "Hi Anora, I would like to inquire about the On-Location Dance Session.",
     },
     {
-      title: "Full-day dance booking",
+      title: "Full-Day Dance Booking",
       price: "₹50,000",
       suffix: "full day",
-      note: "Extended dance / appearance booking.",
+      note: "An extended dance or appearance booking.",
+      inquiry: "Hi Anora, I would like to inquire about the Full-Day Dance Booking.",
     },
   ],
   contact: {
     whatsapp: {
       label: "WhatsApp",
-      href: "https://wa.me/?text=Hello%20Anora%2C%20I%20found%20your%20profile%20and%20would%20like%20to%20say%20hello.",
+      configured: Boolean(whatsappNumber),
     },
     telegram: {
       label: "Telegram",
-      href: "https://t.me/share/url?url=https%3A%2F%2Fdancerportfolio.vercel.app&text=Hello%20Anora%2C%20I%20found%20your%20profile.",
+      configured: Boolean(telegramHandle),
     },
   },
   seo: {
