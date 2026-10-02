@@ -1,53 +1,33 @@
-# Anora — Private Profile
+# Anora
 
-A premium, mobile-first personal profile built with Next.js, TypeScript, and Tailwind CSS.
+Premium, mobile-first personal profile built with Next.js, TypeScript, and Tailwind CSS.
 
-## Current V1
+The Vercel project remains named `dancer-portfolio` because it is already connected to this GitHub repository. The public-facing site branding is Anora.
 
-- high-contrast hero and navigation
-- Anora branding and Bangalore availability
-- About section
-- non-intimate profile details
-- premium asymmetric photo gallery with lightbox
-- direct WhatsApp, Telegram, and Instagram actions
-- floating WhatsApp CTA
-- responsive mobile/desktop layout
-- metadata, Open Graph, sitemap, robots.txt, semantic structure, and optimized images
-- automated desktop/mobile browser tests
+## Real profile photos
 
-The public site intentionally does not publish sexual-service advertising, explicit rate cards, or intimate profile details.
+The current site uses the real uploaded repository images:
 
-## Add real photos
+    public/images/profile/hero.jpeg
+    public/images/profile/about.jpeg
+    public/images/profile/gallery-01.jpeg
+    public/images/profile/gallery-02.jpg
+    public/images/profile/gallery-03.jpg
+    public/images/profile/gallery-04.jpg
+    public/images/profile/gallery-05.jpeg
+    public/images/profile/gallery-06.jpeg
 
-Use this GitHub folder:
+Any future image placed inside `public/` is served directly from the site root. For example:
 
-    public/images/profile/
+    public/images/profile/new-photo.jpg
 
-Recommended filenames:
+is available as:
 
-    hero.jpg
-    about.jpg
-    gallery-01.jpg
-    gallery-02.jpg
-    gallery-03.jpg
-    gallery-04.jpg
-    gallery-05.jpg
+    /images/profile/new-photo.jpg
 
-After upload, replace the temporary Unsplash URLs in:
+Image references are centralized in:
 
     content/site-content.ts
-
-with:
-
-    /images/profile/hero.jpg
-    /images/profile/about.jpg
-    /images/profile/gallery-01.jpg
-    /images/profile/gallery-02.jpg
-    /images/profile/gallery-03.jpg
-    /images/profile/gallery-04.jpg
-    /images/profile/gallery-05.jpg
-
-Anything inside Next.js public/ is available from the website root, so public/images/profile/hero.jpg becomes /images/profile/hero.jpg on the live site.
 
 ## Quality checks
 

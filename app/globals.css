@@ -5,7 +5,7 @@
   --foreground: #171513;
   --muted: #6f6962;
   --line: rgba(23, 21, 19, 0.14);
-  --accent: #8f694f;
+  --accent: #946b50;
   --surface: #ebe4dc;
 }
 
@@ -55,6 +55,17 @@ button {
 
 [id] {
   scroll-margin-top: 5rem;
+}
+
+.hero-primary-cta {
+  background: #946b50;
+  color: #ffffff;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+
+.hero-primary-cta:hover {
+  background: #ffffff;
+  color: #171513;
 }
 
 :focus-visible {

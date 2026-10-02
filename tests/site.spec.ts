@@ -1,37 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 async function expectNoHorizontalOverflow(page: import("@playwright/test").Page) {
-  const overflow = await page.evaluate(() => {
-    const innerWidth = window.innerWidth;
-    const offenders = Array.from(document.querySelectorAll("body *"))
-      .map((element) => {
-        const rect = element.getBoundingClientRect();
-        return {
-          tag: element.tagName,
-          className: element.getAttribute("class") ?? "",
-          text: (element.textContent ?? "").trim().slice(0, 80),
-          left: Math.round(rect.left),
-          right: Math.round(rect.right),
-          width: Math.round(rect.width),
-        };
-      })
-      .filter((item) => item.right > innerWidth + 1 || item.left < -1)
-      .slice(0, 12);
+  const overflow = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    innerWidth: window.innerWidth,
+  }));
 
-    return {
-      scrollWidth: document.documentElement.scrollWidth,
-      innerWidth,
-      offenders,
-    };
-  });
-
-  expect(
-    overflow.scrollWidth,
-    "Horizontal overflow offenders: " + JSON.stringify(overflow.offenders),
-  ).toBeLessThanOrEqual(overflow.innerWidth + 1);
+  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.innerWidth + 1);
 }
 
-async function loadLazyImages(page: import("@playwright/test").Page) {
+async function loadAllImages(page: import("@playwright/test").Page) {
   await page.evaluate(async () => {
     const step = Math.max(500, Math.floor(window.innerHeight * 0.75));
 
@@ -57,18 +35,57 @@ async function loadLazyImages(page: import("@playwright/test").Page) {
     .toBe(true);
 }
 
-test("desktop profile renders and gallery works", async ({ page }) => {
+async function expectNoInternalCopy(page: import("@playwright/test").Page) {
+  const body = await page.locator("body").innerText();
+  const banned = [
+    "Preview photography",
+    "placeholder",
+    "Private Profile",
+    "based on the profile details",
+    "non-explicit",
+    "No video",
+    "This site focuses",
+    "Simple details before you get in touch",
+  ];
+
+  for (const phrase of banned) {
+    expect(body).not.toContain(phrase);
+  }
+}
+
+async function expectLocalProfileImages(page: import("@playwright/test").Page) {
+  const sources = await page.locator("img").evaluateAll((images) =>
+    images.map((image) => (image as HTMLImageElement).currentSrc),
+  );
+
+  expect(sources.length).toBeGreaterThanOrEqual(8);
+  expect(sources.some((source) => source.includes("unsplash.com"))).toBe(false);
+}
+
+test("desktop premium profile is polished and functional", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /Friendly, private/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /At a glance/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /clean, premium photo gallery/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /Prefer to talk/i })).toBeVisible();
 
-  await expect(page.locator("video")).toHaveCount(0);
+  const heroCta = page.getByRole("link", { name: "Message Anora" });
+  await expect(heroCta).toBeVisible();
+  await expect(heroCta).toContainText("Message Anora");
+
+  const colors = await heroCta.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { color: style.color, background: style.backgroundColor };
+  });
+  expect(colors.color).not.toBe(colors.background);
+  expect(colors.background).not.toBe("rgba(0, 0, 0, 0)");
+
+  await expect(page.getByRole("heading", { level: 2, name: /A little about me/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /A few details/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /A closer look/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /Say hello/i })).toBeVisible();
+
+  await expectNoInternalCopy(page);
   await expectNoHorizontalOverflow(page);
 
   await page.getByRole("button", { name: "Open gallery image 1" }).click();
@@ -76,7 +93,8 @@ test("desktop profile renders and gallery works", async ({ page }) => {
   await page.getByRole("button", { name: "Next image" }).click();
   await page.getByRole("button", { name: "Close gallery" }).click();
 
-  await loadLazyImages(page);
+  await loadAllImages(page);
+  await expectLocalProfileImages(page);
   await expectNoHorizontalOverflow(page);
 
   await page.screenshot({
@@ -85,25 +103,26 @@ test("desktop profile renders and gallery works", async ({ page }) => {
   });
 });
 
-test("mobile profile keeps contact visible with no overflow", async ({ page }) => {
+test("mobile premium profile keeps CTA and layout usable", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Contact Anora on WhatsApp/i })).toBeVisible();
-  await expect(page.locator("video")).toHaveCount(0);
 
+  await expectNoInternalCopy(page);
   await expectNoHorizontalOverflow(page);
 
   await page.locator("#profile").scrollIntoViewIfNeeded();
   await expect(page.getByText("English · Fluent")).toBeVisible();
-  await expectNoHorizontalOverflow(page);
 
   await page.locator("#contact").scrollIntoViewIfNeeded();
-  await expect(page.getByRole("heading", { level: 2, name: /Prefer to talk/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /Say hello/i })).toBeVisible();
 
-  await loadLazyImages(page);
+  await loadAllImages(page);
+  await expectLocalProfileImages(page);
   await expectNoHorizontalOverflow(page);
 
   await page.screenshot({

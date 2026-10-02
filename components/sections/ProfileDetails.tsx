@@ -7,8 +7,7 @@ export function ProfileDetails() {
       <div className="mx-auto max-w-[1600px]">
         <SectionHeading
           eyebrow="Profile"
-          title="At a glance."
-          description="A concise set of non-intimate profile details supplied for this version of the website."
+          title="A few details."
         />
 
         <dl className="mt-14 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4">

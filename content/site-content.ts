@@ -1,80 +1,48 @@
 export const siteContent = {
   profile: {
     name: "Anora",
-    role: "Private Profile · Bangalore",
-    location: "Bangalore, India",
+    location: "Bangalore",
     status: "Currently in Bangalore",
-    tagline: "Warm, discreet, and easy to talk to.",
+    eyebrow: "Anora · Bangalore",
+    tagline: "Elegant, warm, and effortlessly herself.",
     intro:
-      "Welcome to my profile. I’m Anora, 27, and currently in Bangalore. I value respectful communication, privacy, cleanliness, and a calm, comfortable atmosphere.",
+      "Welcome. I’m Anora, 27, currently in Bangalore. I’m easy to talk to, attentive, and I value privacy, cleanliness, and respectful communication.",
     bio:
-      "Hello, I’m Anora. I’m a friendly, independent woman currently in Bangalore. I prefer clear and respectful communication and I take privacy, hygiene, and personal boundaries seriously. The photographs on this preview are temporary placeholders; the final gallery should contain only Anora’s approved genuine photographs. If you would like to verify the profile or ask a question, contact me directly on WhatsApp or Telegram.",
-    note:
-      "For privacy and safety, this public page keeps the profile tasteful and does not publish intimate or sexual details.",
+      "I’m a sweet, pleasant person who enjoys keeping things relaxed and comfortable. Good manners, discretion, and clear communication matter to me. I use my own current photographs on this profile, and if you would ever like verification or simply want to know more, you can ask me directly on WhatsApp or Telegram.",
   },
   images: {
     hero: {
-      src: "https://images.unsplash.com/photo-1562349377-0ff74adf1365?auto=format&fit=crop&fm=jpg&q=88&w=2200",
-      alt: "Temporary editorial portrait of a woman in an elegant black dress",
-      credit: "Victoria Magneticwear / Unsplash",
-      uploadPath: "/images/profile/hero.jpg",
-      isPlaceholder: true,
+      src: "/images/profile/hero.jpeg",
+      alt: "Anora portrait",
     },
     about: {
-      src: "https://images.unsplash.com/photo-1677537946961-7b1ffd75d959?auto=format&fit=crop&fm=jpg&q=86&w=1400",
-      alt: "Temporary editorial portrait of a brunette woman in a brown dress",
-      credit: "Lance Reis / Unsplash",
-      uploadPath: "/images/profile/about.jpg",
-      isPlaceholder: true,
+      src: "/images/profile/about.jpeg",
+      alt: "Anora portrait",
     },
     gallery: [
-      {
-        src: "https://images.unsplash.com/photo-1765229278564-6775d6aec567?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary fashion portrait of a woman in an elegant evening dress",
-        credit: "FOTOGRAFÍA EDITORIAL / Unsplash",
-        uploadPath: "/images/profile/gallery-01.jpg",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1766193232543-30daf3802aa0?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary night portrait of a woman in a brown dress",
-        credit: "FOTOGRAFÍA EDITORIAL / Unsplash",
-        uploadPath: "/images/profile/gallery-02.jpg",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1562750271-680f26a95358?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary studio portrait of a brunette woman in a black dress",
-        credit: "Anastasia Leonova / Unsplash",
-        uploadPath: "/images/profile/gallery-03.jpg",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1554787497-98caae0f95df?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary elegant evening portrait near a glass doorway",
-        credit: "raj jariwala / Unsplash",
-        uploadPath: "/images/profile/gallery-04.jpg",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1763551229890-64e97d845251?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary clean studio fashion portrait in a long dress",
-        credit: "sammy swae / Unsplash",
-        uploadPath: "/images/profile/gallery-05.jpg",
-      },
+      { src: "/images/profile/gallery-01.jpeg", alt: "Anora gallery portrait 1" },
+      { src: "/images/profile/gallery-02.jpg", alt: "Anora gallery portrait 2" },
+      { src: "/images/profile/gallery-03.jpg", alt: "Anora gallery portrait 3" },
+      { src: "/images/profile/gallery-04.jpg", alt: "Anora gallery portrait 4" },
+      { src: "/images/profile/gallery-05.jpeg", alt: "Anora gallery portrait 5" },
+      { src: "/images/profile/gallery-06.jpeg", alt: "Anora gallery portrait 6" },
     ],
   },
   highlights: [
     {
       number: "01",
-      title: "Direct communication",
-      text: "Questions and profile verification can be handled directly through WhatsApp or Telegram.",
+      title: "Discreet",
+      text: "Privacy and respectful communication matter to me.",
     },
     {
       number: "02",
-      title: "Privacy first",
-      text: "The profile is intentionally simple and discreet, with only the information needed for a comfortable first conversation.",
+      title: "Genuine",
+      text: "I keep my profile current and use my own photographs.",
     },
     {
       number: "03",
-      title: "Clear expectations",
-      text: "Respectful communication, personal boundaries, and hygiene are important parts of any meeting or conversation.",
+      title: "Easy to reach",
+      text: "WhatsApp and Telegram are the best ways to contact me.",
     },
   ],
   facts: [
@@ -82,32 +50,25 @@ export const siteContent = {
     { label: "Languages", value: "English · Fluent" },
     { label: "Height", value: "158 cm / 5′2″" },
     { label: "Hair", value: "Black" },
+    { label: "Ethnicity", value: "Asian" },
     { label: "Nationality", value: "Indian" },
     { label: "Gender", value: "Female" },
-    { label: "Smoking", value: "Yes" },
     { label: "City", value: "Bangalore" },
   ],
   contact: {
     whatsapp: {
       label: "WhatsApp",
       href: "https://wa.me/?text=Hello%20Anora%2C%20I%20found%20your%20profile%20and%20would%20like%20to%20say%20hello.",
-      isPlaceholder: true,
     },
     telegram: {
       label: "Telegram",
       href: "https://t.me/share/url?url=https%3A%2F%2Fdancerportfolio.vercel.app&text=Hello%20Anora%2C%20I%20found%20your%20profile.",
-      isPlaceholder: true,
-    },
-    instagram: {
-      label: "Instagram",
-      href: "https://www.instagram.com/",
-      isPlaceholder: true,
     },
   },
   seo: {
-    title: "Anora | Private Profile in Bangalore",
+    title: "Anora | Bangalore",
     description:
-      "Private profile for Anora, currently in Bangalore. View her profile, gallery, personal details, and direct contact options.",
+      "Anora in Bangalore. View her personal profile, photographs, profile details, and direct contact options.",
   },
 } as const;
 

@@ -11,6 +11,7 @@ const layouts = [
   "md:col-span-5 aspect-[5/4]",
   "md:col-span-4 aspect-[4/5]",
   "md:col-span-8 aspect-[16/9]",
+  "md:col-span-12 aspect-[16/8]",
 ];
 
 export function Gallery() {
@@ -53,12 +54,13 @@ export function Gallery() {
 
   return (
     <>
-      <section id="gallery" className="bg-surface px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-36">
+      <section id="gallery" className="bg-foreground px-5 py-20 text-background sm:px-8 sm:py-28 lg:px-12 lg:py-36">
         <div className="mx-auto max-w-[1600px]">
           <SectionHeading
             eyebrow="Gallery"
-            title="A clean, premium photo gallery."
-            description="These are non-Indian editorial placeholders only. Upload Anora’s approved genuine photos into the GitHub image folder and replace these sources before public launch."
+            title="A closer look."
+            description="A selection of my recent photographs."
+            light
           />
 
           <div className="mt-14 grid auto-rows-[minmax(220px,1fr)] grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
@@ -67,7 +69,7 @@ export function Gallery() {
                 key={image.src}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={"group relative overflow-hidden bg-neutral-200 text-left " + layouts[index]}
+                className={"group relative overflow-hidden bg-[#2a2724] text-left " + layouts[index]}
                 aria-label={"Open gallery image " + (index + 1)}
               >
                 <Image
@@ -77,15 +79,13 @@ export function Gallery() {
                   sizes={
                     index === 0
                       ? "(max-width: 768px) 100vw, 58vw"
-                      : "(max-width: 768px) 100vw, 45vw"
+                      : "(max-width: 768px) 100vw, 48vw"
                   }
                   className="object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
                 />
-                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/60 to-transparent px-4 pb-4 pt-16 text-white opacity-100 transition md:opacity-0 md:group-hover:opacity-100">
-                  <span className="text-[10px] uppercase tracking-[0.16em]">
-                    Placeholder · {image.credit}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-[0.16em]">View</span>
+                <span className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/10" />
+                <span className="absolute bottom-4 right-4 rounded-full border border-white/35 bg-black/20 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-white opacity-100 backdrop-blur-sm transition md:opacity-0 md:group-hover:opacity-100">
+                  View
                 </span>
               </button>
             ))}
@@ -126,7 +126,7 @@ export function Gallery() {
             ←
           </button>
 
-          <div className="relative h-[78vh] w-[88vw] max-w-6xl">
+          <div className="relative h-[80vh] w-[90vw] max-w-6xl">
             <Image
               src={activeImage.src}
               alt={activeImage.alt}
@@ -151,10 +151,6 @@ export function Gallery() {
           >
             →
           </button>
-
-          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-[10px] uppercase tracking-[0.16em] text-white/50 sm:bottom-7">
-            Temporary image · {activeImage.credit}
-          </p>
         </div>
       ) : null}
     </>

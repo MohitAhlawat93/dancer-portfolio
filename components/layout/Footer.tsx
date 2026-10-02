@@ -12,12 +12,12 @@ export function Footer() {
               {siteContent.profile.name}
             </p>
             <p className="mt-3 text-xs uppercase tracking-[0.2em] text-white/50">
-              {siteContent.profile.role} · {siteContent.profile.location}
+              {siteContent.profile.location}
             </p>
           </div>
           <div className="text-xs leading-6 text-white/50 md:text-right">
             <p>© {year} {siteContent.profile.name}</p>
-            <p>Private profile · Placeholder photography · No video</p>
+            <p>WhatsApp · Telegram</p>
           </div>
         </div>
       </div>
