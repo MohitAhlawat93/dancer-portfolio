@@ -100,3 +100,14 @@ button { font: inherit; }
     transition-duration: 0.01ms !important;
   }
 }
+
+
+.luxury-light-button {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.luxury-light-button:hover {
+  background-color: #e5e5e5 !important;
+  color: #000000 !important;
+}
