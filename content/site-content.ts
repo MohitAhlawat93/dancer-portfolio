@@ -26,9 +26,9 @@ export const siteContent = {
     },
     gallery: [
       {
-        src: "https://images.unsplash.com/photo-1530234332485-f2c7355bd1ef?auto=format&fit=crop&fm=jpg&q=85&w=1400",
-        alt: "Temporary gallery photograph of a dancer under dramatic light",
-        credit: "Leon JL / Unsplash",
+        src: "https://images.unsplash.com/photo-1769651409831-3f3d8677782a?auto=format&fit=crop&fm=jpg&q=85&w=1400",
+        alt: "Temporary gallery photograph of ballet dancers performing on stage",
+        credit: "Kazuo ota / Unsplash",
       },
       {
         src: "https://images.unsplash.com/photo-1783864424950-ccca6d6d52aa?auto=format&fit=crop&fm=jpg&q=85&w=1400",
