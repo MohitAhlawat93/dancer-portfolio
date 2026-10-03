@@ -6,7 +6,6 @@ import {
 
 export function Footer() {
   const year = new Date().getFullYear();
-
   const links = [
     {
       label: "WhatsApp",
@@ -21,18 +20,16 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0b0b0b] px-6 pb-24 pt-12 text-white lg:px-16">
-      <div className="mx-auto max-w-[1600px] border-t border-white/10 pt-8">
-        <p className="font-display text-[clamp(5rem,14vw,13rem)] font-light leading-none tracking-[-0.06em] text-white/[0.08]">
+    <footer className="bg-[#090809] px-5 pb-24 pt-10 text-white sm:px-6 lg:px-16">
+      <div className="mx-auto max-w-[1500px] border-t border-white/[0.08] pt-8">
+        <p className="font-display text-[clamp(5.5rem,17vw,15rem)] font-light leading-[.75] tracking-[-0.07em] text-white/[0.045]">
           ANORA
         </p>
 
-        <div className="mt-8 grid gap-8 border-t border-white/10 pt-6 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div className="mt-10 grid gap-6 border-t border-white/[0.08] pt-6 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-zinc-500">
-              Bangalore, India
-            </p>
-            <p className="mt-3 text-xs text-zinc-600">© {year} Anora</p>
+            <p className="text-[9px] uppercase tracking-[0.22em] text-zinc-600">Bangalore, India</p>
+            <p className="mt-2 text-[10px] text-zinc-700">© {year} Anora</p>
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -42,7 +39,7 @@ export function Footer() {
                 href={channel.href}
                 target={channel.configured ? "_blank" : undefined}
                 rel={channel.configured ? "noreferrer" : undefined}
-                className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] font-medium uppercase tracking-[0.16em] text-zinc-300 transition hover:border-white/20 hover:text-white"
+                className="rounded-full border border-white/[0.08] bg-white/[0.025] px-4 py-2 text-[9px] font-medium uppercase tracking-[0.16em] text-zinc-400 transition hover:border-white/20 hover:text-white"
               >
                 {channel.label}
               </a>

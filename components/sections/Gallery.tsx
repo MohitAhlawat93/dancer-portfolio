@@ -5,8 +5,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { siteContent } from "@/content/site-content";
 
 const galleryImages = siteContent.images.gallery;
-
-const aspectClasses = [
+const aspects = [
   "aspect-[3/4]",
   "aspect-[4/5]",
   "aspect-[3/4]",
@@ -43,7 +42,6 @@ export function Gallery() {
     };
 
     window.addEventListener("keydown", onKeyDown);
-
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
@@ -51,9 +49,7 @@ export function Gallery() {
   }, [activeIndex]);
 
   const closeFromBackdrop = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      setActiveIndex(null);
-    }
+    if (event.target === event.currentTarget) setActiveIndex(null);
   };
 
   const activeImage =
@@ -61,45 +57,38 @@ export function Gallery() {
 
   return (
     <>
-      <section
-        id="gallery"
-        className="bg-[#0b0b0b] px-6 py-28 text-white lg:px-16"
-      >
-        <div className="mx-auto max-w-[1600px]">
-          <div className="grid gap-6 border-t border-white/10 pt-6 md:grid-cols-[0.25fr_1fr] md:gap-12">
-            <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-zinc-500">
-              Gallery
-            </p>
-            <div>
-              <h2 className="font-display text-5xl font-light leading-[0.94] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
-                Editorial <span className="italic text-zinc-400">frames.</span>
-              </h2>
-              <p className="mt-6 text-sm text-zinc-400">
-                Tap any image to expand it.
-              </p>
-            </div>
+      <section id="gallery" className="relative overflow-hidden bg-[#090809] px-4 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
+        <div className="mx-auto max-w-[1500px]">
+          <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-zinc-600">
+            Gallery
+          </p>
+          <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <h2 className="font-display text-5xl font-light leading-[.95] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
+              Curated <span className="italic text-[#cdb6aa]">frames.</span>
+            </h2>
+            <p className="text-sm text-zinc-500">Tap any frame to open full screen.</p>
           </div>
 
-          <div className="mt-16 columns-1 gap-5 sm:columns-2 lg:columns-3">
+          <div className="mt-10 columns-2 gap-3 sm:mt-12 sm:columns-2 sm:gap-4 lg:columns-3 lg:gap-5">
             {galleryImages.map((image, index) => (
               <button
                 key={image.src}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className="group relative mb-5 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/10 bg-[#141414] text-left"
+                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.08] bg-[#151215] text-left shadow-[0_18px_45px_rgba(0,0,0,.35)] sm:mb-4 lg:mb-5"
                 aria-label={"Open gallery image " + (index + 1)}
               >
-                <div className={"relative w-full " + aspectClasses[index]}>
+                <div className={"relative w-full " + aspects[index]}>
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
                     quality={92}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.055]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="absolute bottom-4 right-4 translate-y-2 rounded-full border border-white/20 bg-black/45 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/[0.04] opacity-40 transition duration-500 group-hover:opacity-70" />
+                  <span className="absolute bottom-3 right-3 rounded-full border border-white/15 bg-black/45 px-2.5 py-1.5 text-[8px] uppercase tracking-[0.17em] text-white/85 opacity-100 backdrop-blur-xl sm:bottom-4 sm:right-4 sm:px-3 sm:py-2 sm:text-[9px] lg:translate-y-2 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
                     + Expand
                   </span>
                 </div>
@@ -111,7 +100,7 @@ export function Gallery() {
 
       {activeImage ? (
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md animate-[fade-up_.25s_ease-out_both]"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/95 p-3 backdrop-blur-xl animate-[fade-up_.25s_ease-out_both] sm:p-5"
           role="dialog"
           aria-modal="true"
           aria-label="Gallery lightbox"
@@ -121,7 +110,7 @@ export function Gallery() {
           <button
             type="button"
             onClick={() => setActiveIndex(null)}
-            className="absolute right-4 top-4 z-10 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-md transition hover:bg-white/15 sm:right-7 sm:top-7"
+            className="absolute right-3 top-3 z-10 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs text-white backdrop-blur-xl transition hover:bg-white/15 sm:right-6 sm:top-6"
             aria-label="Close gallery"
           >
             ✕
@@ -136,7 +125,7 @@ export function Gallery() {
                   : (current - 1 + galleryImages.length) % galleryImages.length,
               )
             }
-            className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-white backdrop-blur-md transition hover:bg-white/15 sm:left-6"
+            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2.5 text-white backdrop-blur-xl sm:left-5 sm:px-4 sm:py-3"
             aria-label="Previous image"
           >
             ←
@@ -144,7 +133,7 @@ export function Gallery() {
 
           <div
             key={activeImage.src}
-            className="relative h-[82vh] w-[88vw] max-w-6xl animate-[fade-up_.3s_ease-out_both]"
+            className="relative h-[84vh] w-[90vw] max-w-6xl animate-[fade-up_.3s_ease-out_both]"
           >
             <Image
               src={activeImage.src}
@@ -152,7 +141,7 @@ export function Gallery() {
               fill
               priority
               quality={95}
-              sizes="90vw"
+              sizes="92vw"
               className="object-contain"
             />
           </div>
@@ -164,7 +153,7 @@ export function Gallery() {
                 current === null ? null : (current + 1) % galleryImages.length,
               )
             }
-            className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-white backdrop-blur-md transition hover:bg-white/15 sm:right-6"
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2.5 text-white backdrop-blur-xl sm:right-5 sm:px-4 sm:py-3"
             aria-label="Next image"
           >
             →

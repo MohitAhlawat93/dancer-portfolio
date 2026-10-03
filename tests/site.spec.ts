@@ -14,7 +14,7 @@ async function loadAllImages(page: import("@playwright/test").Page) {
 
   for (let index = 0; index < count; index += 1) {
     await images.nth(index).scrollIntoViewIfNeeded();
-    await page.waitForTimeout(120);
+    await page.waitForTimeout(100);
   }
 
   await expect
@@ -33,26 +33,32 @@ async function loadAllImages(page: import("@playwright/test").Page) {
   await page.evaluate(() => window.scrollTo(0, 0));
 }
 
-test("desktop premium cards frames and bento render correctly", async ({ page }) => {
+async function checkLayout(page: import("@playwright/test").Page) {
+  await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
+  await expect(page.getByText("Active in Bangalore")).toBeVisible();
+  await expect(page.locator("#rates article")).toHaveCount(3);
+  await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
+  await expectNoHorizontalOverflow(page);
+}
+
+test("premium desktop visual system is complete", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Primary contact" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
+  await checkLayout(page);
 
-  await expect(page.getByText("Bangalore · Available")).toBeVisible();
-  await expect(page.getByText("Bangalore · Profile")).toBeVisible();
+  const messageButton = page.getByRole("link", { name: "Message Anora" });
+  const style = await messageButton.evaluate((element) => {
+    const computed = getComputedStyle(element);
+    return { color: computed.color, background: computed.backgroundColor };
+  });
+  expect(style.color).toBe("rgb(9, 8, 9)");
 
-  await page.locator("#profile").scrollIntoViewIfNeeded();
-  await expect(page.getByText("Active in Bangalore for engagements")).toBeVisible();
-  await expect(page.getByText("Active now")).toBeVisible();
-
-  await page.locator("#rates").scrollIntoViewIfNeeded();
-  await expect(page.locator("#rates article")).toHaveCount(3);
-  await expect(page.getByText("₹17,000")).toBeVisible();
-  await expect(page.getByText("₹20,000")).toBeVisible();
-  await expect(page.getByText("₹50,000")).toBeVisible();
+  await page.getByRole("button", { name: "Open gallery image 1" }).click();
+  await expect(page.getByTestId("gallery-lightbox")).toBeVisible();
+  await page.getByRole("button", { name: "Next image" }).click();
+  await page.getByRole("button", { name: "Close gallery" }).click();
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);
@@ -60,18 +66,18 @@ test("desktop premium cards frames and bento render correctly", async ({ page })
   await page.screenshot({ path: "test-results/desktop-full.png", fullPage: true });
 });
 
-test("mobile premium cards frames and bento stay responsive", async ({ page }) => {
+test("premium mobile visual system is compact and usable", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
+  await checkLayout(page);
 
-  await page.locator("#profile").scrollIntoViewIfNeeded();
-  await expect(page.getByText("Active in Bangalore for engagements")).toBeVisible();
-
-  await page.locator("#rates").scrollIntoViewIfNeeded();
-  await expect(page.locator("#rates article")).toHaveCount(3);
+  const galleryButtons = page.locator("#gallery button[aria-label^='Open gallery image']");
+  const first = await galleryButtons.nth(0).boundingBox();
+  const second = await galleryButtons.nth(1).boundingBox();
+  expect(first).not.toBeNull();
+  expect(second).not.toBeNull();
+  expect(Math.abs((first?.y ?? 0) - (second?.y ?? 0))).toBeLessThan(80);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);

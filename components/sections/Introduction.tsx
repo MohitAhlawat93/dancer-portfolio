@@ -2,20 +2,28 @@ import { siteContent } from "@/content/site-content";
 
 export function Introduction() {
   return (
-    <section className="bg-[#0b0b0b] px-6 py-28 text-white lg:px-16">
-      <div className="mx-auto grid max-w-[1600px] gap-10 lg:grid-cols-[0.28fr_1fr] lg:gap-16">
-        <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-zinc-500">
+    <section className="relative overflow-hidden bg-[#090809] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[18%] top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[#5f3047]/10 blur-[110px]"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1500px]">
+        <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-zinc-600">
           Introduction
         </p>
-        <div>
-          <p className="max-w-6xl font-display text-[clamp(3rem,6vw,6.4rem)] font-light leading-[0.95] tracking-[-0.04em] text-white">
-            A quiet kind of <span className="italic text-zinc-400">confidence.</span>
+
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_.72fr] lg:gap-20">
+          <p className="font-display text-[clamp(3.3rem,6.6vw,6.8rem)] font-light leading-[0.9] tracking-[-0.045em]">
+            Quiet confidence,
+            <span className="block italic text-[#cdb6aa]">beautifully understated.</span>
           </p>
-          <div className="mt-10 grid gap-8 border-t border-white/10 pt-8 sm:grid-cols-2">
-            <p className="max-w-xl text-base leading-8 text-zinc-300 sm:text-lg">
+
+          <div className="self-end border-l border-white/10 pl-6 sm:pl-8">
+            <p className="text-sm leading-8 text-zinc-400 sm:text-base">
               {siteContent.profile.bio}
             </p>
-            <p className="max-w-lg font-display text-2xl font-light italic leading-relaxed text-zinc-400 sm:justify-self-end sm:text-3xl">
+            <p className="mt-7 font-display text-2xl font-light italic leading-relaxed text-zinc-300">
               “{siteContent.profile.quote}”
             </p>
           </div>

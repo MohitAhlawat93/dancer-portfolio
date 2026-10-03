@@ -5,81 +5,78 @@ import {
 
 export function DanceBookings() {
   return (
-    <section id="rates" className="relative overflow-hidden bg-[#101010] px-6 py-28 text-white lg:px-16">
+    <section id="rates" className="relative overflow-hidden bg-[#100e10] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[8%] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-gradient-to-br from-neutral-700/15 to-transparent blur-[120px]"
+        className="pointer-events-none absolute -left-24 top-1/3 h-[460px] w-[460px] rounded-full bg-[#5f3047]/[0.12] blur-[130px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 bottom-[-100px] h-[440px] w-[440px] rounded-full bg-[#e7cbbb]/[0.05] blur-[120px]"
       />
 
-      <div className="relative z-10 mx-auto max-w-[1600px]">
-        <div className="grid gap-6 border-t border-white/10 pt-6 md:grid-cols-[0.25fr_1fr] md:gap-12">
-          <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-zinc-500">
-            Dance bookings
+      <div className="relative z-10 mx-auto max-w-[1500px]">
+        <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-zinc-600">
+          Bookings
+        </p>
+        <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="max-w-4xl font-display text-5xl font-light leading-[.95] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
+            Choose your <span className="italic text-[#cdb6aa]">format.</span>
+          </h2>
+          <p className="max-w-md text-sm leading-7 text-zinc-500">
+            Three simple dance booking options with direct inquiry.
           </p>
-          <div>
-            <h2 className="font-display text-5xl font-light leading-[0.94] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
-              Booking <span className="italic text-zinc-400">roster.</span>
-            </h2>
-            <p className="mt-6 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-              Three simple options for dance sessions and appearance bookings.
-            </p>
-          </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {siteContent.danceBookings.map((item, index) => (
             <article
               key={item.title}
-              className="group relative flex min-h-[390px] flex-col justify-between overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-b from-white/[0.07] to-white/[0.01] p-8 shadow-2xl shadow-black/80 backdrop-blur-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_20px_50px_rgba(255,255,255,0.05)]"
+              className="glass-3d shine-sweep group relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 p-6 sm:min-h-[390px] sm:p-8"
             >
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent"
-              />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]"
+                className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#e7cbbb]/[0.035] blur-[55px] transition duration-700 group-hover:bg-[#e7cbbb]/[0.065]"
               />
 
               <div className="relative z-10">
-                <div className="flex items-start justify-between gap-6">
-                  <p className="font-display text-4xl font-light text-white/20">
+                <div className="flex items-start justify-between">
+                  <p className="font-display text-5xl font-light text-white/[0.12]">
                     0{index + 1}
                   </p>
-                  <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+                  <span className="rounded-full border border-white/10 bg-black/15 px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.22em] text-zinc-500">
                     Dance
                   </span>
                 </div>
 
-                <h3 className="mt-8 font-display text-3xl font-light leading-tight text-white">
+                <h3 className="mt-8 max-w-xs font-display text-3xl font-light leading-[1.02] text-white sm:text-4xl">
                   {item.title}
                 </h3>
-
-                <p className="mt-4 text-sm leading-7 text-zinc-400">
+                <p className="mt-4 max-w-sm text-sm leading-7 text-zinc-500">
                   {item.note}
                 </p>
               </div>
 
-              <div className="relative z-10 mt-10 border-t border-white/10 pt-6">
-                <p className="font-display text-4xl font-light tracking-[-0.03em] text-white">
-                  {item.price}
-                </p>
-                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500">
-                  {item.suffix}
-                </p>
+              <div className="relative z-10 mt-10">
+                <div className="border-t border-white/[0.08] pt-6">
+                  <div className="flex items-end justify-between gap-4">
+                    <p className="font-display text-4xl font-light tracking-[-0.035em] text-white sm:text-5xl">
+                      {item.price}
+                    </p>
+                    <p className="pb-1 text-[8px] font-medium uppercase tracking-[0.2em] text-zinc-600">
+                      {item.suffix}
+                    </p>
+                  </div>
 
-                <a
-                  href={getWhatsAppHref(item.inquiry)}
-                  target={siteContent.contact.whatsapp.configured ? "_blank" : undefined}
-                  rel={siteContent.contact.whatsapp.configured ? "noreferrer" : undefined}
-                  className="luxury-light-button relative mt-7 inline-flex w-full items-center justify-center overflow-hidden rounded-full border border-white/10 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-all duration-300"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/50 to-transparent opacity-20 transition-opacity duration-300 group-hover:opacity-35"
-                  />
-                  <span className="relative z-10">Inquire on WhatsApp</span>
-                </a>
+                  <a
+                    href={getWhatsAppHref(item.inquiry)}
+                    target={siteContent.contact.whatsapp.configured ? "_blank" : undefined}
+                    rel={siteContent.contact.whatsapp.configured ? "noreferrer" : undefined}
+                    className="luxury-light-button mt-6 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-[9px] font-bold uppercase tracking-[0.17em]"
+                  >
+                    Inquire
+                  </a>
+                </div>
               </div>
             </article>
           ))}

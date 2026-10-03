@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0b0b0b;
-  --surface: #141414;
-  --surface-soft: #101010;
-  --foreground: #ffffff;
-  --muted: #a1a1aa;
-  --muted-dark: #71717a;
+  --background: #090809;
+  --surface: #121012;
+  --surface-2: #171317;
+  --foreground: #f7f2ee;
+  --muted: #a7a0a5;
+  --muted-dark: #706a70;
   --line: rgba(255, 255, 255, 0.10);
-  --accent: #d6c0b2;
+  --champagne: #e7cbbb;
+  --plum: #5f3047;
+  --plum-soft: #2a1722;
 }
 
 @theme inline {
@@ -18,9 +20,7 @@
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-muted-dark: var(--muted-dark);
   --color-line: var(--line);
-  --color-accent: var(--accent);
 }
 
 * { box-sizing: border-box; }
@@ -34,8 +34,9 @@ body {
   margin: 0;
   overflow-x: clip;
   background:
-    radial-gradient(circle at 80% 0%, rgba(214, 192, 178, 0.05), transparent 26%),
-    #0b0b0b;
+    radial-gradient(circle at 12% 8%, rgba(95,48,71,.14), transparent 26%),
+    radial-gradient(circle at 88% 15%, rgba(231,203,187,.07), transparent 24%),
+    #090809;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
   text-rendering: optimizeLegibility;
@@ -48,8 +49,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 998;
-  background: radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.32) 100%);
-  opacity: 0.42;
+  background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.42) 100%);
 }
 
 body::after {
@@ -58,43 +58,100 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 999;
-  opacity: 0.03;
+  opacity: 0.032;
   background-image: url("/noise.svg");
   background-size: 180px 180px;
   mix-blend-mode: soft-light;
 }
 
 a { color: inherit; text-decoration: none; }
-
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
-
 [id] { scroll-margin-top: 7rem; }
 
 :focus-visible {
-  outline: 1px solid rgba(255,255,255,0.9);
+  outline: 1px solid rgba(255,255,255,.9);
   outline-offset: 4px;
 }
 
 ::selection {
-  background: #ffffff;
-  color: #0b0b0b;
+  background: #f7f2ee;
+  color: #090809;
 }
 
-.editorial-noise {
+.editorial-grid {
   background-image:
-    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
-  background-size: 38px 38px;
+    linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.fade-up {
-  animation: fade-up 900ms cubic-bezier(.2,.7,.2,1) both;
+.luxury-light-button {
+  background: linear-gradient(180deg, #fff 0%, #eee8e3 100%) !important;
+  color: #090809 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 14px 40px rgba(0,0,0,.35);
 }
 
-.fade-up-delay {
-  animation: fade-up 1100ms 140ms cubic-bezier(.2,.7,.2,1) both;
+.luxury-light-button:hover {
+  background: #ffffff !important;
+  color: #090809 !important;
+  transform: translateY(-2px);
 }
+
+.luxury-frame {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -1px 0 rgba(255,255,255,.04),
+    0 40px 90px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.035);
+}
+
+.glass-3d {
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.018) 54%, rgba(95,48,71,.08)),
+    rgba(16,14,16,.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -1px 0 rgba(255,255,255,.035),
+    0 30px 70px rgba(0,0,0,.55);
+  transition:
+    transform .6s cubic-bezier(.2,.7,.2,1),
+    border-color .6s ease,
+    box-shadow .6s ease;
+}
+
+@media (hover: hover) {
+  .glass-3d:hover {
+    transform: perspective(1200px) translateY(-10px) rotateX(1.7deg) rotateY(-1.4deg);
+    border-color: rgba(231,203,187,.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.22),
+      0 42px 90px rgba(0,0,0,.62),
+      0 0 40px rgba(95,48,71,.10);
+  }
+}
+
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-sweep::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto -30% -70%;
+  width: 38%;
+  transform: rotate(15deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  transition: left .8s cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+}
+
+.shine-sweep:hover::before { left: 135%; }
 
 .availability-pulse {
   position: relative;
@@ -109,25 +166,36 @@ button { font: inherit; }
   animation: availability-pulse 2.2s ease-out infinite;
 }
 
-.luxury-light-button {
-  background-color: #ffffff !important;
-  color: #000000 !important;
+.float-slow {
+  animation: float-slow 7s ease-in-out infinite;
 }
 
-.luxury-light-button:hover {
-  background-color: #e5e5e5 !important;
-  color: #000000 !important;
+.fade-up {
+  animation: fade-up 900ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+.fade-up-delay {
+  animation: fade-up 1100ms 140ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes float-slow {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-9px); }
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(22px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes availability-pulse {
-  0% { opacity: 0.8; transform: scale(0.72); }
-  70% { opacity: 0; transform: scale(1.65); }
-  100% { opacity: 0; transform: scale(1.65); }
+  0% { opacity: .8; transform: scale(.72); }
+  70%,100% { opacity: 0; transform: scale(1.65); }
+}
+
+@media (max-width: 640px) {
+  [id] { scroll-margin-top: 5.5rem; }
+  .float-slow { animation: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -136,8 +204,8 @@ button { font: inherit; }
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
+    animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: .01ms !important;
   }
 }
