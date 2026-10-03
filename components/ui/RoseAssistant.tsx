@@ -3,6 +3,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { roseKnowledge } from "@/content/rose-knowledge";
 
+type ChatMessage = {
+  id: number;
+  role: "user" | "assistant";
+  content: string;
+};
+
 function RoseMark() {
   return (
     <svg
@@ -11,32 +17,10 @@ function RoseMark() {
       className="h-5 w-5"
       fill="none"
     >
-      <path
-        d="M16 27.5c.7-4.2.15-8.2-1.55-11.25"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinecap="round"
-      />
-      <path
-        d="M15.2 21.4c-2.85.15-5.05-1-6.5-3.2 2.8-.55 5.05.3 6.75 2.25"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M16 14.7c-2.55.05-5.8-1.65-6.15-4.55-.3-2.45 1.55-4.6 4.2-4.85.7-2.25 2.75-3.7 5.1-3.25 2.3.45 3.7 2.45 3.35 4.7 2.3.85 3.55 3.25 2.65 5.5-.95 2.35-3.6 3.35-6.05 2.45-.85 1.2-1.8 1.8-3.1 1.8s-2.3-.6-3.1-1.8"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14.2 7.9c1.35-1.25 3.7-1.35 5.2-.15 1.7 1.35 1.75 3.85.1 5.25-1.45 1.25-3.75 1.15-5.1-.2-1.3-1.3-1.4-3.65-.2-4.9Z"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
+      <path d="M16 27.5c.7-4.2.15-8.2-1.55-11.25" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      <path d="M15.2 21.4c-2.85.15-5.05-1-6.5-3.2 2.8-.55 5.05.3 6.75 2.25" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M16 14.7c-2.55.05-5.8-1.65-6.15-4.55-.3-2.45 1.55-4.6 4.2-4.85.7-2.25 2.75-3.7 5.1-3.25 2.3.45 3.7 2.45 3.35 4.7 2.3.85 3.55 3.25 2.65 5.5-.95 2.35-3.6 3.35-6.05 2.45-.85 1.2-1.8 1.8-3.1 1.8s-2.3-.6-3.1-1.8" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14.2 7.9c1.35-1.25 3.7-1.35 5.2-.15 1.7 1.35 1.75 3.85.1 5.25-1.45 1.25-3.75 1.15-5.1-.2-1.3-1.3-1.4-3.65-.2-4.9Z" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -44,10 +28,11 @@ function RoseMark() {
 export function RoseAssistant() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [previewReply, setPreviewReply] = useState<string | null>(null);
-  const [lastQuestion, setLastQuestion] = useState<string | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const nextIdRef = useRef(1);
 
   useEffect(() => {
     if (!open) return;
@@ -65,10 +50,22 @@ export function RoseAssistant() {
     };
   }, [open]);
 
-  const showPreviewReply = (reply: string) => {
-    setLastQuestion(null);
-    setPreviewReply(reply);
-    setMessage("");
+  useEffect(() => {
+    if (!open) return;
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages, loading, open]);
+
+  const addMessage = (role: ChatMessage["role"], content: string) => {
+    const id = nextIdRef.current++;
+    setMessages((current) => [...current, { id, role, content }]);
+  };
+
+  const showQuickReply = (label: string, answer: string) => {
+    addMessage("user", label);
+    addMessage("assistant", answer);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -77,10 +74,9 @@ export function RoseAssistant() {
     const question = message.trim();
     if (!question || loading) return;
 
-    setLastQuestion(question);
+    addMessage("user", question);
     setMessage("");
     setLoading(true);
-    setPreviewReply(null);
 
     try {
       const response = await fetch("/api/rose", {
@@ -95,17 +91,13 @@ export function RoseAssistant() {
       };
 
       if (!response.ok) {
-        setPreviewReply(data.error ?? "I couldn’t answer that just now. Please try again.");
+        addMessage("assistant", data.error ?? "I couldn’t answer that just now. Please try again.");
         return;
       }
 
-      setPreviewReply(
-        data.answer ?? roseKnowledge.boundaries.unknownAnswer,
-      );
+      addMessage("assistant", data.answer ?? roseKnowledge.boundaries.unknownAnswer);
     } catch {
-      setPreviewReply(
-        "I couldn’t reach my knowledge service just now. Please try again.",
-      );
+      addMessage("assistant", "I couldn’t reach my knowledge service just now. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -129,10 +121,7 @@ export function RoseAssistant() {
                 </div>
                 <div>
                   <div className="mb-1 flex items-center gap-2">
-                    <h2
-                      id="rose-title"
-                      className="font-[family-name:var(--font-display)] text-[1.65rem] leading-none text-[#f8f4f1]"
-                    >
+                    <h2 id="rose-title" className="font-[family-name:var(--font-display)] text-[1.65rem] leading-none text-[#f8f4f1]">
                       {roseKnowledge.assistant.name}
                     </h2>
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,.7)]" />
@@ -154,7 +143,7 @@ export function RoseAssistant() {
             </div>
           </div>
 
-          <div className="no-scrollbar flex-1 overflow-y-auto px-4 py-5 sm:px-5">
+          <div ref={scrollRef} className="no-scrollbar flex-1 overflow-y-auto px-4 py-5 sm:px-5">
             <div className="max-w-[90%] rounded-[1.25rem] rounded-tl-md border border-white/[.08] bg-white/[.055] px-4 py-3.5">
               <p className="mb-1 font-[family-name:var(--font-display)] text-[1.12rem] text-[#f8f4f1]">
                 {roseKnowledge.assistant.greeting}
@@ -164,52 +153,53 @@ export function RoseAssistant() {
               </p>
             </div>
 
-            {lastQuestion ? (
-              <div className="ml-auto mt-3 max-w-[86%] rounded-[1.25rem] rounded-tr-md bg-[#f1e8e2] px-4 py-3 text-[#160d14]">
-                <p className="text-[12px] leading-5">{lastQuestion}</p>
-              </div>
-            ) : null}
+            {messages.map((item) =>
+              item.role === "user" ? (
+                <div key={item.id} className="ml-auto mt-3 max-w-[86%] rounded-[1.25rem] rounded-tr-md bg-[#f1e8e2] px-4 py-3 text-[#160d14]">
+                  <p className="text-[12px] leading-5">{item.content}</p>
+                </div>
+              ) : (
+                <div key={item.id} className="mt-3 max-w-[90%] rounded-[1.25rem] rounded-tl-md border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.065] px-4 py-3.5">
+                  <p className="text-[12px] leading-5 text-[#d9ced4]">{item.content}</p>
+                </div>
+              ),
+            )}
 
             {loading ? (
               <div className="mt-3 max-w-[55%] rounded-[1.25rem] rounded-tl-md border border-white/[.08] bg-white/[.045] px-4 py-3.5">
                 <p className="text-[12px] tracking-[0.18em] text-white/45">•••</p>
               </div>
-            ) : previewReply ? (
-              <div className="mt-3 max-w-[90%] rounded-[1.25rem] rounded-tl-md border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.065] px-4 py-3.5">
-                <p className="text-[12px] leading-5 text-[#d9ced4]">
-                  {previewReply}
-                </p>
-              </div>
             ) : null}
 
-            <p className="mb-2 mt-5 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/35">
-              Try a quick question
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {roseKnowledge.quickQuestions.map((item) => (
-                <button
-                  key={item.label}
-                  type="button"
-                  onClick={() => showPreviewReply(item.answer)}
-                  className="rounded-full border border-white/10 bg-white/[.035] px-3.5 py-2 text-[10px] font-medium text-[#d8cfd4] transition hover:border-[#e8c9b6]/25 hover:bg-[#e8c9b6]/[.07] hover:text-white"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+            {messages.length === 0 ? (
+              <>
+                <p className="mb-2 mt-5 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/35">
+                  Try a quick question
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {roseKnowledge.quickQuestions.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => showQuickReply(item.label, item.answer)}
+                      className="rounded-full border border-white/10 bg-white/[.035] px-3.5 py-2 text-[10px] font-medium text-[#d8cfd4] transition hover:border-[#e8c9b6]/25 hover:bg-[#e8c9b6]/[.07] hover:text-white"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : null}
 
             <div className="mt-5 flex items-center gap-2 border-t border-white/[.07] pt-4">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8c9b6]/60" />
               <p className="text-[9px] leading-4 text-white/35">
-                Personal assistant · Grounded knowledge search
+                Personal assistant · Conversation stays visible
               </p>
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="border-t border-white/[.08] bg-black/10 p-3 sm:p-4"
-          >
+          <form onSubmit={handleSubmit} className="border-t border-white/[.08] bg-black/10 p-3 sm:p-4">
             <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[.045] p-1.5 pl-4 transition focus-within:border-[#e8c9b6]/25 focus-within:bg-white/[.06]">
               <input
                 ref={inputRef}
@@ -225,19 +215,8 @@ export function RoseAssistant() {
                 disabled={loading}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4eee9] text-[#110b10] transition hover:scale-[1.03] hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 20 20"
-                  className="h-4 w-4"
-                  fill="none"
-                >
-                  <path
-                    d="m5 10 9-5-3 10-1.8-3.2L5 10Z"
-                    stroke="currentColor"
-                    strokeWidth="1.45"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none">
+                  <path d="m5 10 9-5-3 10-1.8-3.2L5 10Z" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
