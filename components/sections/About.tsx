@@ -3,22 +3,13 @@ import { siteContent } from "@/content/site-content";
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-[#0e0b0e] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-28 top-20 h-[430px] w-[430px] rounded-full bg-[#e8c9b6]/[.05] blur-[130px]"
-      />
-
+    <section id="about" className="section-bronze relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <div className="grid gap-10 lg:grid-cols-[.9fr_1fr] lg:items-center lg:gap-24">
           <div className="relative mx-auto w-full max-w-[620px] pb-10 pl-1 pr-5 pt-2 sm:pl-9">
             <div
               aria-hidden="true"
-              className="absolute bottom-0 right-0 h-[72%] w-[62%] rotate-[5deg] rounded-[2rem] border border-white/[.07] bg-gradient-to-br from-[#2b1722] to-[#0c090c] shadow-2xl"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute left-0 top-[14%] h-[64%] w-[32%] -rotate-[6deg] rounded-[1.8rem] border border-white/[.05] bg-white/[.025] backdrop-blur-xl"
+              className="absolute bottom-0 right-0 h-[72%] w-[62%] rotate-[5deg] rounded-[2rem] border border-white/[.07] bg-gradient-to-br from-[#351926] to-[#0c090c] shadow-2xl"
             />
 
             <div className="luxury-frame prism-edge group relative z-10 aspect-[9/14] overflow-hidden rounded-[2rem] border border-white/15 bg-[#151116]">
@@ -40,7 +31,7 @@ export function About() {
           <div>
             <p className="text-[9px] font-medium uppercase tracking-[.28em] text-zinc-600">About</p>
             <h2 className="mt-5 max-w-3xl font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
-              A closer <span className="italic text-[#d5bcaf]">portrait.</span>
+              A closer <span className="italic text-[#d8bcae]">portrait.</span>
             </h2>
 
             <p className="mt-8 max-w-2xl font-display text-3xl font-light italic leading-[1.15] text-zinc-200 sm:text-4xl">

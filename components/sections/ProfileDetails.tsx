@@ -10,16 +10,11 @@ export function ProfileDetails() {
   const city = siteContent.facts.find((fact) => fact.label === "City")!;
 
   return (
-    <section id="profile" className="relative overflow-hidden bg-[#070607] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[540px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#51273c]/[.10] blur-[145px]"
-      />
-
+    <section id="profile" className="section-obsidian relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <p className="text-[9px] font-medium uppercase tracking-[.28em] text-zinc-600">Profile</p>
         <h2 className="mt-5 max-w-4xl font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
-          Details, <span className="italic text-[#d5bcaf]">refined.</span>
+          Details, <span className="italic text-[#d8bcae]">refined.</span>
         </h2>
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-4">

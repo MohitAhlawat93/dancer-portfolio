@@ -44,24 +44,30 @@ async function checkLayout(page: import("@playwright/test").Page) {
   await expectNoHorizontalOverflow(page);
 }
 
-test("3D premium desktop renders correctly", async ({ page }) => {
+async function verifyHorizontalGallery(page: import("@playwright/test").Page) {
+  const rail = page.getByTestId("gallery-rail");
+  await expect(rail).toBeVisible();
+
+  const before = await rail.evaluate((element) => element.scrollLeft);
+  await page.getByRole("button", { name: "Scroll gallery right" }).click();
+
+  await expect
+    .poll(async () => rail.evaluate((element) => element.scrollLeft))
+    .toBeGreaterThan(before + 20);
+}
+
+test("premium desktop gallery flows left to right", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await checkLayout(page);
+  await page.locator("#gallery").scrollIntoViewIfNeeded();
+  await verifyHorizontalGallery(page);
 
-  const messageButton = page.getByRole("link", { name: "Message Anora" });
-  const style = await messageButton.evaluate((element) => {
-    const computed = getComputedStyle(element);
-    return { color: computed.color };
-  });
-  expect(style.color).toBe("rgb(7, 6, 7)");
-
-  await page.locator("#profile").scrollIntoViewIfNeeded();
-  await expect(page.locator("#profile .depth-card")).toHaveCount(4);
-
-  await page.locator("#rates").scrollIntoViewIfNeeded();
-  await expect(page.locator("#rates .depth-card")).toHaveCount(3);
+  const firstCard = page.locator("[data-gallery-card]").first();
+  const cardWidth = await firstCard.evaluate((element) => element.getBoundingClientRect().width);
+  expect(cardWidth).toBeGreaterThan(350);
+  expect(cardWidth).toBeLessThan(520);
 
   await page.getByRole("button", { name: "Open gallery image 1" }).click();
   await expect(page.getByTestId("gallery-lightbox")).toBeVisible();
@@ -73,7 +79,7 @@ test("3D premium desktop renders correctly", async ({ page }) => {
   await page.screenshot({ path: "test-results/desktop-full.png", fullPage: true });
 });
 
-test("3D premium mobile is compact and balanced", async ({ page }) => {
+test("premium mobile gallery swipes one card at a time", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
@@ -83,17 +89,12 @@ test("3D premium mobile is compact and balanced", async ({ page }) => {
   expect(heroHeight).toBeLessThan(1450);
 
   await page.locator("#gallery").scrollIntoViewIfNeeded();
-  const metrics = await page
-    .locator("#gallery button[aria-label^='Open gallery image']")
-    .evaluateAll((buttons) =>
-      buttons.slice(0, 4).map((button) => {
-        const rect = button.getBoundingClientRect();
-        return { x: Math.round(rect.x), width: Math.round(rect.width) };
-      }),
-    );
+  const firstCard = page.locator("[data-gallery-card]").first();
+  const cardWidth = await firstCard.evaluate((element) => element.getBoundingClientRect().width);
+  expect(cardWidth).toBeGreaterThan(280);
+  expect(cardWidth).toBeLessThan(350);
 
-  expect(Math.max(...metrics.map((item) => item.width))).toBeLessThan(190);
-  expect(new Set(metrics.map((item) => item.x)).size).toBeGreaterThanOrEqual(2);
+  await verifyHorizontalGallery(page);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);

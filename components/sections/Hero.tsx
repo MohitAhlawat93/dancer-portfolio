@@ -5,25 +5,25 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="editorial-grid relative isolate overflow-hidden bg-[#070607] px-4 pb-14 pt-24 text-white sm:px-6 sm:pt-28 lg:min-h-screen lg:px-16 lg:pb-20 lg:pt-32"
+      className="editorial-grid section-obsidian relative isolate overflow-hidden px-4 pb-14 pt-24 text-white sm:px-6 sm:pt-28 lg:min-h-screen lg:px-16 lg:pb-20 lg:pt-32"
       aria-labelledby="hero-title"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -top-32 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(232,201,182,.18),rgba(143,77,104,.10)_36%,transparent_70%)] blur-[100px]"
+        className="pointer-events-none absolute -right-40 -top-32 h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(232,201,182,.19),rgba(112,48,75,.11)_36%,transparent_70%)] blur-[100px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-44 bottom-[-180px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(81,39,60,.24),transparent_68%)] blur-[110px]"
+        className="pointer-events-none absolute -left-44 bottom-[-180px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(63,20,42,.26),transparent_68%)] blur-[110px]"
       />
 
       <div className="relative z-10 mx-auto grid max-w-[1580px] items-center gap-9 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
         <div className="order-2 fade-up lg:order-1">
           <div className="flex flex-wrap gap-2">
-            <span className="glass-panel rounded-full px-3 py-2 text-[9px] font-medium uppercase tracking-[0.2em] text-zinc-300">
+            <span className="glass-panel rounded-full px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-zinc-300">
               Bangalore, IN
             </span>
-            <span className="rounded-full border border-[#e8c9b6]/15 bg-[#e8c9b6]/[0.05] px-3 py-2 text-[9px] font-medium uppercase tracking-[0.2em] text-[#dec5b7] backdrop-blur-xl">
+            <span className="rounded-full border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.05] px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-[#dec5b7] backdrop-blur-xl">
               Available now
             </span>
           </div>
@@ -77,18 +77,14 @@ export function Hero() {
           <div className="relative mx-auto max-w-[800px] px-1 pb-8 pt-2 sm:px-9 sm:pb-14">
             <div
               aria-hidden="true"
-              className="float-slower absolute bottom-[2%] left-[2%] h-[72%] w-[67%] rounded-[2.2rem] border border-white/[.07] bg-gradient-to-br from-[#2a1722] via-[#160f15] to-[#0b090b] shadow-2xl"
+              className="absolute bottom-[2%] left-[2%] h-[72%] w-[67%] rotate-[-4deg] rounded-[2.2rem] border border-white/[.07] bg-gradient-to-br from-[#341a29] via-[#190f16] to-[#0b090b] shadow-2xl"
             />
             <div
               aria-hidden="true"
-              className="absolute right-[1%] top-[9%] h-[66%] w-[43%] rotate-[5deg] rounded-[2.2rem] border border-[#e8c9b6]/10 bg-gradient-to-b from-[#2a2023] to-[#0c090c] shadow-2xl"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute left-[8%] top-[4%] h-[58%] w-[38%] -rotate-[7deg] rounded-[2rem] border border-white/[.05] bg-gradient-to-b from-white/[.035] to-transparent backdrop-blur-xl"
+              className="absolute right-[1%] top-[9%] h-[66%] w-[43%] rotate-[5deg] rounded-[2.2rem] border border-[#e8c9b6]/10 bg-gradient-to-b from-[#2f2526] to-[#0c090c] shadow-2xl"
             />
 
-            <div className="luxury-frame prism-edge float-slow group relative z-10 aspect-[4/5] overflow-hidden rounded-[2.2rem] border border-white/15 bg-[#151116]">
+            <div className="luxury-frame prism-edge group relative z-10 aspect-[4/5] overflow-hidden rounded-[2.2rem] border border-white/15 bg-[#151116]">
               <Image
                 src={siteContent.images.hero.src}
                 alt={siteContent.images.hero.alt}

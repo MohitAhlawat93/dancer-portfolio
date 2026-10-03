@@ -2,21 +2,12 @@ import { getWhatsAppHref, siteContent } from "@/content/site-content";
 
 export function DanceBookings() {
   return (
-    <section id="rates" className="relative overflow-hidden bg-[#0e0b0e] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-28 top-1/3 h-[480px] w-[480px] rounded-full bg-[#51273c]/[.14] blur-[135px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-28 bottom-[-110px] h-[460px] w-[460px] rounded-full bg-[#e8c9b6]/[.05] blur-[125px]"
-      />
-
+    <section id="rates" className="section-wine relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <p className="text-[9px] uppercase tracking-[.28em] text-zinc-600">Bookings</p>
         <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-4xl font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
-            Choose your <span className="italic text-[#d5bcaf]">format.</span>
+            Choose your <span className="italic text-[#d8bcae]">format.</span>
           </h2>
           <p className="max-w-md text-sm leading-7 text-zinc-500">Three dance booking options with direct inquiry.</p>
         </div>

@@ -15,9 +15,7 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-[#0e0b0e] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div className="pointer-events-none absolute right-[6%] top-[2%] h-[420px] w-[420px] rounded-full bg-[#51273c]/[.16] blur-[130px]" />
-
+    <section id="contact" className="section-wine relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <div className="depth-card glass-panel prism-edge rounded-[2rem] p-6 sm:p-10 lg:p-14">
           <p className="text-[9px] uppercase tracking-[.28em] text-zinc-600">Contact</p>
@@ -25,7 +23,7 @@ export function Contact() {
           <div className="mt-5 grid gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
             <div>
               <h2 className="font-display text-[clamp(4rem,9vw,8rem)] font-light leading-[.82] tracking-[-.055em]">
-                Say <span className="italic text-[#d5bcaf]">hello.</span>
+                Say <span className="italic text-[#d8bcae]">hello.</span>
               </h2>
               <p className="mt-7 max-w-xl text-sm leading-7 text-zinc-400">
                 For questions, availability, or verification, message directly.
