@@ -150,6 +150,21 @@ export const roseKnowledge = {
       answer: "The current profile lists English.",
       keywords: ["language", "languages", "english", "speak"],
     },
+    {
+      id: "assistant-owner",
+      category: "general",
+      question: "Who is your boss?",
+      answer: "Anora is the person I assist.",
+      keywords: ["boss", "owner", "work for", "who do you work for", "your boss"],
+    },
+    {
+      id: "night-bookings",
+      category: "booking",
+      question: "Does Anora do night bookings?",
+      answer:
+        "Night bookings can be discussed by prior arrangement. Final timing and availability should be confirmed directly with Anora.",
+      keywords: ["night", "night booking", "late night", "evening booking", "overnight"],
+    },
   ] satisfies RoseFaqItem[],
 } as const;
 
@@ -161,4 +176,19 @@ export const roseKnowledge = {
   3. Add or remove FAQ entries as needed.
   4. Do not put secrets, private addresses, or API keys in this file.
   5. Live availability should come from a real source later, not a hard-coded answer.
+
+  TO ADD YOUR OWN QUESTIONS:
+  Add another object inside the faq array using this shape:
+
+  {
+    id: "unique-name",
+    category: "general",
+    question: "Your question here?",
+    answer: "The approved answer Rose should use.",
+    keywords: ["important", "matching", "words"],
+  }
+
+  Mature/adult FAQs can also be added here. Keep answers factual, respectful,
+  and approved for the public site. Rose should not invent Anora-specific details
+  that are not written in this knowledge file.
 */
