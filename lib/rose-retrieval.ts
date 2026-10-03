@@ -1,15 +1,46 @@
 import { roseKnowledge } from "@/content/rose-knowledge";
+import { roseTrainingData } from "@/content/rose-training-data";
 
-export type RoseRetrievalResult = {
-  answer: string;
-  source: "faq" | "pricing" | "profile" | "contact" | "booking" | "boundary" | "general";
+export type RoseHistoryMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type RoseChunk = {
+  id: string;
+  category: string;
+  title: string;
+  text: string;
+  searchText: string;
+};
+
+export type RoseRagResult = {
+  chunks: RoseChunk[];
   confidence: number;
-  matchedId?: string;
+  fallbackAnswer: string;
 };
 
 const STOP_WORDS = new Set([
-  "a","an","and","are","as","at","be","can","do","for","from","how","i","in","is","it","me","of","on","or","the","to","what","when","where","who","with","you",
+  "a","an","and","are","as","at","be","can","could","did","do","does","for","from","had","has","have",
+  "he","her","hers","him","his","how","i","if","in","is","it","its","me","my","of","on","or","our",
+  "she","should","so","that","the","their","them","they","this","to","was","we","were","what","when",
+  "where","which","who","why","will","with","would","you","your"
 ]);
+
+const SYNONYMS: Record<string, string[]> = {
+  boss: ["owner", "work", "assist"],
+  owner: ["boss", "work", "assist"],
+  night: ["evening", "late", "overnight"],
+  evening: ["night", "late"],
+  price: ["cost", "rate", "fee", "charge"],
+  cost: ["price", "rate", "fee", "charge"],
+  booking: ["book", "reserve", "appointment", "session"],
+  book: ["booking", "reserve", "appointment", "session"],
+  contact: ["message", "whatsapp", "telegram", "reach"],
+  location: ["city", "based", "where"],
+  available: ["availability", "free"],
+  availability: ["available", "free"],
+};
 
 function normalize(text: string) {
   return text
@@ -19,242 +50,197 @@ function normalize(text: string) {
     .trim();
 }
 
-function tokens(text: string) {
-  return normalize(text)
+function tokenize(text: string) {
+  const base = normalize(text)
     .split(" ")
     .filter(Boolean)
     .filter((token) => !STOP_WORDS.has(token));
+
+  const expanded = new Set(base);
+
+  for (const token of base) {
+    for (const synonym of SYNONYMS[token] ?? []) expanded.add(synonym);
+  }
+
+  return [...expanded];
 }
 
-function includesAny(haystack: string, needles: string[]) {
-  return needles.some((needle) => haystack.includes(normalize(needle)));
-}
+function buildKnowledgeChunks(): RoseChunk[] {
+  const chunks: RoseChunk[] = [];
 
-function retrieveGeneralConversation(question: string): RoseRetrievalResult | null {
-  const q = normalize(question);
+  chunks.push({
+    id: "profile-summary",
+    category: "profile",
+    title: "Profile summary",
+    text: [
+      `${roseKnowledge.profile.name} is based in ${roseKnowledge.profile.city}, ${roseKnowledge.profile.country}.`,
+      `Age: ${roseKnowledge.profile.age}.`,
+      `Height: ${roseKnowledge.profile.height}.`,
+      `Languages: ${roseKnowledge.profile.languages.join(", ")}.`,
+      `Hair: ${roseKnowledge.profile.hair}.`,
+      `Nationality: ${roseKnowledge.profile.nationality}.`,
+      roseKnowledge.profile.shortBio,
+    ].join(" "),
+    searchText: "",
+  });
 
-  if (includesAny(q, ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"])) {
-    return {
-      answer: "Hi! I’m Rose. How can I help you today?",
-      source: "general",
-      confidence: 0.99,
-    };
+  chunks.push({
+    id: "booking-policy",
+    category: "booking",
+    title: "Booking policy",
+    text: [
+      "Advance booking is recommended.",
+      ...roseKnowledge.booking.notes,
+    ].join(" "),
+    searchText: "",
+  });
+
+  chunks.push({
+    id: "contact",
+    category: "contact",
+    title: "Contact",
+    text: roseKnowledge.contact.preferredMessage,
+    searchText: "",
+  });
+
+  chunks.push({
+    id: "availability",
+    category: "availability",
+    title: "Availability guidance",
+    text: roseKnowledge.boundaries.liveAvailability,
+    searchText: "",
+  });
+
+  for (const item of roseKnowledge.pricing) {
+    chunks.push({
+      id: `pricing-${item.id}`,
+      category: "pricing",
+      title: item.title,
+      text: `${item.title}: ${item.price} ${item.unit}. ${item.description}`,
+      searchText: "",
+    });
   }
 
-  if (includesAny(q, ["how are you", "how r you", "how do you feel"])) {
-    return {
-      answer: "I’m doing well, thank you. How are you?",
-      source: "general",
-      confidence: 0.99,
-    };
+  for (const faq of roseKnowledge.faq) {
+    chunks.push({
+      id: `faq-${faq.id}`,
+      category: faq.category,
+      title: faq.question,
+      text: faq.answer,
+      searchText: [faq.question, faq.answer, ...faq.keywords].join(" "),
+    });
   }
 
-  if (includesAny(q, ["thank you", "thanks", "thx"])) {
-    return {
-      answer: "You’re very welcome.",
-      source: "general",
-      confidence: 0.99,
-    };
+  for (const qa of roseTrainingData.qa) {
+    chunks.push({
+      id: `qa-${qa.id}`,
+      category: qa.category ?? "general",
+      title: qa.question,
+      text: qa.answer,
+      searchText: [qa.question, qa.answer, ...(qa.aliases ?? [])].join(" "),
+    });
   }
 
-  if (includesAny(q, ["who are you", "your name", "what is your name"])) {
-    return {
-      answer: `I’m ${roseKnowledge.assistant.name}, ${roseKnowledge.assistant.ownerName}’s personal assistant.`,
-      source: "general",
-      confidence: 0.99,
-    };
-  }
+  for (const conversation of roseTrainingData.conversations) {
+    for (let index = 0; index < conversation.messages.length - 1; index += 1) {
+      const current = conversation.messages[index];
+      const next = conversation.messages[index + 1];
 
-  if (includesAny(q, ["your boss", "who is your boss", "who do you work for", "your owner"])) {
-    return {
-      answer: `${roseKnowledge.assistant.ownerName} is the person I assist.`,
-      source: "general",
-      confidence: 0.99,
-    };
-  }
+      if (current.role !== "user" || next.role !== "assistant") continue;
 
-  return null;
-}
-
-function scoreFaq(question: string, faq: (typeof roseKnowledge.faq)[number]) {
-  const normalizedQuestion = normalize(question);
-  const questionTokens = new Set(tokens(question));
-  let score = 0;
-
-  for (const keyword of faq.keywords) {
-    const normalizedKeyword = normalize(keyword);
-
-    if (normalizedQuestion.includes(normalizedKeyword)) {
-      score += normalizedKeyword.includes(" ") ? 4 : 3;
-    } else if (questionTokens.has(normalizedKeyword)) {
-      score += 2;
+      chunks.push({
+        id: `conversation-${conversation.id}-${index}`,
+        category: "conversation",
+        title: current.content,
+        text: next.content,
+        searchText: `${current.content} ${next.content}`,
+      });
     }
   }
 
-  for (const faqToken of tokens(faq.question)) {
-    if (questionTokens.has(faqToken)) score += 1;
+  return chunks.map((chunk) => ({
+    ...chunk,
+    searchText: chunk.searchText || `${chunk.title} ${chunk.text}`,
+  }));
+}
+
+const KNOWLEDGE_CHUNKS = buildKnowledgeChunks();
+
+function buildQuery(question: string, history: RoseHistoryMessage[]) {
+  const recentHistory = history
+    .slice(-4)
+    .map((item) => item.content)
+    .join(" ");
+
+  return `${recentHistory} ${question}`.trim();
+}
+
+function scoreChunk(query: string, chunk: RoseChunk) {
+  const normalizedQuery = normalize(query);
+  const normalizedTitle = normalize(chunk.title);
+  const normalizedSearch = normalize(chunk.searchText);
+  const queryTokens = tokenize(query);
+  const chunkTokens = new Set(tokenize(chunk.searchText));
+
+  let score = 0;
+
+  if (normalizedTitle && normalizedQuery.includes(normalizedTitle)) score += 10;
+
+  for (const token of queryTokens) {
+    if (chunkTokens.has(token)) score += token.length >= 5 ? 2.4 : 1.5;
+    if (normalizedSearch.includes(token)) score += 0.5;
   }
+
+  const queryPhrase = normalize(query);
+  if (queryPhrase.length >= 8 && normalizedSearch.includes(queryPhrase)) score += 8;
 
   return score;
 }
 
-function retrievePricing(question: string): RoseRetrievalResult | null {
+function isSmallTalk(question: string) {
   const q = normalize(question);
-  const pricingIntent = [
-    "price","pricing","rate","rates","cost","costs","fee","fees","charge","charges","how much","package","packages"
-  ];
-
-  if (!includesAny(q, pricingIntent)) return null;
-
-  const matchedPackage = roseKnowledge.pricing.find((item) => {
-    const title = normalize(item.title);
-    const titleTokens = tokens(item.title);
-    return q.includes(title) || titleTokens.filter((t) => t.length > 3).some((t) => q.includes(t));
-  });
-
-  if (matchedPackage) {
-    return {
-      answer: `${matchedPackage.title} is currently listed at ${matchedPackage.price} ${matchedPackage.unit}. ${matchedPackage.description}`,
-      source: "pricing",
-      confidence: 0.98,
-      matchedId: matchedPackage.id,
-    };
-  }
-
-  const summary = roseKnowledge.pricing
-    .map((item) => `${item.title}: ${item.price} ${item.unit}`)
-    .join("; ");
-
-  return {
-    answer: `Here are the current booking prices: ${summary}.`,
-    source: "pricing",
-    confidence: 0.94,
-  };
+  return [
+    "hi","hello","hey","how are you","how r you","thank you","thanks","who are you","what is your name"
+  ].some((phrase) => q === phrase || q.startsWith(`${phrase} `));
 }
 
-function retrieveProfile(question: string): RoseRetrievalResult | null {
-  const q = normalize(question);
-  const p = roseKnowledge.profile;
-
-  if (includesAny(q, ["age", "how old"])) {
-    return { answer: `${p.name} is listed as ${p.age} years old.`, source: "profile", confidence: 0.98 };
-  }
-
-  if (includesAny(q, ["height", "tall"])) {
-    return { answer: `${p.name}'s listed height is ${p.height}.`, source: "profile", confidence: 0.98 };
-  }
-
-  if (includesAny(q, ["language", "languages", "speak"])) {
-    return { answer: `The current profile lists: ${p.languages.join(", ")}.`, source: "profile", confidence: 0.97 };
-  }
-
-  if (includesAny(q, ["nationality", "national"])) {
-    return { answer: `${p.name}'s listed nationality is ${p.nationality}.`, source: "profile", confidence: 0.97 };
-  }
-
-  if (includesAny(q, ["hair"])) {
-    return { answer: `${p.name}'s listed hair colour is ${p.hair}.`, source: "profile", confidence: 0.96 };
-  }
-
-  if (includesAny(q, ["where", "location", "city", "based", "bangalore"])) {
-    return { answer: `${p.name} is currently based in ${p.city}, ${p.country}.`, source: "profile", confidence: 0.98 };
-  }
-
-  if (includesAny(q, ["profile", "about", "tell me about", "who is"])) {
-    return { answer: p.shortBio, source: "profile", confidence: 0.86 };
-  }
-
-  return null;
-}
-
-function retrieveContact(question: string): RoseRetrievalResult | null {
+function smallTalkFallback(question: string) {
   const q = normalize(question);
 
-  if (!includesAny(q, ["contact", "message", "whatsapp", "telegram", "reach", "talk", "get in touch"])) {
-    return null;
+  if (q.includes("how are you")) return "I’m doing well, thank you. How are you?";
+  if (q.includes("thank")) return "You’re very welcome.";
+  if (q.includes("who are you") || q.includes("your name")) {
+    return `I’m ${roseKnowledge.assistant.name}, ${roseKnowledge.assistant.ownerName}’s personal assistant.`;
   }
 
-  return {
-    answer: roseKnowledge.contact.preferredMessage,
-    source: "contact",
-    confidence: 0.98,
-  };
+  return `Hi! I’m ${roseKnowledge.assistant.name}. How can I help you today?`;
 }
 
-function retrieveBooking(question: string): RoseRetrievalResult | null {
-  const q = normalize(question);
-
-  if (includesAny(q, ["night booking", "night bookings", "late night", "evening booking", "overnight"])) {
+export function retrieveRoseContext(
+  question: string,
+  history: RoseHistoryMessage[] = [],
+): RoseRagResult {
+  if (isSmallTalk(question)) {
     return {
-      answer:
-        "Night bookings can be discussed by prior arrangement. Final timing and availability should be confirmed directly with Anora.",
-      source: "booking",
-      confidence: 0.97,
+      chunks: [],
+      confidence: 1,
+      fallbackAnswer: smallTalkFallback(question),
     };
   }
 
-  if (includesAny(q, ["available today", "available tonight", "availability", "tonight", "today", "tomorrow"])) {
-    return {
-      answer: roseKnowledge.boundaries.liveAvailability,
-      source: "boundary",
-      confidence: 0.99,
-    };
-  }
+  const query = buildQuery(question, history);
 
-  if (includesAny(q, ["book", "booking", "reserve", "appointment", "advance", "same day"])) {
-    const notes = roseKnowledge.booking.notes.join(" ");
-    return {
-      answer: `Booking in advance is recommended. ${notes}`,
-      source: "booking",
-      confidence: 0.91,
-    };
-  }
-
-  return null;
-}
-
-export function retrieveRoseAnswer(question: string): RoseRetrievalResult {
-  const cleanQuestion = question.trim();
-
-  if (!cleanQuestion) {
-    return {
-      answer: roseKnowledge.boundaries.unknownAnswer,
-      source: "boundary",
-      confidence: 0,
-    };
-  }
-
-  const directRetrievers = [
-    retrieveGeneralConversation,
-    retrievePricing,
-    retrieveContact,
-    retrieveBooking,
-    retrieveProfile,
-  ];
-
-  for (const retriever of directRetrievers) {
-    const result = retriever(cleanQuestion);
-    if (result) return result;
-  }
-
-  const faqScores = roseKnowledge.faq
-    .map((faq) => ({ faq, score: scoreFaq(cleanQuestion, faq) }))
+  const ranked = KNOWLEDGE_CHUNKS
+    .map((chunk) => ({ chunk, score: scoreChunk(query, chunk) }))
     .sort((a, b) => b.score - a.score);
 
-  const best = faqScores[0];
-
-  if (best && best.score >= 3) {
-    return {
-      answer: best.faq.answer,
-      source: "faq",
-      confidence: Math.min(0.95, 0.55 + best.score * 0.06),
-      matchedId: best.faq.id,
-    };
-  }
+  const top = ranked.filter((item) => item.score > 1.5).slice(0, 5);
+  const bestScore = top[0]?.score ?? 0;
 
   return {
-    answer: roseKnowledge.boundaries.unknownAnswer,
-    source: "boundary",
-    confidence: 0.15,
+    chunks: top.map((item) => item.chunk),
+    confidence: Math.min(0.99, bestScore / 14),
+    fallbackAnswer:
+      top[0]?.chunk.text ?? roseKnowledge.boundaries.unknownAnswer,
   };
 }
