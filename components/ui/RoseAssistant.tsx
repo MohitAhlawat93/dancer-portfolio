@@ -45,6 +45,8 @@ export function RoseAssistant() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [previewReply, setPreviewReply] = useState<string | null>(null);
+  const [lastQuestion, setLastQuestion] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -64,19 +66,49 @@ export function RoseAssistant() {
   }, [open]);
 
   const showPreviewReply = (reply: string) => {
+    setLastQuestion(null);
     setPreviewReply(reply);
     setMessage("");
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!message.trim()) return;
+    const question = message.trim();
+    if (!question || loading) return;
 
-    setPreviewReply(
-      `I can help with the information available in ${roseKnowledge.assistant.ownerName}’s profile. Try one of the suggested questions below.`,
-    );
+    setLastQuestion(question);
     setMessage("");
+    setLoading(true);
+    setPreviewReply(null);
+
+    try {
+      const response = await fetch("/api/rose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: question }),
+      });
+
+      const data = (await response.json()) as {
+        answer?: string;
+        error?: string;
+      };
+
+      if (!response.ok) {
+        setPreviewReply(data.error ?? "I couldn’t answer that just now. Please try again.");
+        return;
+      }
+
+      setPreviewReply(
+        data.answer ?? roseKnowledge.boundaries.unknownAnswer,
+      );
+    } catch {
+      setPreviewReply(
+        "I couldn’t reach my knowledge service just now. Please try again.",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -132,7 +164,17 @@ export function RoseAssistant() {
               </p>
             </div>
 
-            {previewReply ? (
+            {lastQuestion ? (
+              <div className="ml-auto mt-3 max-w-[86%] rounded-[1.25rem] rounded-tr-md bg-[#f1e8e2] px-4 py-3 text-[#160d14]">
+                <p className="text-[12px] leading-5">{lastQuestion}</p>
+              </div>
+            ) : null}
+
+            {loading ? (
+              <div className="mt-3 max-w-[55%] rounded-[1.25rem] rounded-tl-md border border-white/[.08] bg-white/[.045] px-4 py-3.5">
+                <p className="text-[12px] tracking-[0.18em] text-white/45">•••</p>
+              </div>
+            ) : previewReply ? (
               <div className="mt-3 max-w-[90%] rounded-[1.25rem] rounded-tl-md border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.065] px-4 py-3.5">
                 <p className="text-[12px] leading-5 text-[#d9ced4]">
                   {previewReply}
@@ -159,7 +201,7 @@ export function RoseAssistant() {
             <div className="mt-5 flex items-center gap-2 border-t border-white/[.07] pt-4">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8c9b6]/60" />
               <p className="text-[9px] leading-4 text-white/35">
-                Personal assistant · Knowledge base ready
+                Personal assistant · Grounded knowledge search
               </p>
             </div>
           </div>
@@ -180,7 +222,8 @@ export function RoseAssistant() {
               <button
                 type="submit"
                 aria-label="Send message"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4eee9] text-[#110b10] transition hover:scale-[1.03] hover:bg-white"
+                disabled={loading}
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4eee9] text-[#110b10] transition hover:scale-[1.03] hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <svg
                   aria-hidden="true"
