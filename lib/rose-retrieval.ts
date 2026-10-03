@@ -65,6 +65,14 @@ function retrieveGeneralConversation(question: string): RoseRetrievalResult | nu
     };
   }
 
+  if (includesAny(q, ["your boss", "who is your boss", "who do you work for", "your owner"])) {
+    return {
+      answer: `${roseKnowledge.assistant.ownerName} is the person I assist.`,
+      source: "general",
+      confidence: 0.99,
+    };
+  }
+
   return null;
 }
 
@@ -175,6 +183,15 @@ function retrieveContact(question: string): RoseRetrievalResult | null {
 
 function retrieveBooking(question: string): RoseRetrievalResult | null {
   const q = normalize(question);
+
+  if (includesAny(q, ["night booking", "night bookings", "late night", "evening booking", "overnight"])) {
+    return {
+      answer:
+        "Night bookings can be discussed by prior arrangement. Final timing and availability should be confirmed directly with Anora.",
+      source: "booking",
+      confidence: 0.97,
+    };
+  }
 
   if (includesAny(q, ["available today", "available tonight", "availability", "tonight", "today", "tomorrow"])) {
     return {
