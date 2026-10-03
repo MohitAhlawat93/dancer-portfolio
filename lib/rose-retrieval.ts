@@ -2,7 +2,7 @@ import { roseKnowledge } from "@/content/rose-knowledge";
 
 export type RoseRetrievalResult = {
   answer: string;
-  source: "faq" | "pricing" | "profile" | "contact" | "booking" | "boundary";
+  source: "faq" | "pricing" | "profile" | "contact" | "booking" | "boundary" | "general";
   confidence: number;
   matchedId?: string;
 };
@@ -28,6 +28,44 @@ function tokens(text: string) {
 
 function includesAny(haystack: string, needles: string[]) {
   return needles.some((needle) => haystack.includes(normalize(needle)));
+}
+
+function retrieveGeneralConversation(question: string): RoseRetrievalResult | null {
+  const q = normalize(question);
+
+  if (includesAny(q, ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"])) {
+    return {
+      answer: "Hi! I’m Rose. How can I help you today?",
+      source: "general",
+      confidence: 0.99,
+    };
+  }
+
+  if (includesAny(q, ["how are you", "how r you", "how do you feel"])) {
+    return {
+      answer: "I’m doing well, thank you. How are you?",
+      source: "general",
+      confidence: 0.99,
+    };
+  }
+
+  if (includesAny(q, ["thank you", "thanks", "thx"])) {
+    return {
+      answer: "You’re very welcome.",
+      source: "general",
+      confidence: 0.99,
+    };
+  }
+
+  if (includesAny(q, ["who are you", "your name", "what is your name"])) {
+    return {
+      answer: `I’m ${roseKnowledge.assistant.name}, ${roseKnowledge.assistant.ownerName}’s personal assistant.`,
+      source: "general",
+      confidence: 0.99,
+    };
+  }
+
+  return null;
 }
 
 function scoreFaq(question: string, faq: (typeof roseKnowledge.faq)[number]) {
@@ -170,6 +208,7 @@ export function retrieveRoseAnswer(question: string): RoseRetrievalResult {
   }
 
   const directRetrievers = [
+    retrieveGeneralConversation,
     retrievePricing,
     retrieveContact,
     retrieveBooking,
