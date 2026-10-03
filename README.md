@@ -41,4 +41,4 @@ Image references are centralized in:
 
 ## Deployment sync
 
-Latest production sync: 2026-10-02 22:07 IST.
+Latest production sync: 2026-10-03 22:56 IST.
