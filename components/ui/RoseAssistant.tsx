@@ -74,7 +74,7 @@ export function RoseAssistant() {
     if (!message.trim()) return;
 
     setPreviewReply(
-      "I can help with the information available in Anora’s profile. Try one of the suggested questions below.",
+      `I can help with the information available in ${roseKnowledge.assistant.ownerName}’s profile. Try one of the suggested questions below.`,
     );
     setMessage("");
   };
@@ -101,7 +101,7 @@ export function RoseAssistant() {
                       id="rose-title"
                       className="font-[family-name:var(--font-display)] text-[1.65rem] leading-none text-[#f8f4f1]"
                     >
-                      Rose
+                      {roseKnowledge.assistant.name}
                     </h2>
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,.7)]" />
                   </div>
@@ -114,7 +114,7 @@ export function RoseAssistant() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close {roseKnowledge.assistant.name} assistant"
+                aria-label={`Close ${roseKnowledge.assistant.name} assistant`}
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-lg text-white/60 transition hover:border-white/20 hover:bg-white/[.06] hover:text-white"
               >
                 ×
