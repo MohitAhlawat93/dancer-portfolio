@@ -158,6 +158,25 @@ function buildKnowledgeChunks(): RoseChunk[] {
     }
   }
 
+  for (const document of roseTrainingData.documents) {
+    const paragraphs = document.text
+      .split(/\n\s*\n/)
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    const parts = paragraphs.length ? paragraphs : [document.text];
+
+    parts.forEach((part, index) => {
+      chunks.push({
+        id: `document-${document.id}-${index}`,
+        category: document.category ?? "document",
+        title: document.title,
+        text: part,
+        searchText: `${document.title} ${part}`,
+      });
+    });
+  }
+
   return chunks.map((chunk) => ({
     ...chunk,
     searchText: chunk.searchText || `${chunk.title} ${chunk.text}`,
