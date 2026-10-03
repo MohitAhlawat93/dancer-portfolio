@@ -9,18 +9,20 @@ async function expectNoHorizontalOverflow(page: import("@playwright/test").Page)
 }
 
 async function loadAllImages(page: import("@playwright/test").Page) {
-  const images = page.locator("img");
-  const count = await images.count();
+  const count = await page.locator("img").count();
 
   for (let index = 0; index < count; index += 1) {
-    await images.nth(index).scrollIntoViewIfNeeded();
+    await page.evaluate((imageIndex) => {
+      const image = document.querySelectorAll("img")[imageIndex];
+      image?.scrollIntoView({ block: "center", behavior: "auto" });
+    }, index);
     await page.waitForTimeout(100);
   }
 
   await expect
     .poll(
       async () =>
-        images.evaluateAll((items) =>
+        page.locator("img").evaluateAll((items) =>
           items.every((image) => {
             const img = image as HTMLImageElement;
             return img.complete && img.naturalWidth > 0;
@@ -72,12 +74,19 @@ test("premium mobile visual system is compact and usable", async ({ page }) => {
 
   await checkLayout(page);
 
-  const galleryButtons = page.locator("#gallery button[aria-label^='Open gallery image']");
-  const first = await galleryButtons.nth(0).boundingBox();
-  const second = await galleryButtons.nth(1).boundingBox();
-  expect(first).not.toBeNull();
-  expect(second).not.toBeNull();
-  expect(Math.abs((first?.y ?? 0) - (second?.y ?? 0))).toBeLessThan(80);
+  await page.locator("#gallery").scrollIntoViewIfNeeded();
+  const galleryMetrics = await page
+    .locator("#gallery button[aria-label^='Open gallery image']")
+    .evaluateAll((buttons) =>
+      buttons.slice(0, 4).map((button) => {
+        const rect = button.getBoundingClientRect();
+        return { x: Math.round(rect.x), width: Math.round(rect.width) };
+      }),
+    );
+
+  expect(galleryMetrics.length).toBeGreaterThanOrEqual(4);
+  expect(Math.max(...galleryMetrics.map((item) => item.width))).toBeLessThan(190);
+  expect(new Set(galleryMetrics.map((item) => item.x)).size).toBeGreaterThanOrEqual(2);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);
