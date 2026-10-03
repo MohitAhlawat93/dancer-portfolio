@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { retrieveRoseAnswer } from "@/lib/rose-retrieval";
+import { generateRoseAnswer } from "@/lib/rose-groq";
 
 type RoseRequestBody = {
   message?: unknown;
@@ -41,12 +42,14 @@ export async function POST(request: Request) {
   }
 
   const result = retrieveRoseAnswer(message);
+  const generated = await generateRoseAnswer(message, result);
 
   return NextResponse.json({
-    answer: result.answer,
+    answer: generated.answer,
     source: result.source,
     confidence: result.confidence,
     matchedId: result.matchedId ?? null,
-    mode: "retrieval",
+    mode: generated.mode,
+    model: generated.model,
   });
 }
