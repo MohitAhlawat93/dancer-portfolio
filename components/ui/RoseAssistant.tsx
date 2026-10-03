@@ -82,7 +82,13 @@ export function RoseAssistant() {
       const response = await fetch("/api/rose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question }),
+        body: JSON.stringify({
+          message: question,
+          history: messages.slice(-8).map((item) => ({
+            role: item.role,
+            content: item.content,
+          })),
+        }),
       });
 
       const data = (await response.json()) as {
