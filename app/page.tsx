@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
+import { RoseAssistant } from "@/components/ui/RoseAssistant";
 import { Hero } from "@/components/sections/Hero";
 import { Introduction } from "@/components/sections/Introduction";
 import { About } from "@/components/sections/About";
@@ -23,6 +24,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <RoseAssistant />
       <FloatingWhatsApp />
     </>
   );
