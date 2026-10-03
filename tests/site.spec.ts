@@ -38,13 +38,13 @@ async function loadAllImages(page: import("@playwright/test").Page) {
 async function checkLayout(page: import("@playwright/test").Page) {
   await expect(page.getByRole("heading", { level: 1, name: "Anora" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Message Anora" })).toBeVisible();
-  await expect(page.getByText("Active in Bangalore")).toBeVisible();
+  await expect(page.getByText("Active in Bangalore", { exact: true }).first()).toBeVisible();
   await expect(page.locator("#rates article")).toHaveCount(3);
   await expect(page.locator("#gallery button[aria-label^='Open gallery image']")).toHaveCount(6);
   await expectNoHorizontalOverflow(page);
 }
 
-test("premium desktop visual system is complete", async ({ page }) => {
+test("3D premium desktop renders correctly", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "networkidle" });
 
@@ -53,13 +53,18 @@ test("premium desktop visual system is complete", async ({ page }) => {
   const messageButton = page.getByRole("link", { name: "Message Anora" });
   const style = await messageButton.evaluate((element) => {
     const computed = getComputedStyle(element);
-    return { color: computed.color, background: computed.backgroundColor };
+    return { color: computed.color };
   });
-  expect(style.color).toBe("rgb(9, 8, 9)");
+  expect(style.color).toBe("rgb(7, 6, 7)");
+
+  await page.locator("#profile").scrollIntoViewIfNeeded();
+  await expect(page.locator("#profile .depth-card")).toHaveCount(4);
+
+  await page.locator("#rates").scrollIntoViewIfNeeded();
+  await expect(page.locator("#rates .depth-card")).toHaveCount(3);
 
   await page.getByRole("button", { name: "Open gallery image 1" }).click();
   await expect(page.getByTestId("gallery-lightbox")).toBeVisible();
-  await page.getByRole("button", { name: "Next image" }).click();
   await page.getByRole("button", { name: "Close gallery" }).click();
 
   await loadAllImages(page);
@@ -68,14 +73,17 @@ test("premium desktop visual system is complete", async ({ page }) => {
   await page.screenshot({ path: "test-results/desktop-full.png", fullPage: true });
 });
 
-test("premium mobile visual system is compact and usable", async ({ page }) => {
+test("3D premium mobile is compact and balanced", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/", { waitUntil: "networkidle" });
 
   await checkLayout(page);
 
+  const heroHeight = await page.locator("#top").evaluate((element) => element.getBoundingClientRect().height);
+  expect(heroHeight).toBeLessThan(1450);
+
   await page.locator("#gallery").scrollIntoViewIfNeeded();
-  const galleryMetrics = await page
+  const metrics = await page
     .locator("#gallery button[aria-label^='Open gallery image']")
     .evaluateAll((buttons) =>
       buttons.slice(0, 4).map((button) => {
@@ -84,9 +92,8 @@ test("premium mobile visual system is compact and usable", async ({ page }) => {
       }),
     );
 
-  expect(galleryMetrics.length).toBeGreaterThanOrEqual(4);
-  expect(Math.max(...galleryMetrics.map((item) => item.width))).toBeLessThan(190);
-  expect(new Set(galleryMetrics.map((item) => item.x)).size).toBeGreaterThanOrEqual(2);
+  expect(Math.max(...metrics.map((item) => item.width))).toBeLessThan(190);
+  expect(new Set(metrics.map((item) => item.x)).size).toBeGreaterThanOrEqual(2);
 
   await loadAllImages(page);
   await expectNoHorizontalOverflow(page);

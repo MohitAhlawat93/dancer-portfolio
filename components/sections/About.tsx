@@ -3,41 +3,44 @@ import { siteContent } from "@/content/site-content";
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-[#100e10] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
+    <section id="about" className="relative overflow-hidden bg-[#0e0b0e] px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-20 top-24 h-96 w-96 rounded-full bg-[#e7cbbb]/[0.045] blur-[120px]"
+        className="pointer-events-none absolute -right-28 top-20 h-[430px] w-[430px] rounded-full bg-[#e8c9b6]/[.05] blur-[130px]"
       />
 
       <div className="relative z-10 mx-auto max-w-[1500px]">
-        <div className="grid gap-10 lg:grid-cols-[.86fr_1fr] lg:items-center lg:gap-24">
-          <div className="relative mx-auto w-full max-w-[610px] pb-8 pl-2 pr-5 pt-2 sm:pl-8">
+        <div className="grid gap-10 lg:grid-cols-[.9fr_1fr] lg:items-center lg:gap-24">
+          <div className="relative mx-auto w-full max-w-[620px] pb-10 pl-1 pr-5 pt-2 sm:pl-9">
             <div
               aria-hidden="true"
-              className="absolute bottom-0 right-0 h-[72%] w-[64%] rotate-[4deg] rounded-[2rem] border border-white/[0.07] bg-gradient-to-br from-[#291821] to-[#0f0d0f]"
+              className="absolute bottom-0 right-0 h-[72%] w-[62%] rotate-[5deg] rounded-[2rem] border border-white/[.07] bg-gradient-to-br from-[#2b1722] to-[#0c090c] shadow-2xl"
             />
-            <div className="luxury-frame group relative z-10 aspect-[9/14] overflow-hidden rounded-[2rem] border border-white/15 bg-[#171317]">
+            <div
+              aria-hidden="true"
+              className="absolute left-0 top-[14%] h-[64%] w-[32%] -rotate-[6deg] rounded-[1.8rem] border border-white/[.05] bg-white/[.025] backdrop-blur-xl"
+            />
+
+            <div className="luxury-frame prism-edge group relative z-10 aspect-[9/14] overflow-hidden rounded-[2rem] border border-white/15 bg-[#151116]">
               <Image
                 src={siteContent.images.about.src}
                 alt={siteContent.images.about.alt}
                 fill
-                quality={94}
+                quality={95}
                 sizes="(max-width: 1024px) 100vw, 46vw"
-                className="object-cover object-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.045]"
+                className="object-cover object-center transition-transform duration-[1500ms] ease-out group-hover:scale-[1.05]"
               />
-              <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-transparent to-black/15" />
-              <div className="absolute bottom-5 left-5 z-20 rounded-full border border-white/15 bg-black/45 px-3.5 py-2 text-[9px] uppercase tracking-[0.18em] text-white/85 backdrop-blur-xl">
+              <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-transparent to-black/15" />
+              <div className="absolute bottom-4 left-4 z-20 glass-panel rounded-full px-4 py-2 text-[8px] uppercase tracking-[.18em] text-white/85">
                 Bangalore · Portrait 02
               </div>
             </div>
           </div>
 
           <div>
-            <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-zinc-600">
-              About
-            </p>
-            <h2 className="mt-6 max-w-3xl font-display text-5xl font-light leading-[.95] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-              A closer <span className="italic text-[#cdb6aa]">portrait.</span>
+            <p className="text-[9px] font-medium uppercase tracking-[.28em] text-zinc-600">About</p>
+            <h2 className="mt-5 max-w-3xl font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
+              A closer <span className="italic text-[#d5bcaf]">portrait.</span>
             </h2>
 
             <p className="mt-8 max-w-2xl font-display text-3xl font-light italic leading-[1.15] text-zinc-200 sm:text-4xl">
@@ -45,14 +48,14 @@ export function About() {
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              <div className="glass-3d rounded-2xl border border-white/10 p-5">
-                <p className="text-[9px] uppercase tracking-[0.2em] text-zinc-600">Location</p>
-                <p className="mt-2 font-display text-2xl font-light">Bangalore</p>
-              </div>
-              <div className="glass-3d rounded-2xl border border-white/10 p-5">
-                <p className="text-[9px] uppercase tracking-[0.2em] text-zinc-600">Verification</p>
-                <p className="mt-2 font-display text-2xl font-light">WhatsApp / Telegram</p>
-              </div>
+              <article className="depth-card glass-panel relative rounded-3xl p-5">
+                <p className="text-[8px] uppercase tracking-[.2em] text-zinc-600">Location</p>
+                <p className="mt-3 font-display text-2xl font-light">Bangalore</p>
+              </article>
+              <article className="depth-card glass-panel relative rounded-3xl p-5">
+                <p className="text-[8px] uppercase tracking-[.2em] text-zinc-600">Verification</p>
+                <p className="mt-3 font-display text-2xl font-light">WhatsApp / Telegram</p>
+              </article>
             </div>
           </div>
         </div>
