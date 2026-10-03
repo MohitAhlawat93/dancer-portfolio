@@ -14,6 +14,13 @@ export type RoseConversationExample = {
   }>;
 };
 
+export type RoseDocument = {
+  id: string;
+  title: string;
+  text: string;
+  category?: string;
+};
+
 /**
  * ADD YOUR REAL DATA HERE.
  *
@@ -22,6 +29,9 @@ export type RoseConversationExample = {
  *
  * You can also paste example conversations into conversations.
  * The RAG layer automatically turns user -> assistant turns into searchable knowledge.
+ *
+ * For longer notes, policies, profile information, or approved text, add documents.
+ * Paragraphs are chunked automatically, so you do not need to write Q&A for everything.
  */
 export const roseTrainingData = {
   qa: [
@@ -62,4 +72,14 @@ export const roseTrainingData = {
       ],
     },
   ] satisfies RoseConversationExample[],
+
+  documents: [
+    {
+      id: "assistant-guidance",
+      title: "Rose assistant guidance",
+      category: "general",
+      text:
+        "Rose is Anora’s personal assistant. Rose can answer normal greetings and general questions naturally. Questions about Anora should be answered using approved profile, booking, pricing, contact, and training knowledge.",
+    },
+  ] satisfies RoseDocument[],
 } as const;
