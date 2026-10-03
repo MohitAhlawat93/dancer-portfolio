@@ -1,34 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-
-type PreviewReply = {
-  label: string;
-  reply: string;
-};
-
-const previewReplies: PreviewReply[] = [
-  {
-    label: "Booking options",
-    reply:
-      "I can help you understand Anora’s dance booking options. In the next stage, I’ll answer from the approved website knowledge base.",
-  },
-  {
-    label: "Location",
-    reply:
-      "Anora is currently based in Bangalore. Live availability and exact arrangements should always be confirmed directly.",
-  },
-  {
-    label: "Prices",
-    reply:
-      "I’ll be able to explain the published dance-session pricing once my knowledge connection is switched on in Stage 2.",
-  },
-  {
-    label: "Contact",
-    reply:
-      "For direct communication, please use the WhatsApp or Telegram options on this website.",
-  },
-];
+import { roseKnowledge } from "@/content/rose-knowledge";
 
 function RoseMark() {
   return (
@@ -101,7 +74,7 @@ export function RoseAssistant() {
     if (!message.trim()) return;
 
     setPreviewReply(
-      "Rose’s AI knowledge connection is coming in the next stage. For now, try one of the suggested questions below.",
+      "I can help with the information available in Anora’s profile. Try one of the suggested questions below.",
     );
     setMessage("");
   };
@@ -133,7 +106,7 @@ export function RoseAssistant() {
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,.7)]" />
                   </div>
                   <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#a79ea5]">
-                    Your profile assistant
+                    {roseKnowledge.assistant.ownerName}’s personal assistant
                   </p>
                 </div>
               </div>
@@ -141,7 +114,7 @@ export function RoseAssistant() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close Rose assistant"
+                aria-label="Close {roseKnowledge.assistant.name} assistant"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-lg text-white/60 transition hover:border-white/20 hover:bg-white/[.06] hover:text-white"
               >
                 ×
@@ -152,11 +125,10 @@ export function RoseAssistant() {
           <div className="no-scrollbar flex-1 overflow-y-auto px-4 py-5 sm:px-5">
             <div className="max-w-[90%] rounded-[1.25rem] rounded-tl-md border border-white/[.08] bg-white/[.055] px-4 py-3.5">
               <p className="mb-1 font-[family-name:var(--font-display)] text-[1.12rem] text-[#f8f4f1]">
-                Hello, I’m Rose.
+                {roseKnowledge.assistant.greeting}
               </p>
               <p className="text-[12px] leading-5 text-[#b9afb6]">
-                I’m being prepared to answer questions about Anora’s profile,
-                dance bookings, pricing, location, and contact options.
+                {roseKnowledge.assistant.intro}
               </p>
             </div>
 
@@ -172,11 +144,11 @@ export function RoseAssistant() {
               Try a quick question
             </p>
             <div className="flex flex-wrap gap-2">
-              {previewReplies.map((item) => (
+              {roseKnowledge.quickQuestions.map((item) => (
                 <button
                   key={item.label}
                   type="button"
-                  onClick={() => showPreviewReply(item.reply)}
+                  onClick={() => showPreviewReply(item.answer)}
                   className="rounded-full border border-white/10 bg-white/[.035] px-3.5 py-2 text-[10px] font-medium text-[#d8cfd4] transition hover:border-[#e8c9b6]/25 hover:bg-[#e8c9b6]/[.07] hover:text-white"
                 >
                   {item.label}
@@ -187,7 +159,7 @@ export function RoseAssistant() {
             <div className="mt-5 flex items-center gap-2 border-t border-white/[.07] pt-4">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e8c9b6]/60" />
               <p className="text-[9px] leading-4 text-white/35">
-                Stage 1 preview · AI answers are not connected yet.
+                Personal assistant · Knowledge base ready
               </p>
             </div>
           </div>
@@ -201,8 +173,8 @@ export function RoseAssistant() {
                 ref={inputRef}
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                placeholder="Ask Rose..."
-                aria-label="Ask Rose"
+                placeholder={roseKnowledge.assistant.inputPlaceholder}
+                aria-label={`Ask ${roseKnowledge.assistant.name}`}
                 className="min-w-0 flex-1 bg-transparent text-[12px] text-white outline-none placeholder:text-white/30"
               />
               <button
@@ -242,10 +214,10 @@ export function RoseAssistant() {
         </span>
         <span className="pr-1 text-left">
           <span className="block font-[family-name:var(--font-display)] text-base leading-4">
-            Ask Rose
+            Ask {roseKnowledge.assistant.name}
           </span>
           <span className="mt-1 hidden text-[8px] font-semibold uppercase tracking-[0.16em] text-white/35 sm:block">
-            Profile assistant
+            {roseKnowledge.assistant.ownerName}’s assistant
           </span>
         </span>
       </button>
