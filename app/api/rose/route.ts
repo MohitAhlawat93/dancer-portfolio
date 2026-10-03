@@ -1,10 +1,36 @@
 import { NextResponse } from "next/server";
-import { retrieveRoseAnswer } from "@/lib/rose-retrieval";
+import { retrieveRoseContext, type RoseHistoryMessage } from "@/lib/rose-retrieval";
 import { generateRoseAnswer } from "@/lib/rose-groq";
 
 type RoseRequestBody = {
   message?: unknown;
+  history?: unknown;
 };
+
+function parseHistory(value: unknown): RoseHistoryMessage[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .filter(
+      (item): item is RoseHistoryMessage =>
+        Boolean(
+          item &&
+            typeof item === "object" &&
+            ("role" in item) &&
+            ("content" in item) &&
+            (item as { role?: unknown }).role !== undefined &&
+            ((item as { role?: unknown }).role === "user" ||
+              (item as { role?: unknown }).role === "assistant") &&
+            typeof (item as { content?: unknown }).content === "string",
+        ),
+    )
+    .map((item) => ({
+      role: item.role,
+      content: item.content.trim().slice(0, 500),
+    }))
+    .filter((item) => item.content.length > 0)
+    .slice(-8);
+}
 
 export async function POST(request: Request) {
   let body: RoseRequestBody;
@@ -41,14 +67,14 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = retrieveRoseAnswer(message);
-  const generated = await generateRoseAnswer(message, result);
+  const history = parseHistory(body.history);
+  const retrieval = retrieveRoseContext(message, history);
+  const generated = await generateRoseAnswer(message, retrieval, history);
 
   return NextResponse.json({
     answer: generated.answer,
-    source: result.source,
-    confidence: result.confidence,
-    matchedId: result.matchedId ?? null,
+    confidence: retrieval.confidence,
+    retrievedIds: retrieval.chunks.map((chunk) => chunk.id),
     mode: generated.mode,
     model: generated.model,
   });
