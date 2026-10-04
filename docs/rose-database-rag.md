@@ -41,9 +41,9 @@ Never expose `SUPABASE_SERVICE_ROLE_KEY` or `ROSE_ADMIN_SECRET` with a `NEXT_PUB
 
 Optional during migration:
 
-    ROSE_ALLOW_FILE_FALLBACK=true
+    ROSE_ALLOW_FILE_FALLBACK=false
 
-Set this to `false` once all approved knowledge lives in the database.
+Keep this `false` in production once database knowledge is available so one tenant can never fall back to another profile's static file knowledge.
 
 ## 4. Upload knowledge
 
