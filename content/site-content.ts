@@ -34,7 +34,7 @@ const seo = {
     "Meet Anora, a Bangalore-based dancer available for private studio, on-location and full-day dance bookings. View her profile, gallery, rates and contact options.",
   serviceLabel: "Dance bookings",
   serviceDescription:
-    "Choose from private studio, on-location, and full-day dance bookings in Bangalore, with clear rates and direct enquiry.",
+    `Choose from private studio, on-location, and full-day dance bookings in ${profile.city}, with clear rates and direct enquiry.`,
   searchTargets: [
     "Anora dancer Bangalore",
     "Anora Bangalore dancer",
