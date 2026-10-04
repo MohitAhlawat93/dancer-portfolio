@@ -43,6 +43,9 @@ create index if not exists rose_sources_tenant_idx
 create index if not exists rose_chunks_tenant_idx
   on public.rose_chunks (tenant_id);
 
+create index if not exists rose_chunks_source_id_idx
+  on public.rose_chunks (source_id);
+
 create index if not exists rose_chunks_search_idx
   on public.rose_chunks using gin (search_vector);
 
