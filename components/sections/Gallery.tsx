@@ -65,25 +65,25 @@ export function Gallery() {
     <>
       <section
         id="gallery"
-        className="section-bronze relative overflow-hidden py-20 text-white sm:py-24 lg:py-32"
+        className="section-teal relative overflow-hidden py-20 text-white sm:py-24 lg:py-32"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-8%] top-[8%] h-[460px] w-[460px] rounded-full bg-[#e8c9b6]/[.06] blur-[125px]"
+          className="pointer-events-none absolute right-[-8%] top-[8%] h-[460px] w-[460px] rounded-full bg-teal-soft/[.08] blur-[125px]"
         />
 
         <div className="relative z-10 mx-auto max-w-[1600px]">
           <div className="px-5 sm:px-6 lg:px-16">
-            <p className="text-[9px] uppercase tracking-[.28em] text-zinc-600">
+            <p className="text-[9px] uppercase tracking-[.28em] text-muted">
               Gallery
             </p>
 
             <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <h2 className="font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
-                  One frame at a <span className="italic text-[#d8bcae]">time.</span>
+                  One frame at a <span className="italic text-accent-soft">time.</span>
                 </h2>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-500">
+                <p className="mt-4 max-w-xl text-sm leading-7 text-muted">
                   Swipe or use the arrows to move through the collection from left to right.
                 </p>
               </div>
@@ -120,7 +120,7 @@ export function Gallery() {
                 type="button"
                 data-gallery-card
                 onClick={() => setActiveIndex(index)}
-                className="depth-card group relative min-w-[82vw] snap-center overflow-hidden rounded-[1.8rem] border border-white/[.09] bg-[#151115] text-left shadow-[0_28px_70px_rgba(0,0,0,.45)] sm:min-w-[54vw] lg:min-w-[31vw]"
+                className="depth-card group relative min-w-[82vw] snap-center overflow-hidden rounded-[1.8rem] border border-white/[.09] bg-surface text-left shadow-[0_28px_70px_rgba(0,0,0,.45)] sm:min-w-[54vw] lg:min-w-[31vw]"
                 aria-label={"Open gallery image " + (index + 1)}
               >
                 <div className="relative aspect-[4/5] w-full">
@@ -158,7 +158,7 @@ export function Gallery() {
               {galleryImages.map((image, index) => (
                 <span
                   key={image.src}
-                  className={index === 0 ? "h-px w-12 bg-[#e8c9b6]" : "h-px w-6 bg-white/15"}
+                  className={index === 0 ? "h-px w-12 bg-accent" : "h-px w-6 bg-white/15"}
                 />
               ))}
             </div>
