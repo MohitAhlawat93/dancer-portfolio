@@ -1,5 +1,9 @@
 import { roseKnowledge } from "@/content/rose-knowledge";
 import { roseTrainingData } from "@/content/rose-training-data";
+import {
+  isRoseDatabaseConfigured,
+  searchRoseDatabase,
+} from "@/lib/rose-db";
 
 export type RoseHistoryMessage = {
   role: "user" | "assistant";
@@ -18,6 +22,7 @@ export type RoseRagResult = {
   chunks: RoseChunk[];
   confidence: number;
   fallbackAnswer: string;
+  source: "database" | "file" | "general";
 };
 
 const STOP_WORDS = new Set([
@@ -88,10 +93,7 @@ function buildKnowledgeChunks(): RoseChunk[] {
     id: "booking-policy",
     category: "booking",
     title: "Booking policy",
-    text: [
-      "Advance booking is recommended.",
-      ...roseKnowledge.booking.notes,
-    ].join(" "),
+    text: ["Advance booking is recommended.", ...roseKnowledge.booking.notes].join(" "),
     searchText: "",
   });
 
@@ -183,15 +185,16 @@ function buildKnowledgeChunks(): RoseChunk[] {
   }));
 }
 
-const KNOWLEDGE_CHUNKS = buildKnowledgeChunks();
+const FILE_KNOWLEDGE_CHUNKS = buildKnowledgeChunks();
 
 function buildQuery(question: string, history: RoseHistoryMessage[]) {
-  const recentHistory = history
-    .slice(-4)
+  const recentUserContext = history
+    .filter((item) => item.role === "user")
+    .slice(-2)
     .map((item) => item.content)
     .join(" ");
 
-  return `${recentHistory} ${question}`.trim();
+  return `${recentUserContext} ${question}`.trim();
 }
 
 function scoreChunk(query: string, chunk: RoseChunk) {
@@ -210,8 +213,9 @@ function scoreChunk(query: string, chunk: RoseChunk) {
     if (normalizedSearch.includes(token)) score += 0.5;
   }
 
-  const queryPhrase = normalize(query);
-  if (queryPhrase.length >= 8 && normalizedSearch.includes(queryPhrase)) score += 8;
+  if (normalizedQuery.length >= 8 && normalizedSearch.includes(normalizedQuery)) {
+    score += 8;
+  }
 
   return score;
 }
@@ -223,33 +227,20 @@ function isSmallTalk(question: string) {
   ].some((phrase) => q === phrase || q.startsWith(`${phrase} `));
 }
 
-function smallTalkFallback(question: string) {
+function smallTalkFallback(question: string, assistantName: string, ownerName: string) {
   const q = normalize(question);
 
   if (q.includes("how are you")) return "I’m doing well, thank you. How are you?";
   if (q.includes("thank")) return "You’re very welcome.";
   if (q.includes("who are you") || q.includes("your name")) {
-    return `I’m ${roseKnowledge.assistant.name}, ${roseKnowledge.assistant.ownerName}’s personal assistant.`;
+    return `I’m ${assistantName}, ${ownerName}’s personal assistant.`;
   }
 
-  return `Hi! I’m ${roseKnowledge.assistant.name}. How can I help you today?`;
+  return `Hi! I’m ${assistantName}. How can I help you today?`;
 }
 
-export function retrieveRoseContext(
-  question: string,
-  history: RoseHistoryMessage[] = [],
-): RoseRagResult {
-  if (isSmallTalk(question)) {
-    return {
-      chunks: [],
-      confidence: 1,
-      fallbackAnswer: smallTalkFallback(question),
-    };
-  }
-
-  const query = buildQuery(question, history);
-
-  const ranked = KNOWLEDGE_CHUNKS
+function retrieveFileContext(query: string): RoseRagResult {
+  const ranked = FILE_KNOWLEDGE_CHUNKS
     .map((chunk) => ({ chunk, score: scoreChunk(query, chunk) }))
     .sort((a, b) => b.score - a.score);
 
@@ -261,5 +252,76 @@ export function retrieveRoseContext(
     confidence: Math.min(0.99, bestScore / 14),
     fallbackAnswer:
       top[0]?.chunk.text ?? roseKnowledge.boundaries.unknownAnswer,
+    source: "file",
   };
+}
+
+export async function retrieveRoseContext(
+  question: string,
+  history: RoseHistoryMessage[] = [],
+  options?: {
+    tenantId?: string;
+    assistantName?: string;
+    ownerName?: string;
+  },
+): Promise<RoseRagResult> {
+  const tenantId = options?.tenantId ?? "anora";
+  const assistantName = options?.assistantName ?? roseKnowledge.assistant.name;
+  const ownerName = options?.ownerName ?? roseKnowledge.assistant.ownerName;
+
+  if (isSmallTalk(question)) {
+    return {
+      chunks: [],
+      confidence: 1,
+      fallbackAnswer: smallTalkFallback(question, assistantName, ownerName),
+      source: "general",
+    };
+  }
+
+  const query = buildQuery(question, history);
+
+  if (isRoseDatabaseConfigured()) {
+    try {
+      const rows = await searchRoseDatabase(tenantId, query, 6);
+
+      if (rows.length) {
+        const chunks: RoseChunk[] = rows.map((row, index) => ({
+          id: row.id,
+          category:
+            typeof row.metadata?.kind === "string"
+              ? row.metadata.kind
+              : "database",
+          title:
+            typeof row.metadata?.fileName === "string"
+              ? row.metadata.fileName
+              : `Knowledge ${index + 1}`,
+          text: row.content,
+          searchText: row.content,
+        }));
+
+        return {
+          chunks,
+          confidence: Math.min(0.99, Math.max(0.25, rows[0]?.score ?? 0.25)),
+          fallbackAnswer: chunks[0]?.text ?? roseKnowledge.boundaries.unknownAnswer,
+          source: "database",
+        };
+      }
+
+      const allowFileFallback =
+        process.env.ROSE_ALLOW_FILE_FALLBACK?.trim().toLowerCase() !== "false";
+
+      if (!allowFileFallback) {
+        return {
+          chunks: [],
+          confidence: 0,
+          fallbackAnswer: roseKnowledge.boundaries.unknownAnswer,
+          source: "database",
+        };
+      }
+    } catch {
+      // Keep Rose available by falling back to the existing local knowledge.
+    }
+  }
+
+  return retrieveFileContext(query);
 }
