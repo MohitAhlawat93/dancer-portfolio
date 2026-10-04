@@ -18,6 +18,9 @@ const sansFont = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const googleSiteVerification =
+  process.env.GOOGLE_SITE_VERIFICATION?.trim() ?? "";
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: siteContent.seo.title,
@@ -38,6 +41,13 @@ export const metadata: Metadata = {
     images: [siteContent.images.hero.src],
   },
   robots: { index: true, follow: true },
+  ...(googleSiteVerification
+    ? {
+        verification: {
+          google: googleSiteVerification,
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
