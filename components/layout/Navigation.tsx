@@ -9,7 +9,7 @@ export function Navigation() {
   return (
     <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1rem)] max-w-3xl -translate-x-1/2 sm:top-5 sm:w-[92%]">
       <nav
-        className="flex items-center justify-between rounded-full border border-white/10 bg-[#0c0a0c]/72 px-3 py-2.5 shadow-[0_20px_70px_rgba(0,0,0,.55)] backdrop-blur-2xl sm:px-5"
+        className="flex items-center justify-between rounded-full border border-accent/20 bg-[#071016]/88 px-3 py-2.5 shadow-[0_20px_70px_rgba(0,0,0,.55)] backdrop-blur-2xl sm:px-5"
         aria-label="Primary navigation"
       >
         <a
@@ -25,7 +25,7 @@ export function Navigation() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-full px-3 py-2 text-[10px] font-medium uppercase tracking-[0.16em] text-zinc-400 transition duration-300 hover:bg-white/[0.05] hover:text-white"
+              className="rounded-full px-3 py-2 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-strong transition duration-300 hover:bg-accent/10 hover:text-white"
             >
               {item.label}
             </a>

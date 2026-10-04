@@ -5,25 +5,25 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="editorial-grid section-obsidian relative isolate overflow-hidden px-4 pb-14 pt-24 text-white sm:px-6 sm:pt-28 lg:min-h-screen lg:px-16 lg:pb-20 lg:pt-32"
+      className="editorial-grid section-ink relative isolate overflow-hidden px-4 pb-14 pt-24 text-white sm:px-6 sm:pt-28 lg:min-h-screen lg:px-16 lg:pb-20 lg:pt-32"
       aria-labelledby="hero-title"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -top-32 h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(232,201,182,.19),rgba(112,48,75,.11)_36%,transparent_70%)] blur-[100px]"
+        className="pointer-events-none absolute -right-40 -top-32 h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(199,167,106,.18),rgba(33,74,73,.18)_36%,transparent_70%)] blur-[100px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-44 bottom-[-180px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(63,20,42,.26),transparent_68%)] blur-[110px]"
+        className="pointer-events-none absolute -left-44 bottom-[-180px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(33,74,73,.28),transparent_68%)] blur-[110px]"
       />
 
       <div className="relative z-10 mx-auto grid max-w-[1580px] items-center gap-9 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
         <div className="order-2 fade-up lg:order-1">
           <div className="flex flex-wrap gap-2">
-            <span className="glass-panel rounded-full px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-zinc-300">
+            <span className="glass-panel rounded-full px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-muted-strong">
               {siteContent.profile.profession} · {siteContent.profile.location}
             </span>
-            <span className="rounded-full border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.05] px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-[#dec5b7] backdrop-blur-xl">
+            <span className="rounded-full border border-accent/25 bg-accent/10 px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-accent-soft backdrop-blur-xl">
               Available now
             </span>
           </div>
@@ -35,15 +35,15 @@ export function Hero() {
             {siteContent.profile.name}
           </h1>
 
-          <p className="mt-7 max-w-xl font-display text-3xl font-light italic leading-[1.02] text-[#f0e7e1] sm:text-4xl lg:text-5xl">
+          <p className="mt-7 max-w-xl font-display text-3xl font-light italic leading-[1.02] text-accent-soft sm:text-4xl lg:text-5xl">
             {siteContent.profile.tagline}
           </p>
 
-          <p className="mt-5 max-w-xl text-sm font-medium leading-7 text-zinc-300 sm:text-[15px]">
+          <p className="mt-5 max-w-xl text-sm font-medium leading-7 text-muted-strong sm:text-[15px]">
             {siteContent.profile.serviceSummary}
           </p>
 
-          <p className="mt-3 max-w-xl text-sm leading-7 text-zinc-400 sm:text-[15px]">
+          <p className="mt-3 max-w-xl text-sm leading-7 text-muted sm:text-[15px]">
             {siteContent.profile.intro}
           </p>
 
@@ -71,7 +71,7 @@ export function Hero() {
             ].map(([value, label]) => (
               <div key={label} className="border-r border-white/[.07] px-4 py-4 last:border-r-0">
                 <p className="font-display text-2xl font-light">{value}</p>
-                <p className="mt-1 text-[8px] uppercase tracking-[.18em] text-zinc-600">{label}</p>
+                <p className="mt-1 text-[8px] uppercase tracking-[.18em] text-muted">{label}</p>
               </div>
             ))}
           </div>
@@ -81,14 +81,14 @@ export function Hero() {
           <div className="relative mx-auto max-w-[800px] px-1 pb-8 pt-2 sm:px-9 sm:pb-14">
             <div
               aria-hidden="true"
-              className="absolute bottom-[2%] left-[2%] h-[72%] w-[67%] rotate-[-4deg] rounded-[2.2rem] border border-white/[.07] bg-gradient-to-br from-[#341a29] via-[#190f16] to-[#0b090b] shadow-2xl"
+              className="absolute bottom-[2%] left-[2%] h-[72%] w-[67%] rotate-[-4deg] rounded-[2.2rem] border border-white/[.07] bg-gradient-to-br from-[#173437] via-[#0d2027] to-[#071016] shadow-2xl"
             />
             <div
               aria-hidden="true"
-              className="absolute right-[1%] top-[9%] h-[66%] w-[43%] rotate-[5deg] rounded-[2.2rem] border border-[#e8c9b6]/10 bg-gradient-to-b from-[#2f2526] to-[#0c090c] shadow-2xl"
+              className="absolute right-[1%] top-[9%] h-[66%] w-[43%] rotate-[5deg] rounded-[2.2rem] border border-accent/15 bg-gradient-to-b from-[#26343a] to-[#081218] shadow-2xl"
             />
 
-            <div className="luxury-frame prism-edge group relative z-10 aspect-[4/5] overflow-hidden rounded-[2.2rem] border border-white/15 bg-[#151116]">
+            <div className="luxury-frame prism-edge group relative z-10 aspect-[4/5] overflow-hidden rounded-[2.2rem] border border-white/15 bg-surface">
               <Image
                 src={siteContent.images.hero.src}
                 alt={siteContent.images.hero.alt}
@@ -103,12 +103,12 @@ export function Hero() {
               <div className="absolute bottom-4 left-4 right-4 z-20 glass-panel rounded-2xl px-4 py-3 sm:bottom-5 sm:left-5 sm:right-auto sm:min-w-[300px]">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[8px] uppercase tracking-[.18em] text-zinc-500">Status</p>
+                    <p className="text-[8px] uppercase tracking-[.18em] text-muted">Status</p>
                     <p className="mt-1 font-display text-xl font-light text-white">
                       Active in {siteContent.profile.city}
                     </p>
                   </div>
-                  <span className="availability-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-400" />
+                  <span className="availability-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-[#6fd1a6]" />
                 </div>
               </div>
 
