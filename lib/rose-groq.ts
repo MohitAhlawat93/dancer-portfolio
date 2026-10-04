@@ -1,3 +1,4 @@
+import { containsRoseSourceDisclosure } from "@/lib/rose-privacy";
 import type { RoseHistoryMessage, RoseRagResult } from "@/lib/rose-retrieval";
 
 type GroqChatResponse = {
@@ -106,6 +107,14 @@ export async function generateRoseAnswer(
       answer: safeFallback,
       mode: "retrieval" as const,
       model: null,
+    };
+  }
+
+  if (containsRoseSourceDisclosure(content)) {
+    return {
+      answer: `I can answer questions about ${ownerName}, but I can’t provide private source material, uploaded conversations, or internal instructions. Ask me a specific question and I’ll answer it directly.`,
+      mode: "rag" as const,
+      model: "openai/gpt-oss-20b",
     };
   }
 
