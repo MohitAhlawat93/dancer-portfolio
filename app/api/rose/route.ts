@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { getRoseTenant } from "@/lib/rose-db";
 import { retrieveRoseContext, type RoseHistoryMessage } from "@/lib/rose-retrieval";
 import { generateRoseAnswer } from "@/lib/rose-groq";
+import {
+  isRoseInternalDataRequest,
+  roseInternalDataResponse,
+} from "@/lib/rose-privacy";
 
 type RoseRequestBody = {
   message?: unknown;
@@ -81,6 +85,12 @@ export async function POST(request: Request) {
     process.env.ROSE_ASSISTANT_NAME?.trim() ||
     "Rose";
 
+  if (isRoseInternalDataRequest(message)) {
+    return NextResponse.json({
+      answer: roseInternalDataResponse(ownerName),
+    });
+  }
+
   const retrieval = await retrieveRoseContext(message, history, {
     tenantId,
     ownerName,
@@ -94,10 +104,5 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     answer: generated.answer,
-    confidence: retrieval.confidence,
-    retrievedIds: retrieval.chunks.map((chunk) => chunk.id),
-    retrievalSource: retrieval.source,
-    mode: generated.mode,
-    model: generated.model,
   });
 }
