@@ -44,47 +44,31 @@ export function Gallery() {
   const move = (direction: 1 | -1) => {
     const rail = railRef.current;
     if (!rail) return;
-
     const card = rail.querySelector<HTMLElement>("[data-gallery-card]");
     const distance = card ? card.offsetWidth + 20 : rail.clientWidth * 0.82;
-
-    rail.scrollBy({
-      left: direction * distance,
-      behavior: "smooth",
-    });
+    rail.scrollBy({ left: direction * distance, behavior: "smooth" });
   };
 
   const closeFromBackdrop = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) setActiveIndex(null);
   };
 
-  const activeImage =
-    activeIndex === null ? null : galleryImages[activeIndex];
+  const activeImage = activeIndex === null ? null : galleryImages[activeIndex];
 
   return (
     <>
-      <section
-        id="gallery"
-        className="section-teal relative overflow-hidden py-20 text-white sm:py-24 lg:py-32"
-      >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[-8%] top-[8%] h-[460px] w-[460px] rounded-full bg-teal-soft/[.08] blur-[125px]"
-        />
-
+      <section id="gallery" className="section-paper relative overflow-hidden py-20 sm:py-24 lg:py-32">
         <div className="relative z-10 mx-auto max-w-[1600px]">
           <div className="px-5 sm:px-6 lg:px-16">
-            <p className="text-[9px] uppercase tracking-[.28em] text-muted">
-              Gallery
-            </p>
+            <p className="text-[9px] font-semibold uppercase tracking-[.28em] text-accent">Gallery</p>
 
             <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h2 className="font-display text-5xl font-light leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">
-                  One frame at a <span className="italic text-accent-soft">time.</span>
+                <h2 className="font-display text-5xl font-light leading-[.94] tracking-[-.045em] text-foreground sm:text-6xl lg:text-7xl">
+                  A quiet visual <span className="italic text-accent">story.</span>
                 </h2>
                 <p className="mt-4 max-w-xl text-sm leading-7 text-muted">
-                  Swipe or use the arrows to move through the collection from left to right.
+                  Swipe or use the arrows to move through the collection.
                 </p>
               </div>
 
@@ -92,7 +76,7 @@ export function Gallery() {
                 <button
                   type="button"
                   onClick={() => move(-1)}
-                  className="glass-panel inline-flex h-11 w-11 items-center justify-center rounded-full text-lg text-white transition hover:border-white/20"
+                  className="secondary-button inline-flex h-11 w-11 items-center justify-center rounded-full text-lg"
                   aria-label="Scroll gallery left"
                 >
                   ←
@@ -100,7 +84,7 @@ export function Gallery() {
                 <button
                   type="button"
                   onClick={() => move(1)}
-                  className="luxury-light-button inline-flex h-11 w-11 items-center justify-center rounded-full text-lg"
+                  className="primary-button inline-flex h-11 w-11 items-center justify-center rounded-full text-lg"
                   aria-label="Scroll gallery right"
                 >
                   →
@@ -120,7 +104,7 @@ export function Gallery() {
                 type="button"
                 data-gallery-card
                 onClick={() => setActiveIndex(index)}
-                className="depth-card group relative min-w-[82vw] snap-center overflow-hidden rounded-[1.8rem] border border-white/[.09] bg-surface text-left shadow-[0_28px_70px_rgba(0,0,0,.45)] sm:min-w-[54vw] lg:min-w-[31vw]"
+                className="depth-card group relative min-w-[82vw] snap-center overflow-hidden rounded-[2rem] border border-line bg-surface text-left shadow-[0_22px_55px_rgba(65,50,33,.11)] sm:min-w-[54vw] lg:min-w-[31vw]"
                 aria-label={"Open gallery image " + (index + 1)}
               >
                 <div className="relative aspect-[4/5] w-full">
@@ -130,21 +114,16 @@ export function Gallery() {
                     fill
                     quality={94}
                     sizes="(max-width: 640px) 82vw, (max-width: 1024px) 54vw, 31vw"
-                    className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.055]"
+                    className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-transparent to-black/[.06]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/48 via-transparent to-transparent" />
 
                   <div className="absolute inset-x-4 bottom-4 z-10 flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-[8px] uppercase tracking-[.2em] text-white/45">
-                        Frame
-                      </p>
-                      <p className="mt-1 font-display text-3xl font-light text-white">
-                        0{index + 1}
-                      </p>
+                      <p className="text-[8px] font-semibold uppercase tracking-[.2em] text-white/65">Frame</p>
+                      <p className="mt-1 font-display text-3xl font-light text-white">0{index + 1}</p>
                     </div>
-
-                    <span className="rounded-full border border-white/15 bg-black/45 px-3 py-2 text-[8px] uppercase tracking-[.17em] text-white/85 backdrop-blur-xl">
+                    <span className="rounded-full border border-white/25 bg-white/15 px-3 py-2 text-[8px] font-semibold uppercase tracking-[.17em] text-white backdrop-blur-xl">
                       + Expand
                     </span>
                   </div>
@@ -158,7 +137,7 @@ export function Gallery() {
               {galleryImages.map((image, index) => (
                 <span
                   key={image.src}
-                  className={index === 0 ? "h-px w-12 bg-accent" : "h-px w-6 bg-white/15"}
+                  className={index === 0 ? "h-px w-12 bg-accent" : "h-px w-6 bg-line"}
                 />
               ))}
             </div>
@@ -168,7 +147,7 @@ export function Gallery() {
 
       {activeImage ? (
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/95 p-3 backdrop-blur-xl animate-[fade-up_.25s_ease-out_both] sm:p-5"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#101315]/95 p-3 backdrop-blur-xl animate-[fade-up_.25s_ease-out_both] sm:p-5"
           role="dialog"
           aria-modal="true"
           aria-label="Gallery lightbox"
@@ -188,21 +167,16 @@ export function Gallery() {
             type="button"
             onClick={() =>
               setActiveIndex((current) =>
-                current === null
-                  ? null
-                  : (current - 1 + galleryImages.length) % galleryImages.length,
+                current === null ? null : (current - 1 + galleryImages.length) % galleryImages.length,
               )
             }
-            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2.5 text-white backdrop-blur-xl sm:left-5 sm:px-4 sm:py-3"
+            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/35 px-3 py-2.5 text-white backdrop-blur-xl sm:left-5 sm:px-4 sm:py-3"
             aria-label="Previous image"
           >
             ←
           </button>
 
-          <div
-            key={activeImage.src}
-            className="relative h-[84vh] w-[90vw] max-w-6xl animate-[fade-up_.3s_ease-out_both]"
-          >
+          <div key={activeImage.src} className="relative h-[84vh] w-[90vw] max-w-6xl animate-[fade-up_.3s_ease-out_both]">
             <Image
               src={activeImage.src}
               alt={activeImage.alt}
@@ -218,12 +192,10 @@ export function Gallery() {
             type="button"
             onClick={() =>
               setActiveIndex((current) =>
-                current === null
-                  ? null
-                  : (current + 1) % galleryImages.length,
+                current === null ? null : (current + 1) % galleryImages.length,
               )
             }
-            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2.5 text-white backdrop-blur-xl sm:right-5 sm:px-4 sm:py-3"
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/35 px-3 py-2.5 text-white backdrop-blur-xl sm:right-5 sm:px-4 sm:py-3"
             aria-label="Next image"
           >
             →
