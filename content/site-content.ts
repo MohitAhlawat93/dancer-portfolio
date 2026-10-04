@@ -76,6 +76,11 @@ export const siteContent = {
       { src: "/images/profile/gallery-06.jpeg", alt: "Anora gallery portrait 6" },
     ],
   },
+  bodyMeasurements: [
+    { label: "Bust", value: "34" },
+    { label: "Waist", value: "28" },
+    { label: "Hips", value: "38" },
+  ],
   facts: [
     { label: "Age", value: "27" },
     { label: "Height", value: "158 cm / 5′2″" },
