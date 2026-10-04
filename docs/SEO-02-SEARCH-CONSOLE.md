@@ -173,3 +173,24 @@ After a custom domain is connected:
 5. Submit the new custom-domain sitemap.
 6. Inspect and request indexing for the custom-domain homepage.
 7. Keep redirects/canonicals consistent so the old Vercel URL does not compete with the new domain.
+
+
+## SEO-02 completion evidence
+
+For the current Anora deployment, Search Console confirmed:
+
+- Ownership verified with the HTML tag method.
+- Sitemap status: **Success**.
+- Discovered pages: **1**.
+- Homepage status: **URL is on Google**.
+- Page indexing: **Page is indexed**.
+- Crawled as: **Googlebot smartphone**.
+- Crawl allowed: **Yes**.
+- Page fetch: **Successful**.
+- Indexing allowed: **Yes**.
+- User-declared canonical: `https://dancerportfolio.vercel.app/`.
+- Google-selected canonical: inspected URL.
+- Live URL test: successful.
+- Profile page structured data: **1 valid item detected**.
+
+Manual "Request indexing" later hit Google's daily quota, which is not an error with the website and is not required because the page is already indexed.
