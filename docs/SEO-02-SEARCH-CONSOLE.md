@@ -1,5 +1,12 @@
 # SEO-02 — Google Search Console & Indexing
 
+## Current setup status
+
+- `NEXT_PUBLIC_SITE_URL` is configured in Vercel for the production URL.
+- `GOOGLE_SITE_VERIFICATION` is configured in Vercel for Production.
+- The verification value is intentionally not stored in this repository.
+- After any verification-token change, redeploy production before clicking Verify in Search Console.
+
 This project supports reusable Google Search Console verification without hard-coding a person's verification token into the repository.
 
 ## Current site
