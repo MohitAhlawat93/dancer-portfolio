@@ -31,6 +31,23 @@ function normalizeLine(text: string) {
   return text.replace(/\u200e/g, "").replace(/\s+/g, " ").trim();
 }
 
+function redactSensitiveText(text: string) {
+  return text
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[private email]")
+    .replace(/(?:\+?\d[\d\s().-]{7,}\d)/g, "[private phone]")
+    .replace(/\b\d{12,19}\b/g, "[private number]")
+    .replace(/\b[a-z0-9._-]{2,}@[a-z]{2,}\b/gi, "[private payment id]");
+}
+
+function sanitizeChunks(chunks: ParsedRoseChunk[]) {
+  return chunks
+    .map((chunk) => ({
+      ...chunk,
+      content: redactSensitiveText(chunk.content).trim(),
+    }))
+    .filter((chunk) => chunk.content.length > 0);
+}
+
 function parseWhatsApp(text: string): ChatMessage[] {
   const messages: ChatMessage[] = [];
   const lines = text.split(/\r?\n/);
@@ -204,7 +221,7 @@ export function parseRoseKnowledgeInput(input: {
       if (messages.length) {
         return {
           sourceType: "telegram",
-          chunks: conversationWindows(messages),
+          chunks: sanitizeChunks(conversationWindows(messages)),
         };
       }
     } catch {
@@ -215,7 +232,7 @@ export function parseRoseKnowledgeInput(input: {
   if (fileName.endsWith(".csv") || mime.includes("csv")) {
     return {
       sourceType: "csv",
-      chunks: parseCsv(input.text),
+      chunks: sanitizeChunks(parseCsv(input.text)),
     };
   }
 
@@ -223,12 +240,12 @@ export function parseRoseKnowledgeInput(input: {
   if (whatsapp.length >= 2) {
     return {
       sourceType: "whatsapp",
-      chunks: conversationWindows(whatsapp),
+      chunks: sanitizeChunks(conversationWindows(whatsapp)),
     };
   }
 
   return {
     sourceType: fileName.endsWith(".md") ? "markdown" : "text",
-    chunks: genericTextChunks(input.text),
+    chunks: sanitizeChunks(genericTextChunks(input.text)),
   };
 }
