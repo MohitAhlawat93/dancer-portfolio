@@ -67,7 +67,7 @@ body::after {
   mix-blend-mode: multiply;
 }
 
-a { color: inherit; text-decoration: none; }
+a { text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
 [id] { scroll-margin-top: 7rem; }
