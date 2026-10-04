@@ -1,9 +1,9 @@
 -- Rose multi-tenant database RAG schema for Supabase/Postgres.
 -- Run this once in the Supabase SQL editor.
 
-create extension if not exists pgcrypto;
-create extension if not exists pg_trgm;
-create extension if not exists vector;
+create extension if not exists pgcrypto with schema extensions;
+create extension if not exists pg_trgm with schema extensions;
+create extension if not exists vector with schema extensions;
 
 create table if not exists public.rose_tenants (
   id text primary key,
@@ -14,7 +14,7 @@ create table if not exists public.rose_tenants (
 );
 
 create table if not exists public.rose_sources (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default extensions.gen_random_uuid(),
   tenant_id text not null references public.rose_tenants(id) on delete cascade,
   source_type text not null,
   file_name text not null,
@@ -23,14 +23,14 @@ create table if not exists public.rose_sources (
 );
 
 create table if not exists public.rose_chunks (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default extensions.gen_random_uuid(),
   tenant_id text not null references public.rose_tenants(id) on delete cascade,
   source_id uuid not null references public.rose_sources(id) on delete cascade,
   ordinal integer not null,
   content text not null,
   metadata jsonb not null default '{}'::jsonb,
   -- Reserved for a future semantic embedding provider.
-  embedding vector(384),
+  embedding extensions.vector(384),
   search_vector tsvector generated always as (
     to_tsvector('simple', coalesce(content, ''))
   ) stored,
@@ -47,7 +47,7 @@ create index if not exists rose_chunks_search_idx
   on public.rose_chunks using gin (search_vector);
 
 create index if not exists rose_chunks_trgm_idx
-  on public.rose_chunks using gin (content gin_trgm_ops);
+  on public.rose_chunks using gin (content extensions.gin_trgm_ops);
 
 alter table public.rose_tenants enable row level security;
 alter table public.rose_sources enable row level security;
@@ -70,7 +70,7 @@ returns table (
 language sql
 stable
 security definer
-set search_path = public
+set search_path = ''
 as $$
   with q as (
     select websearch_to_tsquery('simple', p_query) as tsq
@@ -81,18 +81,20 @@ as $$
     c.metadata,
     (
       ts_rank_cd(c.search_vector, q.tsq) * 2.0
-      + similarity(lower(c.content), lower(p_query))
+      + extensions.similarity(lower(c.content), lower(p_query))
     )::real as score
   from public.rose_chunks c
   cross join q
   where c.tenant_id = p_tenant_id
     and (
       c.search_vector @@ q.tsq
-      or similarity(lower(c.content), lower(p_query)) > 0.05
+      or extensions.similarity(lower(c.content), lower(p_query)) > 0.05
     )
   order by score desc
   limit greatest(1, least(p_limit, 12));
 $$;
 
 revoke all on function public.match_rose_chunks(text, text, integer) from public;
+revoke all on function public.match_rose_chunks(text, text, integer) from anon;
+revoke all on function public.match_rose_chunks(text, text, integer) from authenticated;
 grant execute on function public.match_rose_chunks(text, text, integer) to service_role;
