@@ -21,7 +21,7 @@ export function Hero() {
         <div className="order-2 fade-up lg:order-1">
           <div className="flex flex-wrap gap-2">
             <span className="glass-panel rounded-full px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-zinc-300">
-              Bangalore, IN
+              {siteContent.profile.profession} · {siteContent.profile.location}
             </span>
             <span className="rounded-full border border-[#e8c9b6]/15 bg-[#e8c9b6]/[.05] px-3 py-2 text-[9px] font-medium uppercase tracking-[.2em] text-[#dec5b7] backdrop-blur-xl">
               Available now
@@ -32,24 +32,28 @@ export function Hero() {
             id="hero-title"
             className="mt-6 font-display text-[clamp(5rem,14vw,10.8rem)] font-light leading-[.72] tracking-[-.065em]"
           >
-            Anora
+            {siteContent.profile.name}
           </h1>
 
           <p className="mt-7 max-w-xl font-display text-3xl font-light italic leading-[1.02] text-[#f0e7e1] sm:text-4xl lg:text-5xl">
             {siteContent.profile.tagline}
           </p>
 
-          <p className="mt-5 max-w-xl text-sm leading-7 text-zinc-400 sm:text-[15px]">
+          <p className="mt-5 max-w-xl text-sm font-medium leading-7 text-zinc-300 sm:text-[15px]">
+            {siteContent.profile.serviceSummary}
+          </p>
+
+          <p className="mt-3 max-w-xl text-sm leading-7 text-zinc-400 sm:text-[15px]">
             {siteContent.profile.intro}
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="#contact"
-              aria-label="Message Anora"
+              aria-label={`Message ${siteContent.profile.name}`}
               className="luxury-light-button shine-sweep inline-flex min-h-12 items-center justify-center rounded-full px-7 py-3.5 text-[10px] font-bold uppercase tracking-[.17em]"
             >
-              Message Anora
+              Message {siteContent.profile.name}
             </a>
             <a
               href="#gallery"
@@ -100,7 +104,9 @@ export function Hero() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-[8px] uppercase tracking-[.18em] text-zinc-500">Status</p>
-                    <p className="mt-1 font-display text-xl font-light text-white">Active in Bangalore</p>
+                    <p className="mt-1 font-display text-xl font-light text-white">
+                      Active in {siteContent.profile.city}
+                    </p>
                   </div>
                   <span className="availability-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-400" />
                 </div>

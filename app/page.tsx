@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
+import { ProfileStructuredData } from "@/components/seo/ProfileStructuredData";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { RoseAssistant } from "@/components/ui/RoseAssistant";
 import { Hero } from "@/components/sections/Hero";
@@ -13,6 +14,7 @@ import { Contact } from "@/components/sections/Contact";
 export default function Home() {
   return (
     <>
+      <ProfileStructuredData />
       <Navigation />
       <main>
         <Hero />

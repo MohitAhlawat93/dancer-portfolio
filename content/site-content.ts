@@ -4,8 +4,37 @@ const rawTelegramHandle = process.env.NEXT_PUBLIC_TELEGRAM_HANDLE?.trim() ?? "";
 const whatsappNumber = rawWhatsappNumber.replace(/\D/g, "");
 const telegramHandle = rawTelegramHandle.replace(/^@/, "");
 
+// CLONE CONTROL: update this profile block first when reusing the site for another person.
+const profile = {
+  name: "Anora",
+  profession: "Dancer",
+  city: "Bangalore",
+  countryCode: "IN",
+  location: "Bangalore, IN",
+  status: "Available in Bangalore",
+  eyebrow: "ANORA · BANGALORE, IN",
+  tagline: "Elegant presence. Quiet confidence.",
+  serviceSummary:
+    "Bangalore-based dancer available for private studio, on-location, and full-day dance bookings.",
+  intro:
+    "Warm, discreet, and easy to talk to. I value privacy, cleanliness, respectful communication, and a relaxed atmosphere.",
+  bio:
+    "I’m Anora, 27, currently in Bangalore. I like things to feel natural, comfortable, and uncomplicated. Good manners, discretion, and clear communication matter to me. If you would like to know more or verify my profile, WhatsApp or Telegram is the easiest way to reach me.",
+  quote:
+    "I prefer simple things done beautifully — good conversation, good energy, and mutual respect.",
+} as const;
+
+// CLONE CONTROL: edit these two fields when the target search intent changes.
+// NEXT_PUBLIC_SITE_URL in Vercel overrides siteUrl and should point to the final public domain.
+const seo = {
+  siteUrl: "https://dancerportfolio.vercel.app",
+  title: "Anora | Dancer in Bangalore – Private Dance Bookings",
+  description:
+    "Meet Anora, a Bangalore-based dancer available for private studio, on-location and full-day dance bookings. View her profile, gallery, rates and contact options.",
+} as const;
+
 export function getWhatsAppHref(
-  message = "Hi Anora, I would like to inquire about a booking.",
+  message = `Hi ${profile.name}, I would like to inquire about a booking.`,
 ) {
   if (!whatsappNumber) return "#contact";
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -17,27 +46,15 @@ export function getTelegramHref() {
 }
 
 export const siteContent = {
-  profile: {
-    name: "Anora",
-    location: "Bangalore, IN",
-    status: "Available in Bangalore",
-    eyebrow: "ANORA · BANGALORE, IN",
-    tagline: "Elegant presence. Quiet confidence.",
-    intro:
-      "Warm, discreet, and easy to talk to. I value privacy, cleanliness, respectful communication, and a relaxed atmosphere.",
-    bio:
-      "I’m Anora, 27, currently in Bangalore. I like things to feel natural, comfortable, and uncomplicated. Good manners, discretion, and clear communication matter to me. If you would like to know more or verify my profile, WhatsApp or Telegram is the easiest way to reach me.",
-    quote:
-      "I prefer simple things done beautifully — good conversation, good energy, and mutual respect.",
-  },
+  profile,
   images: {
     hero: {
       src: "/images/profile/gallery-02.jpg",
-      alt: "Anora portrait",
+      alt: "Portrait of Anora, a Bangalore-based dancer",
     },
     about: {
       src: "/images/profile/gallery-03.jpg",
-      alt: "Anora portrait",
+      alt: "Anora, Bangalore-based dancer",
     },
     gallery: [
       { src: "/images/profile/gallery-04.jpg", alt: "Anora gallery portrait 1" },
@@ -56,7 +73,7 @@ export const siteContent = {
     { label: "Ethnicity", value: "Asian" },
     { label: "Nationality", value: "Indian" },
     { label: "Gender", value: "Female" },
-    { label: "City", value: "Bangalore" },
+    { label: "City", value: profile.city },
   ],
   danceBookings: [
     {
@@ -64,21 +81,21 @@ export const siteContent = {
       price: "₹17,000",
       suffix: "per hour",
       note: "A private one-to-one studio dance booking.",
-      inquiry: "Hi Anora, I would like to inquire about the Private Studio Dance Session.",
+      inquiry: `Hi ${profile.name}, I would like to inquire about the Private Studio Dance Session.`,
     },
     {
       title: "On-Location Dance Session",
       price: "₹20,000",
       suffix: "per hour",
-      note: "A dance booking at a suitable Bangalore location.",
-      inquiry: "Hi Anora, I would like to inquire about the On-Location Dance Session.",
+      note: `A dance booking at a suitable ${profile.city} location.`,
+      inquiry: `Hi ${profile.name}, I would like to inquire about the On-Location Dance Session.`,
     },
     {
       title: "Full-Day Dance Booking",
       price: "₹50,000",
       suffix: "full day",
       note: "An extended dance or appearance booking.",
-      inquiry: "Hi Anora, I would like to inquire about the Full-Day Dance Booking.",
+      inquiry: `Hi ${profile.name}, I would like to inquire about the Full-Day Dance Booking.`,
     },
   ],
   contact: {
@@ -91,21 +108,19 @@ export const siteContent = {
       configured: Boolean(telegramHandle),
     },
   },
-  seo: {
-    title: "Anora | Bangalore",
-    description:
-      "Anora in Bangalore. View her profile, gallery, dance booking options, and direct contact details.",
-  },
+  seo,
 } as const;
 
 export function getSiteUrl() {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   const vercelProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
   const vercelDeploymentUrl = process.env.VERCEL_URL?.trim();
-  const candidate = configuredUrl || vercelProductionUrl || vercelDeploymentUrl;
+  const candidate =
+    configuredUrl || vercelProductionUrl || vercelDeploymentUrl || siteContent.seo.siteUrl;
 
-  if (!candidate) return "https://dancerportfolio.vercel.app";
+  const withProtocol = /^https?:\/\//.test(candidate)
+    ? candidate
+    : "https://" + candidate;
 
-  const withProtocol = /^https?:\/\//.test(candidate) ? candidate : "https://" + candidate;
   return withProtocol.replace(/\/$/, "");
 }
