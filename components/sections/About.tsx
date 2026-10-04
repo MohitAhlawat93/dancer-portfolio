@@ -23,7 +23,7 @@ export function About() {
               />
               <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-transparent to-black/15" />
               <div className="absolute bottom-4 left-4 z-20 glass-panel rounded-full px-4 py-2 text-[8px] uppercase tracking-[.18em] text-white/85">
-                Bangalore · Portrait 02
+                {siteContent.profile.city} · Portrait 02
               </div>
             </div>
           </div>
@@ -41,7 +41,7 @@ export function About() {
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               <article className="depth-card glass-panel relative rounded-3xl p-5">
                 <p className="text-[8px] uppercase tracking-[.2em] text-zinc-600">Location</p>
-                <p className="mt-3 font-display text-2xl font-light">Bangalore</p>
+                <p className="mt-3 font-display text-2xl font-light">{siteContent.profile.city}</p>
               </article>
               <article className="depth-card glass-panel relative rounded-3xl p-5">
                 <p className="text-[8px] uppercase tracking-[.2em] text-zinc-600">Verification</p>

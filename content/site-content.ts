@@ -24,13 +24,23 @@ const profile = {
     "I prefer simple things done beautifully — good conversation, good energy, and mutual respect.",
 } as const;
 
-// CLONE CONTROL: edit these two fields when the target search intent changes.
+// CLONE CONTROL: edit this SEO block when the person, city, profession, or search intent changes.
 // NEXT_PUBLIC_SITE_URL in Vercel overrides siteUrl and should point to the final public domain.
+// searchTargets are for Search Console measurement only; they are not emitted as a meta-keywords tag.
 const seo = {
   siteUrl: "https://dancerportfolio.vercel.app",
   title: "Anora | Dancer in Bangalore – Private Dance Bookings",
   description:
     "Meet Anora, a Bangalore-based dancer available for private studio, on-location and full-day dance bookings. View her profile, gallery, rates and contact options.",
+  serviceLabel: "Dance bookings",
+  serviceDescription:
+    "Choose from private studio, on-location, and full-day dance bookings in Bangalore, with clear rates and direct enquiry.",
+  searchTargets: [
+    "Anora dancer Bangalore",
+    "Anora Bangalore dancer",
+    "private dance booking Bangalore",
+    "dance booking Bangalore",
+  ],
 } as const;
 
 export function getWhatsAppHref(

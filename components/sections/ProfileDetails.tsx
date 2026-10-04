@@ -44,7 +44,7 @@ export function ProfileDetails() {
               <span className="rounded-full border border-white/10 bg-white/[.035] px-3 py-2 text-[8px] uppercase tracking-[.17em] text-zinc-300">{language.value}</span>
               <span className="rounded-full border border-white/10 bg-white/[.035] px-3 py-2 text-[8px] uppercase tracking-[.17em] text-zinc-300">{city.value}</span>
             </div>
-            <p className="mt-8 text-sm leading-7 text-zinc-500">Currently based in Bangalore and available for direct enquiries.</p>
+            <p className="mt-8 text-sm leading-7 text-zinc-500">Currently based in {siteContent.profile.city} and available for direct enquiries.</p>
           </article>
 
           <article className="depth-card glass-panel relative overflow-hidden rounded-[1.75rem] p-6 md:col-span-4 md:p-8">
@@ -52,7 +52,7 @@ export function ProfileDetails() {
             <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-[8px] uppercase tracking-[.22em] text-zinc-600">Availability</p>
-                <p className="mt-3 font-display text-3xl font-light text-white sm:text-4xl">Active in Bangalore</p>
+                <p className="mt-3 font-display text-3xl font-light text-white sm:text-4xl">{siteContent.profile.status}</p>
                 <p className="mt-2 text-sm text-zinc-500">Open for current engagements and enquiries.</p>
               </div>
               <div className="inline-flex w-fit items-center gap-3 rounded-full border border-emerald-400/15 bg-emerald-400/[.055] px-4 py-2.5 text-[8px] font-semibold uppercase tracking-[.2em] text-emerald-300">
