@@ -117,3 +117,58 @@ export async function insertRoseChunks(chunks: RoseChunkInsert[]) {
     throw new Error(`Could not store Rose chunks: ${response.status}`);
   }
 }
+
+
+export async function upsertRoseTenant(input: {
+  tenantId: string;
+  displayName: string;
+  assistantName: string;
+}) {
+  if (!isRoseDatabaseConfigured()) {
+    throw new Error("Rose database is not configured.");
+  }
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/rose_tenants?on_conflict=id`,
+    {
+      method: "POST",
+      headers: {
+        ...headers(),
+        Prefer: "resolution=merge-duplicates,return=minimal",
+      },
+      body: JSON.stringify({
+        id: input.tenantId,
+        display_name: input.displayName,
+        assistant_name: input.assistantName,
+        updated_at: new Date().toISOString(),
+      }),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Could not upsert Rose tenant: ${response.status}`);
+  }
+}
+
+export async function getRoseTenant(tenantId: string) {
+  if (!isRoseDatabaseConfigured()) return null;
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/rose_tenants?id=eq.${encodeURIComponent(tenantId)}&select=id,display_name,assistant_name&limit=1`,
+    {
+      headers: headers(),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) return null;
+
+  const rows = (await response.json()) as Array<{
+    id: string;
+    display_name: string;
+    assistant_name: string;
+  }>;
+
+  return rows[0] ?? null;
+}
