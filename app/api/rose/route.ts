@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getRoseTenant } from "@/lib/rose-db";
 import { retrieveRoseContext, type RoseHistoryMessage } from "@/lib/rose-retrieval";
 import { generateRoseAnswer } from "@/lib/rose-groq";
 
@@ -16,11 +17,10 @@ function parseHistory(value: unknown): RoseHistoryMessage[] {
         Boolean(
           item &&
             typeof item === "object" &&
-            ("role" in item) &&
-            ("content" in item) &&
-            (item as { role?: unknown }).role !== undefined &&
-            ((item as { role?: unknown }).role === "user" ||
-              (item as { role?: unknown }).role === "assistant") &&
+            "role" in item &&
+            "content" in item &&
+            (((item as { role?: unknown }).role === "user") ||
+              ((item as { role?: unknown }).role === "assistant")) &&
             typeof (item as { content?: unknown }).content === "string",
         ),
     )
@@ -68,13 +68,35 @@ export async function POST(request: Request) {
   }
 
   const history = parseHistory(body.history);
-  const retrieval = retrieveRoseContext(message, history);
-  const generated = await generateRoseAnswer(message, retrieval, history);
+  const tenantId = process.env.ROSE_TENANT_ID?.trim().toLowerCase() || "anora";
+  const tenant = await getRoseTenant(tenantId);
+
+  const ownerName =
+    tenant?.display_name ||
+    process.env.ROSE_OWNER_NAME?.trim() ||
+    "Anora";
+
+  const assistantName =
+    tenant?.assistant_name ||
+    process.env.ROSE_ASSISTANT_NAME?.trim() ||
+    "Rose";
+
+  const retrieval = await retrieveRoseContext(message, history, {
+    tenantId,
+    ownerName,
+    assistantName,
+  });
+
+  const generated = await generateRoseAnswer(message, retrieval, history, {
+    ownerName,
+    assistantName,
+  });
 
   return NextResponse.json({
     answer: generated.answer,
     confidence: retrieval.confidence,
     retrievedIds: retrieval.chunks.map((chunk) => chunk.id),
+    retrievalSource: retrieval.source,
     mode: generated.mode,
     model: generated.model,
   });
