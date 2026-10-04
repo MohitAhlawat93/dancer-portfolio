@@ -15,17 +15,17 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="section-wine relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
+    <section id="contact" className="section-slate relative overflow-hidden px-5 py-20 text-white sm:px-6 sm:py-24 lg:px-16 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <div className="depth-card glass-panel prism-edge rounded-[2rem] p-6 sm:p-10 lg:p-14">
-          <p className="text-[9px] uppercase tracking-[.28em] text-zinc-600">Contact</p>
+          <p className="text-[9px] uppercase tracking-[.28em] text-muted">Contact</p>
 
           <div className="mt-5 grid gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
             <div>
               <h2 className="font-display text-[clamp(4rem,9vw,8rem)] font-light leading-[.82] tracking-[-.055em]">
-                Say <span className="italic text-[#d8bcae]">hello.</span>
+                Say <span className="italic text-accent-soft">hello.</span>
               </h2>
-              <p className="mt-7 max-w-xl text-sm leading-7 text-zinc-400">
+              <p className="mt-7 max-w-xl text-sm leading-7 text-muted">
                 For questions, availability, or verification, message directly.
               </p>
             </div>
@@ -40,10 +40,10 @@ export function Contact() {
                   className="depth-card relative flex min-h-28 items-end justify-between rounded-2xl border border-white/[.09] bg-black/20 p-5 backdrop-blur-xl"
                 >
                   <div>
-                    <p className="text-[8px] uppercase tracking-[.18em] text-zinc-600">Direct message</p>
+                    <p className="text-[8px] uppercase tracking-[.18em] text-muted">Direct message</p>
                     <p className="mt-2 font-display text-3xl font-light">{channel.label}</p>
                   </div>
-                  <span className="mb-1 text-xl text-zinc-500">↗</span>
+                  <span className="mb-1 text-xl text-accent-soft">↗</span>
                 </a>
               ))}
             </div>
