@@ -58,8 +58,9 @@ export function getTelegramHref() {
 export const siteContent = {
   profile,
   images: {
+    // CLONE CONTROL: choose a bright, clean portrait here for the light premium hero.
     hero: {
-      src: "/images/profile/gallery-02.jpg",
+      src: "/images/profile/gallery-04.jpg",
       alt: "Portrait of Anora, a Bangalore-based dancer",
     },
     about: {
