@@ -235,7 +235,7 @@ export function RoseAssistant() {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="rose-title"
-        className="rose-launcher group inline-flex min-h-12 items-center gap-2.5 rounded-full border border-[#e8c9b6]/20 bg-[#160d14]/92 px-3.5 py-2.5 text-foreground shadow-[0_14px_45px_rgba(0,0,0,.55)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#e8c9b6]/35 hover:bg-[#1d111a] sm:min-h-14 sm:px-4"
+        className="rose-launcher group inline-flex min-h-12 items-center gap-2.5 rounded-full border px-3.5 py-2.5 shadow-[0_14px_45px_rgba(0,0,0,.55)] backdrop-blur-xl transition hover:-translate-y-0.5 sm:min-h-14 sm:px-4"
       >
         <span className="rose-mark flex h-8 w-8 items-center justify-center rounded-full bg-[#071016] text-[#f5f1e8] ring-1 ring-inset ring-accent/35 sm:h-9 sm:w-9">
           <RoseMark />
