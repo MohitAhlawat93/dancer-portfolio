@@ -6,47 +6,46 @@ export function Contact() {
       label: "WhatsApp",
       href: getWhatsAppHref("Hi Anora, I would like to inquire about a booking."),
       configured: siteContent.contact.whatsapp.configured,
+      detail: "Fastest way to enquire",
     },
     {
       label: "Telegram",
       href: getTelegramHref(),
       configured: siteContent.contact.telegram.configured,
+      detail: "Direct private message",
     },
   ];
 
   return (
-    <section id="contact" className="section-soft relative overflow-hidden px-5 py-20 sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div className="relative z-10 mx-auto max-w-[1500px]">
-        <div className="section-deep overflow-hidden rounded-[2.25rem] p-6 shadow-[0_32px_80px_rgba(18,51,56,.2)] sm:p-10 lg:p-14">
-          <p className="text-[9px] font-semibold uppercase tracking-[.28em] text-[#d7b58d]">Contact</p>
+    <section id="contact" className="section-soft relative overflow-hidden px-5 py-20 sm:px-7 sm:py-24 lg:px-12 lg:py-32">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid gap-10 lg:grid-cols-[1fr_.82fr] lg:items-end">
+          <div>
+            <p className="text-[8px] font-bold uppercase tracking-[.28em] text-accent">Contact</p>
+            <h2 className="mt-5 font-display text-[clamp(4rem,8vw,7.5rem)] font-light leading-[.84] tracking-[-.055em] text-deep">
+              Say <span className="italic text-[#9a7750]">hello.</span>
+            </h2>
+            <p className="mt-6 max-w-lg text-sm leading-7 text-muted">
+              For questions, current availability, or verification, message directly.
+            </p>
+          </div>
 
-          <div className="mt-5 grid gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
-            <div>
-              <h2 className="font-display text-[clamp(4rem,9vw,8rem)] font-light leading-[.82] tracking-[-.055em] text-[#fffdf9]">
-                Say <span className="italic text-[#d7b58d]">hello.</span>
-              </h2>
-              <p className="mt-7 max-w-xl text-sm leading-7 text-white/65">
-                For questions, availability, or verification, message directly.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              {channels.map((channel) => (
-                <a
-                  key={channel.label}
-                  href={channel.href}
-                  target={channel.configured ? "_blank" : undefined}
-                  rel={channel.configured ? "noreferrer" : undefined}
-                  className="group flex min-h-28 items-end justify-between rounded-2xl border border-white/12 bg-white/[.055] p-5 transition hover:-translate-y-1 hover:border-white/25 hover:bg-white/[.09]"
-                >
-                  <div>
-                    <p className="text-[8px] font-semibold uppercase tracking-[.18em] text-white/45">Direct message</p>
-                    <p className="mt-2 font-display text-3xl font-light text-white">{channel.label}</p>
-                  </div>
-                  <span className="mb-1 text-xl text-[#d7b58d] transition group-hover:translate-x-1">↗</span>
-                </a>
-              ))}
-            </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            {channels.map((channel) => (
+              <a
+                key={channel.label}
+                href={channel.href}
+                target={channel.configured ? "_blank" : undefined}
+                rel={channel.configured ? "noreferrer" : undefined}
+                className="glass-surface group flex min-h-24 items-center justify-between rounded-[1.25rem] px-5 py-4 transition hover:-translate-y-0.5"
+              >
+                <div>
+                  <p className="text-[7px] font-bold uppercase tracking-[.18em] text-muted">{channel.detail}</p>
+                  <p className="mt-1.5 font-display text-2xl font-light text-deep">{channel.label}</p>
+                </div>
+                <span className="text-xl text-accent transition group-hover:translate-x-1">↗</span>
+              </a>
+            ))}
           </div>
         </div>
       </div>
