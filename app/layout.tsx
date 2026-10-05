@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { GrowthAnalytics } from "@/components/growth/GrowthAnalytics";
 import { getSiteUrl, siteContent } from "@/content/site-content";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={displayFont.variable + " " + sansFont.variable}>
         {children}
+        <GrowthAnalytics />
       </body>
     </html>
   );
