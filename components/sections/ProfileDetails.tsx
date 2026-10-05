@@ -24,10 +24,10 @@ export function ProfileDetails() {
         </div>
 
         <dl className="mt-11 grid border-y border-line sm:grid-cols-2 lg:grid-cols-4">
-          {displayFacts.map((fact) => (
+          {displayFacts.map((fact, index) => (
             <div
               key={fact.label}
-              className="border-b border-line px-0 py-6 sm:px-6 sm:nth-[2n]:border-l lg:border-b-0 lg:border-l lg:first:border-l-0"
+              className={"border-b border-line py-6 sm:px-6 lg:border-b-0 " + (index > 0 ? "lg:border-l" : "")}
             >
               <dt className="text-[7px] font-bold uppercase tracking-[.2em] text-muted">{fact.label}</dt>
               <dd className="mt-2 font-display text-2xl font-light text-deep sm:text-3xl">{fact.value}</dd>
