@@ -37,7 +37,7 @@ export function HeroBackground() {
             priority={index === 0}
             quality={94}
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center md:object-[68%_center]"
           />
         </div>
       ))}
