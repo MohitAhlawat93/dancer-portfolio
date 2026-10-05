@@ -11,9 +11,14 @@ export function HeroBackground() {
 
   useEffect(() => {
     if (slides.length < 2) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMotion.matches) return;
+
     const timer = window.setInterval(() => {
       setActive((current) => (current + 1) % slides.length);
-    }, 5200);
+    }, 5600);
+
     return () => window.clearInterval(timer);
   }, []);
 
@@ -38,6 +43,14 @@ export function HeroBackground() {
       ))}
       <div className="hero-vignette absolute inset-0" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,253,249,.02),rgba(35,48,43,.08))]" />
+      <div className="absolute bottom-5 right-5 hidden gap-1.5 md:flex">
+        {slides.map((slide, index) => (
+          <span
+            key={slide.src}
+            className={"h-1 rounded-full transition-all duration-700 " + (index === active ? "w-7 bg-white/85" : "w-2 bg-white/45")}
+          />
+        ))}
+      </div>
     </div>
   );
 }
