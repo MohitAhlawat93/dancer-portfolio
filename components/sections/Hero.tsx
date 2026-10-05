@@ -18,7 +18,7 @@ export function Hero() {
 
           <h1
             id="hero-title"
-            className="mt-5 font-display text-[clamp(4.4rem,8vw,7.6rem)] font-light leading-[.82] tracking-[-.055em] text-[#202a26]"
+            className="mt-5 font-display text-[clamp(3.8rem,8vw,7.6rem)] font-light leading-[.82] tracking-[-.055em] text-[#202a26]"
           >
             Elegance
             <span className="block italic text-[#9a7750]">in motion.</span>
