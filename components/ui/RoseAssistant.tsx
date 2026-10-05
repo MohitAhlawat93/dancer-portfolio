@@ -36,9 +36,13 @@ export function RoseAssistant() {
     };
     window.addEventListener("keydown", onKeyDown);
     const timer = window.setTimeout(() => inputRef.current?.focus(), 180);
+    const isMobile = window.matchMedia("(max-width: 639px)").matches;
+    if (isMobile) document.body.style.overflow = "hidden";
+
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       window.clearTimeout(timer);
+      if (isMobile) document.body.style.overflow = "";
     };
   }, [open]);
 
@@ -100,11 +104,18 @@ export function RoseAssistant() {
   return (
     <div className="fixed inset-x-3 bottom-[4.35rem] z-[70] sm:inset-x-auto sm:bottom-5 sm:left-5">
       {open ? (
-        <section
+        <>
+          <button
+            type="button"
+            aria-label="Close Rose assistant"
+            onClick={() => setOpen(false)}
+            className="fixed inset-0 -z-10 bg-[#24302c]/18 backdrop-blur-[2px] sm:hidden"
+          />
+          <section
           role="dialog"
           aria-modal="false"
           aria-labelledby="rose-title"
-          className="mb-3 flex h-[min(31rem,72svh)] w-full flex-col overflow-hidden rounded-[1.5rem] border border-[#24302c]/10 bg-[#fff9f2]/98 text-[#24302c] shadow-[0_24px_70px_rgba(55,45,35,.18)] backdrop-blur-2xl sm:w-[22rem]"
+          className="fixed inset-x-2 bottom-2 flex h-[min(34rem,82svh)] flex-col overflow-hidden rounded-[1.5rem] border border-[#24302c]/10 bg-[#fff9f2]/98 text-[#24302c] shadow-[0_24px_70px_rgba(55,45,35,.18)] backdrop-blur-2xl sm:static sm:mb-3 sm:h-[min(31rem,72svh)] sm:w-[22rem]"
         >
           <div className="flex items-center justify-between border-b border-[#24302c]/10 bg-[#f5ede2] px-4 py-3.5">
             <div className="flex items-center gap-3">
@@ -201,7 +212,8 @@ export function RoseAssistant() {
               </button>
             </div>
           </form>
-        </section>
+          </section>
+        </>
       ) : null}
 
       <button
@@ -209,7 +221,7 @@ export function RoseAssistant() {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="rose-title"
-        className="inline-flex h-11 items-center gap-2 rounded-full border border-white/45 bg-[#fff9f2]/92 px-3.5 text-[#5c4542] shadow-[0_10px_30px_rgba(55,45,35,.13)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#fffdf9]"
+        className={(open ? "hidden sm:inline-flex " : "inline-flex ") + "h-11 items-center gap-2 rounded-full border border-white/45 bg-[#fff9f2]/92 px-3.5 text-[#5c4542] shadow-[0_10px_30px_rgba(55,45,35,.13)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#fffdf9]"}
       >
         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#7a5a55] text-white">
           <RoseMark />
