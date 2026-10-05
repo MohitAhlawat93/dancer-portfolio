@@ -58,13 +58,13 @@ export const siteContent = {
   images: {
     // CLONE CONTROL: heroSlides controls the slow-changing homepage background.
     heroSlides: [
-      { src: "/images/profile/hero.jpeg", alt: "Portrait of Anora" },
-      { src: "/images/profile/gallery-03.jpg", alt: "Anora indoor portrait" },
       { src: "/images/profile/gallery-04.jpg", alt: "Anora full-length portrait" },
+      { src: "/images/profile/gallery-03.jpg", alt: "Anora indoor portrait" },
       { src: "/images/profile/gallery-06.jpeg", alt: "Anora portrait with a soft color backdrop" },
+      { src: "/images/profile/about.jpeg", alt: "Anora portrait" },
     ],
     hero: {
-      src: "/images/profile/hero.jpeg",
+      src: "/images/profile/gallery-04.jpg",
       alt: "Portrait of Anora, a Bangalore-based dancer",
     },
     about: {
