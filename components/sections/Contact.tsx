@@ -1,3 +1,4 @@
+import { TrackedLink } from "@/components/growth/TrackedLink";
 import { getTelegramHref, getWhatsAppHref, siteContent } from "@/content/site-content";
 
 export function Contact() {
@@ -6,11 +7,13 @@ export function Contact() {
       label: "WhatsApp",
       href: getWhatsAppHref("Hi Anora, I would like to inquire about a booking."),
       configured: siteContent.contact.whatsapp.configured,
+      eventName: "whatsapp_click" as const,
     },
     {
       label: "Telegram",
       href: getTelegramHref(),
       configured: siteContent.contact.telegram.configured,
+      eventName: "telegram_click" as const,
     },
   ];
 
@@ -19,7 +22,6 @@ export function Contact() {
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <div className="section-deep overflow-hidden rounded-[2.25rem] p-6 shadow-[0_32px_80px_rgba(18,51,56,.2)] sm:p-10 lg:p-14">
           <p className="text-[9px] font-semibold uppercase tracking-[.28em] text-[#d7b58d]">Contact</p>
-
           <div className="mt-5 grid gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
             <div>
               <h2 className="font-display text-[clamp(4rem,9vw,8rem)] font-light leading-[.82] tracking-[-.055em] text-[#fffdf9]">
@@ -32,11 +34,13 @@ export function Contact() {
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {channels.map((channel) => (
-                <a
+                <TrackedLink
                   key={channel.label}
                   href={channel.href}
                   target={channel.configured ? "_blank" : undefined}
                   rel={channel.configured ? "noreferrer" : undefined}
+                  eventName={channel.eventName}
+                  eventParams={{ placement: "contact_section", configured: channel.configured }}
                   className="group flex min-h-28 items-end justify-between rounded-2xl border border-white/12 bg-white/[.055] p-5 transition hover:-translate-y-1 hover:border-white/25 hover:bg-white/[.09]"
                 >
                   <div>
@@ -44,7 +48,7 @@ export function Contact() {
                     <p className="mt-2 font-display text-3xl font-light text-white">{channel.label}</p>
                   </div>
                   <span className="mb-1 text-xl text-[#d7b58d] transition group-hover:translate-x-1">↗</span>
-                </a>
+                </TrackedLink>
               ))}
             </div>
           </div>
