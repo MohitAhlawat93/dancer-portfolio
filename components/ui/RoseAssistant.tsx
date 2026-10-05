@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { roseKnowledge } from "@/content/rose-knowledge";
+import { trackGrowthEvent } from "@/lib/growth/track";
 
 type ChatMessage = {
   id: number;
@@ -64,6 +65,7 @@ export function RoseAssistant() {
   };
 
   const showQuickReply = (label: string, answer: string) => {
+    trackGrowthEvent("concierge_message_sent", { mode: "quick_reply" });
     addMessage("user", label);
     addMessage("assistant", answer);
   };
@@ -74,6 +76,7 @@ export function RoseAssistant() {
     const question = message.trim();
     if (!question || loading) return;
 
+    trackGrowthEvent("concierge_message_sent", { mode: "typed" });
     addMessage("user", question);
     setMessage("");
     setLoading(true);
@@ -107,6 +110,11 @@ export function RoseAssistant() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const toggleAssistant = () => {
+    if (!open) trackGrowthEvent("concierge_open", { placement: "floating" });
+    setOpen((value) => !value);
   };
 
   return (
@@ -231,7 +239,7 @@ export function RoseAssistant() {
 
       <button
         type="button"
-        onClick={() => setOpen((value) => !value)}
+        onClick={toggleAssistant}
         aria-expanded={open}
         aria-controls="rose-title"
         className="rose-launcher group inline-flex min-h-12 items-center gap-2.5 rounded-full border px-3.5 py-2.5 backdrop-blur-xl transition sm:min-h-14 sm:px-4"
