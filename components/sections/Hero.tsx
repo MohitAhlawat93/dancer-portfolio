@@ -56,12 +56,6 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-5 right-5 z-10 hidden items-center gap-2 text-[#fffdf9] md:flex">
-        <span className="h-px w-8 bg-white/60" />
-        <span className="text-[8px] font-semibold uppercase tracking-[.2em] drop-shadow">
-          Portraits change slowly
-        </span>
-      </div>
     </section>
   );
 }
