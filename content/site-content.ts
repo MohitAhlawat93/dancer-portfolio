@@ -25,8 +25,6 @@ const profile = {
 } as const;
 
 // CLONE CONTROL: edit this SEO block when the person, city, profession, or search intent changes.
-// NEXT_PUBLIC_SITE_URL in Vercel overrides siteUrl and should point to the final public domain.
-// searchTargets are for Search Console measurement only; they are not emitted as a meta-keywords tag.
 const seo = {
   siteUrl: "https://dancerportfolio.vercel.app",
   title: "Anora | Dancer in Bangalore – Private Dance Bookings",
@@ -58,9 +56,15 @@ export function getTelegramHref() {
 export const siteContent = {
   profile,
   images: {
-    // CLONE CONTROL: choose a bright, clean portrait here for the light premium hero.
+    // CLONE CONTROL: heroSlides controls the slow-changing homepage background.
+    heroSlides: [
+      { src: "/images/profile/hero.jpeg", alt: "Portrait of Anora" },
+      { src: "/images/profile/gallery-03.jpg", alt: "Anora indoor portrait" },
+      { src: "/images/profile/gallery-04.jpg", alt: "Anora full-length portrait" },
+      { src: "/images/profile/gallery-06.jpeg", alt: "Anora portrait with a soft color backdrop" },
+    ],
     hero: {
-      src: "/images/profile/gallery-04.jpg",
+      src: "/images/profile/hero.jpeg",
       alt: "Portrait of Anora, a Bangalore-based dancer",
     },
     about: {
