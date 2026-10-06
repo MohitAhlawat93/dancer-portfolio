@@ -172,8 +172,7 @@ button { font: inherit; }
 
 .hero-vignette {
   background:
-    linear-gradient(90deg, rgba(245,240,232,.98) 0%, rgba(245,240,232,.93) 28%, rgba(245,240,232,.55) 48%, rgba(245,240,232,.08) 70%, rgba(245,240,232,.02) 100%),
-    linear-gradient(180deg, rgba(25,31,29,.03), rgba(25,31,29,.14));
+    linear-gradient(90deg, rgba(245,240,232,1) 0%, rgba(245,240,232,.98) 30%, rgba(245,240,232,.9) 39%, rgba(245,240,232,.3) 52%, transparent 64%);
 }
 
 .availability-pulse { position: relative; }
@@ -213,7 +212,7 @@ button { font: inherit; }
 
   .hero-vignette {
     background:
-      linear-gradient(180deg, rgba(245,240,232,.25) 0%, rgba(245,240,232,.38) 42%, rgba(245,240,232,.97) 76%, rgba(245,240,232,1) 100%);
+      linear-gradient(180deg, rgba(245,240,232,.04) 0%, rgba(245,240,232,.08) 38%, rgba(245,240,232,.78) 69%, rgba(245,240,232,.98) 86%, rgba(245,240,232,1) 100%);
   }
 
   .hero-slide[data-active="true"] {
