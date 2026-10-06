@@ -3,46 +3,45 @@ import { siteContent } from "@/content/site-content";
 
 export function About() {
   return (
-    <section id="about" className="section-soft relative overflow-hidden px-5 py-20 sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div className="relative z-10 mx-auto max-w-[1500px]">
-        <div className="grid gap-12 lg:grid-cols-[.9fr_1fr] lg:items-center lg:gap-24">
-          <div className="relative mx-auto w-full max-w-[610px]">
-            <div className="absolute -bottom-5 -right-5 h-[76%] w-[72%] rounded-[3rem] bg-[#d9ccb9]" aria-hidden="true" />
-            <div className="photo-frame group relative z-10 aspect-[4/5] overflow-hidden rounded-[3rem] bg-surface">
-              <Image
-                src={siteContent.images.about.src}
-                alt={siteContent.images.about.alt}
-                fill
-                quality={95}
-                sizes="(max-width: 1024px) 100vw, 46vw"
-                className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.035]"
-              />
-            </div>
+    <section id="about" className="section-soft relative overflow-hidden px-5 py-20 sm:px-7 sm:py-24 lg:px-12 lg:py-32">
+      <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[.92fr_1.08fr] lg:items-center lg:gap-20">
+        <div className="relative mx-auto w-full max-w-[590px]">
+          <div className="absolute -inset-3 -z-10 translate-x-5 translate-y-5 rounded-[2rem] bg-[#d8cfc2]/72" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/55 shadow-[0_25px_65px_rgba(60,48,35,.11)]">
+            <Image
+              src={siteContent.images.about.src}
+              alt={siteContent.images.about.alt}
+              fill
+              quality={95}
+              sizes="(max-width: 1024px) 100vw, 44vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#27322e]/15 via-transparent to-white/5" />
           </div>
+        </div>
 
-          <div>
-            <p className="text-[9px] font-semibold uppercase tracking-[.28em] text-accent">About</p>
-            <h2 className="mt-5 max-w-3xl font-display text-5xl font-light leading-[.94] tracking-[-.045em] text-foreground sm:text-6xl lg:text-7xl">
-              A closer <span className="italic text-accent">portrait.</span>
-            </h2>
+        <div className="max-w-2xl">
+          <p className="text-[8px] font-bold uppercase tracking-[.28em] text-accent">About Anora</p>
+          <h2 className="mt-5 font-display text-[clamp(3rem,5vw,5.2rem)] font-light leading-[.96] tracking-[-.045em] text-deep">
+            A closer <span className="italic text-[#9a7750]">portrait.</span>
+          </h2>
 
-            <p className="mt-8 max-w-2xl font-display text-3xl font-light italic leading-[1.15] text-deep sm:text-4xl">
-              “Good energy, good manners, and mutual respect.”
-            </p>
+          <p className="mt-7 font-display text-2xl font-light italic leading-[1.25] text-[#4a5650] sm:text-3xl">
+            “Good energy, good manners, and mutual respect.”
+          </p>
 
-            <p className="mt-6 max-w-2xl text-sm leading-8 text-muted sm:text-base">
-              {siteContent.profile.bio}
-            </p>
+          <p className="mt-6 text-sm leading-8 text-muted sm:text-[15px]">
+            {siteContent.profile.bio}
+          </p>
 
-            <div className="mt-9 grid gap-3 sm:grid-cols-2">
-              <article className="soft-card depth-card rounded-2xl p-5">
-                <p className="text-[8px] font-semibold uppercase tracking-[.2em] text-muted">Location</p>
-                <p className="mt-3 font-display text-2xl font-light text-deep">{siteContent.profile.city}</p>
-              </article>
-              <article className="soft-card depth-card rounded-2xl p-5">
-                <p className="text-[8px] font-semibold uppercase tracking-[.2em] text-muted">Direct contact</p>
-                <p className="mt-3 font-display text-2xl font-light text-deep">WhatsApp / Telegram</p>
-              </article>
+          <div className="mt-9 flex flex-wrap gap-x-8 gap-y-4 border-t border-line pt-6">
+            <div>
+              <p className="text-[7px] font-bold uppercase tracking-[.2em] text-muted">Based in</p>
+              <p className="mt-1.5 font-display text-xl text-deep">{siteContent.profile.city}</p>
+            </div>
+            <div>
+              <p className="text-[7px] font-bold uppercase tracking-[.2em] text-muted">Contact</p>
+              <p className="mt-1.5 font-display text-xl text-deep">WhatsApp · Telegram</p>
             </div>
           </div>
         </div>
