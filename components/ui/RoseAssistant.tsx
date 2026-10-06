@@ -110,7 +110,7 @@ export function RoseAssistant() {
   };
 
   return (
-    <div className="fixed inset-x-3 bottom-[4.35rem] z-[70] sm:inset-x-auto sm:bottom-5 sm:left-5">
+    <div className="fixed inset-x-3 bottom-[4.35rem] z-[70] flex justify-end sm:inset-x-auto sm:bottom-5 sm:left-auto sm:right-5">
       {open ? (
         <>
           <button
