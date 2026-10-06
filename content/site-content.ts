@@ -25,8 +25,6 @@ const profile = {
 } as const;
 
 // CLONE CONTROL: edit this SEO block when the person, city, profession, or search intent changes.
-// NEXT_PUBLIC_SITE_URL in Vercel overrides siteUrl and should point to the final public domain.
-// searchTargets are for Search Console measurement only; they are not emitted as a meta-keywords tag.
 const seo = {
   siteUrl: "https://dancerportfolio.vercel.app",
   title: "Anora | Dancer in Bangalore – Private Dance Bookings",
@@ -58,8 +56,15 @@ export function getTelegramHref() {
 export const siteContent = {
   profile,
   images: {
+    // CLONE CONTROL: heroSlides controls the slow-changing homepage background.
+    heroSlides: [
+      { src: "/images/profile/gallery-04.jpg", alt: "Anora full-length portrait" },
+      { src: "/images/profile/gallery-03.jpg", alt: "Anora indoor portrait" },
+      { src: "/images/profile/gallery-06.jpeg", alt: "Anora portrait with a soft color backdrop" },
+      { src: "/images/profile/about.jpeg", alt: "Anora portrait" },
+    ],
     hero: {
-      src: "/images/profile/gallery-02.jpg",
+      src: "/images/profile/gallery-04.jpg",
       alt: "Portrait of Anora, a Bangalore-based dancer",
     },
     about: {
@@ -75,6 +80,11 @@ export const siteContent = {
       { src: "/images/profile/gallery-06.jpeg", alt: "Anora gallery portrait 6" },
     ],
   },
+  bodyMeasurements: [
+    { label: "Bust", value: "34" },
+    { label: "Waist", value: "28" },
+    { label: "Hips", value: "38" },
+  ],
   facts: [
     { label: "Age", value: "27" },
     { label: "Height", value: "158 cm / 5′2″" },

@@ -2,25 +2,26 @@ import { siteContent } from "@/content/site-content";
 
 export function Introduction() {
   return (
-    <section className="section-paper relative overflow-hidden px-5 py-20 sm:px-6 sm:py-24 lg:px-16 lg:py-32">
-      <div className="relative z-10 mx-auto max-w-[1500px]">
-        <p className="text-[9px] font-semibold uppercase tracking-[.28em] text-accent">
+    <section className="section-paper relative overflow-hidden px-5 py-20 sm:px-7 sm:py-24 lg:px-12 lg:py-32">
+      <div className="mx-auto max-w-[1440px]">
+        <p className="text-[8px] font-bold uppercase tracking-[.28em] text-accent">
           Introduction
         </p>
 
-        <div className="mt-8 grid gap-10 lg:grid-cols-[1.08fr_.72fr] lg:gap-24">
-          <p className="max-w-5xl font-display text-[clamp(3.1rem,6.2vw,6.3rem)] font-light leading-[.92] tracking-[-.045em] text-foreground">
+        <div className="mt-7 grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+          <h2 className="max-w-2xl font-display text-[clamp(3.2rem,5.6vw,5.7rem)] font-light leading-[.94] tracking-[-.045em] text-deep">
             Quiet confidence,
-            <span className="block italic text-accent">beautifully understated.</span>
-          </p>
+            <span className="block italic text-[#9a7750]">beautifully understated.</span>
+          </h2>
 
-          <div className="self-end border-l border-line pl-6 sm:pl-8">
-            <p className="text-sm leading-8 text-muted sm:text-base">
+          <div className="max-w-2xl self-end">
+            <div className="h-px w-16 bg-accent/55" />
+            <p className="mt-6 text-sm leading-8 text-muted sm:text-[15px]">
               {siteContent.profile.bio}
             </p>
-            <p className="mt-7 font-display text-2xl font-light italic leading-relaxed text-deep">
+            <blockquote className="mt-7 font-display text-2xl font-light italic leading-relaxed text-[#48544e] sm:text-3xl">
               “{siteContent.profile.quote}”
-            </p>
+            </blockquote>
           </div>
         </div>
       </div>

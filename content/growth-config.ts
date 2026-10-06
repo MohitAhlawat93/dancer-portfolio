@@ -5,7 +5,9 @@ const gaMeasurementId =
 
 export const growthConfig = {
   client: {
-    id:\n      process.env.NEXT_PUBLIC_GROWTH_CLIENT_ID?.trim() ||\n      siteContent.profile.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    id:
+      process.env.NEXT_PUBLIC_GROWTH_CLIENT_ID?.trim() ||
+      siteContent.profile.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
     name: siteContent.profile.name,
     siteUrl: getSiteUrl(),
   },
