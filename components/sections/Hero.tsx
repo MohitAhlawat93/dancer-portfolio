@@ -11,24 +11,24 @@ export function Hero() {
       <HeroBackground />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-68px)] max-w-[1500px] items-end px-5 pb-16 pt-28 sm:px-7 sm:pb-20 md:items-center md:py-24 lg:px-12">
-        <div className="fade-up max-w-[650px]">
+        <div className="fade-up max-w-[570px]">
           <p className="text-[9px] font-bold uppercase tracking-[.3em] text-[#8b693e]">
             {siteContent.profile.name} · {siteContent.profile.city}
           </p>
 
           <h1
             id="hero-title"
-            className="mt-5 font-display text-[clamp(3.8rem,8vw,7.6rem)] font-light leading-[.82] tracking-[-.055em] text-[#202a26]"
+            className="mt-5 font-display text-[clamp(3.8rem,7vw,6.8rem)] font-light leading-[.84] tracking-[-.055em] text-[#202a26]"
           >
             Elegance
             <span className="block italic text-[#9a7750]">in motion.</span>
           </h1>
 
-          <p className="mt-7 max-w-[520px] text-[15px] font-medium leading-7 text-[#3e4944] sm:text-base">
+          <p className="mt-7 max-w-[500px] text-[15px] font-medium leading-7 text-[#3e4944] sm:text-base">
             {siteContent.profile.serviceSummary}
           </p>
 
-          <p className="mt-3 max-w-[520px] text-sm leading-7 text-[#69716c] sm:text-[15px]">
+          <p className="mt-3 max-w-[500px] text-sm leading-7 text-[#69716c] sm:text-[15px]">
             {siteContent.profile.intro}
           </p>
 
@@ -55,7 +55,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }
